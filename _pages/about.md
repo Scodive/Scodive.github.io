@@ -17,7 +17,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-Hi, I am Hengle Jiang. I am a senior undergraduate student at Department of Computer Science and Engineering, Southern University of Science and Technology. I am also an research intern at [MINSys](https://xmouyang.github.io/Team/) Group @ HKUST CSE, supervised by [Dr. Xiaomin Ouyang](https://xmouyang.github.io). 
+Hi, I am Hengle Jiang. I am a senior undergraduate student at Department of Computer Science and Engineering, Southern University of Science and Technology. I am also an research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Dr. Xiaomin Ouyang](https://xmouyang.github.io). 
 
 My research interest mainly includes 
 
@@ -37,4 +37,4 @@ My research interest mainly includes
 
 
 # 💻 Internships
-- *2024.08 - 2025.01 (now)*, [MINSys](https://xmouyang.github.io/Team/) Group @ HKUST CSE, Hong Kong, China.
+- *2024.08 - 2025.01 (now)*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong, China.
