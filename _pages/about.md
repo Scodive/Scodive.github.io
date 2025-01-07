@@ -37,4 +37,4 @@ My research interest mainly includes
 
 
 # 💻 Internships
-- *2024.08 - 2025.01 (now)*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong, China.
+- *2024.08 - 2025.01 (now)*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
