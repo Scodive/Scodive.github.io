@@ -17,3 +17,14 @@
 <head>
   <base target="_blank">
 </head>
+
+<script>
+function checkPassword() {
+  var password = prompt("请输入访问密码:", "");
+  if (password == "123456") {
+    window.location.href = "/#-publications";
+  } else {
+    alert("密码错误!");
+  }
+}
+</script>
