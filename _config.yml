@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "Hengle Jiang"
+title                    : "Hengle JIANG"
 description              : ""
 repository               : "Scodive/Scodive.github.io"
 google_scholar_stats_use_cdn : true
@@ -21,7 +21,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 
 # Site Author
 author:
-  name             : "Hengle Jiang"
+  name             : "Hengle JIANG"
   avatar           : "images/IMG_5903.jpg"
   bio              : "PhD student @SUSTech"
   location         : "Shenzhen, China"
@@ -51,7 +51,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : https://x.com/hengle_sco?s=21
+  X                : https://x.com/hengle_sco?s=21
   vine             :
   weibo            :
   xing             :
