@@ -23,7 +23,7 @@ My research interest mainly includes Multimodal learning, real-world application
 
 
 
-# 🔥 News
+# News
 - *2025.09*: &nbsp;🎉🎉 Our paper "FreePose: Real-Time View-Invariant 3D Human
 Pose Estimation via Motion-View Disentanglement" was accepted as a Demo paper by ACM MobiCom 2025.
 
@@ -33,10 +33,10 @@ Pose Estimation via Motion-View Disentanglement" was accepted as a Demo paper by
 
 
 
-# 📖 Educations
+# Educations
 - *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
 - *2025.09 - now*, Doctor of Philosophy, Computer Science and Technology, SUSTech.
 
-# 💻 Internships
+# Internships
 - *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
 - *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
