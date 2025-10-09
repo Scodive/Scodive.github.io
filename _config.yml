@@ -22,7 +22,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Hengle Jiang"
-  avatar           : "images/photo.jpg"
+  avatar           : "images/IMG_5903.jpg"
   bio              : "PhD student @SUSTech"
   location         : "Shenzhen, China"
   employer         :
@@ -51,7 +51,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : 
+  twitter          : https://x.com/hengle_sco?s=21
   vine             :
   weibo            :
   xing             :

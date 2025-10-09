@@ -17,24 +17,26 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-Hi, I am Hengle Jiang. I am a senior undergraduate student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Dr. Xiaomin Ouyang](https://xmouyang.github.io). 
+Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Dr. Xiaomin Ouyang](https://xmouyang.github.io). 
 
-My research interest mainly includes 
+My research interest mainly includes Multimodal learning, real-world applications of large models, and Autonomous driving.
 
 
 
 # 🔥 News
-- *2024.06*: &nbsp;🎉🎉 
+- *2025.09*: &nbsp;🎉🎉 Our paper "FreePose: Real-Time View-Invariant 3D Human
+Pose Estimation via Motion-View Disentanglement" was accepted as a Demo paper by ACM MobiCom 2025.
 
 
 
-# 🎖 Honors and Awards
-- *2021.10* 
+<!-- # 🎖 Honors and Awards -->
+
 
 
 # 📖 Educations
-- *2021.09 - 2025.01 (now)*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
-
+- *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
+- *2025.09 - now*, Doctor of Philosophy, Computer Science and Technology, SUSTech.
 
 # 💻 Internships
-- *2024.08 - 2025.01 (now)*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
+- *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
+- *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
