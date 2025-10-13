@@ -40,3 +40,7 @@ Pose Estimation via Motion-View Disentanglement" was accepted as a Demo paper by
 # Internships
 - *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
 - *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
+
+# Teaching
+Teaching Assistant
+- 2025 Fall, CS112: Introduction to Python Programming, SUSTech
