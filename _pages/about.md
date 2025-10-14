@@ -21,6 +21,7 @@ Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and 
 
 My research interest mainly includes Multimodal learning, real-world applications of large models, and Autonomous driving.
 
+I'm always open to collaboration! If you have a research idea or want to work together in any project, feel free to reach out — I’d love to connect (hjiangbg@connect.ust.hk).
 
 
 # News
