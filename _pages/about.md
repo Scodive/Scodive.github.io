@@ -19,15 +19,14 @@ redirect_from:
 
 Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Prof. Xiaomin Ouyang](https://xmouyang.github.io). 
 
-My research interest mainly includes Multimodal learning, real-world applications of large models, and Autonomous driving.
+My research interest mainly includes Agentic AI, real-world applications of large models, and Autonomous driving.
 
 I'm always open to collaboration! If you have a research idea or want to work together in any project, feel free to reach out — I’d love to connect (hjiangbg@connect.ust.hk).
 
 
 # News
-- *2025.09*: &nbsp;🎉🎉 Our paper "FreePose: Real-Time View-Invariant 3D Human
-Pose Estimation via Motion-View Disentanglement" was accepted as a Demo paper by ACM MobiCom 2025.
-
+- *2025.09*: &nbsp;🎉🎉 One paper was accepted by ACM MobiCom 2025 Demo.
+<!-- - *2026.01*: &nbsp;🎉🎉 Two paper were accepted by ACM/IEEE SenSys 2026. -->
 
 
 <!-- # 🎖 Honors and Awards -->
