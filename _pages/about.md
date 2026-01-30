@@ -25,8 +25,9 @@ I'm always open to collaboration! If you have a research idea or want to work to
 
 
 # News
-- *2025.09*: &nbsp;🎉🎉 One paper was accepted by ACM MobiCom 2025 Demo.
 - *2026.01*: &nbsp;🎉🎉 Two papers were accepted by ACM/IEEE SenSys 2026.
+- *2025.09*: &nbsp;🎉🎉 One paper was accepted by ACM MobiCom 2025 Demo.
+
 
 
 <!-- # 🎖 Honors and Awards -->
