@@ -35,13 +35,13 @@ I'm always open to collaboration! If you have a research idea or want to work to
 
 
 # Educations
-- *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
 - *2025.09 - now*, Doctor of Philosophy, Computer Science and Technology, SUSTech.
+- *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
+
 
 # Internships
-- *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
 - *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
-
+- *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
 
 
 # Teaching
