@@ -42,6 +42,11 @@ I'm always open to collaboration! If you have a research idea or want to work to
 - *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
 - *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
 
+
+
 # Teaching
-Teaching Assistant
-- 2025 Fall, CS112: Introduction to Python Programming, SUSTech
+- 2026 Spring, CS311H: Artificial Intelligence, SUSTech, Teaching Assistant
+- 2025 Fall, CS112: Introduction to Python Programming, SUSTech, Teaching Assistant
+
+# Services
+- ICLR 2026 Workshop Reliable Autonomy, Reviewer
