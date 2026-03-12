@@ -19,9 +19,16 @@ redirect_from:
 
 Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html) (IEEE Fellow). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Prof. Xiaomin Ouyang](https://xmouyang.github.io). 
 
-My research interest mainly includes Agentic AI, real-world applications of large models, and Autonomous driving.
-
 I'm always open to collaboration! If you have a research idea or want to work together in any project, feel free to reach out — I’d love to connect (hjiangbg@connect.ust.hk).
+
+# Research Interest
+My research focuses on building Safe, Robust, and Reliable autonomy systems that can operate effectively in complex, real-world environments. I focus on:
+
+- Agent Safety & Evaluation: Investigating "Agentic Pressure" to understand and mitigate safety risks and "normative drift" in LLM-based autonomous agents.
+
+- Embodied Robustness & Uncertainty: Developing uncertainty quantification for VLMs Autonomous Driving and view-invariant 3D Human Pose Estimation to ensure reliable perception in the wild.
+
+
 
 
 # News
