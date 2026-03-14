@@ -53,7 +53,7 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 
 
 # Teaching
-- 2026 Spring, CS311H: Artificial Intelligence, SUSTech, Teaching Assistant
+- 2026 Spring, CS311H: Artificial Intelligence (Honor Track), SUSTech, Teaching Assistant
 - 2025 Fall, CS112: Introduction to Python Programming, SUSTech, Teaching Assistant
 
 # Services
