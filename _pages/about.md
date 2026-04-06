@@ -32,7 +32,8 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 
 
 # News
-- *2026.03*: &nbsp;🎉🎉 Award: Honored to be selected for the ACM SIGBED Student Travel Award ($1000) for CPS-IoT Week 2026!
+- *2026.04*: &nbsp;🎉🎉 One paper is accepted by ACL 2026 Findings.
+- *2026.03*: Award: Honored to be selected for the ACM SIGBED Student Travel Award ($1000) for CPS-IoT Week 2026!
 - *2026.02*: &nbsp;🎉🎉 One paper is accepted by ICLR 2026 Workshop Reliable Autonomy.
 - *2026.01*: &nbsp;🎉🎉 Two papers are accepted by ACM/IEEE SenSys 2026.
 - *2025.09*: &nbsp;🎉🎉 One paper is accepted by ACM MobiCom 2025 Demo.
