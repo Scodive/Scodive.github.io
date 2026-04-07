@@ -19,7 +19,7 @@ redirect_from:
 
 Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html) (IEEE Fellow). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Prof. Xiaomin Ouyang](https://xmouyang.github.io). 
 
-I'm always open to collaboration! If you have a research idea or want to work together in any project, feel free to reach out — I’d love to connect (hjiangbg@connect.ust.hk).
+I'm always open to collaboration! If you have a research idea or want to work together in any project, feel free to reach out — I’d love to connect (jianghl2025@mail.sustech.edu.cn, hjiangbg@connect.ust.hk).
 
 # Research Interest
 My research focuses on building Safe, Robust, and Reliable autonomy systems that can operate effectively in complex, real-world environments. I focus on:
@@ -33,7 +33,7 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 
 # News
 - *2026.04*: &nbsp;🎉🎉 One paper is accepted by ACL 2026 Findings.
-- *2026.03*: Award: Honored to be selected for the ACM SIGBED Student Travel Award ($1000) for CPS-IoT Week 2026!
+- *2026.03*: [Award] Honored to be selected for the ACM SIGBED Student Travel Award ($1000) for CPS-IoT Week 2026!
 - *2026.02*: &nbsp;🎉🎉 One paper is accepted by ICLR 2026 Workshop Reliable Autonomy.
 - *2026.01*: &nbsp;🎉🎉 Two papers are accepted by ACM/IEEE SenSys 2026.
 - *2025.09*: &nbsp;🎉🎉 One paper is accepted by ACM MobiCom 2025 Demo.
