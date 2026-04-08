@@ -72,24 +72,6 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 <!-- # 🎖 Honors and Awards -->
 
 
-
-# Educations
-- *2025.09 - now*, Doctor of Philosophy, Computer Science and Technology, SUSTech.
-- *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
-
-
-# Internships
-- *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
-- *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
-
-
-# Teaching
-- 2026 Spring, CS311H: Artificial Intelligence (Honor Track), SUSTech, Teaching Assistant
-- 2025 Fall, CS112: Introduction to Python Programming, SUSTech, Teaching Assistant
-
-# Services
-- ICLR 2026 Workshop Reliable Autonomy, Reviewer
-
 <h1 id="selected-publications" style="position: relative;">
   Selected Publications
   <span style="position: absolute; right: 0; bottom: 0.2em; font-size: 0.5em; font-weight: normal; color: #666; letter-spacing: normal;">* Equal contribution</span>
@@ -136,3 +118,21 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 <div style="margin-top: -1em; margin-bottom: 2em; text-align: left;">
   <a href="/publications/" style="font-weight: bold; text-decoration: underline;">See all publications &rarr;</a>
 </div>
+
+
+# Educations
+- *2025.09 - now*, Doctor of Philosophy, Computer Science and Technology, SUSTech.
+- *2021.09 - 2025.06*, Bachelor of Engineering, Computer Science and Technology, SUSTech.
+
+
+# Internships
+- *2024.08 - now*, [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, Hong Kong SAR, China.
+- *2022.06 - 2023.04*, SZ DJI Technology Co.,Ltd.
+
+
+# Teaching
+- 2026 Spring, CS311H: Artificial Intelligence (Honor Track), SUSTech, Teaching Assistant
+- 2025 Fall, CS112: Introduction to Python Programming, SUSTech, Teaching Assistant
+
+# Services
+- ICLR 2026 Workshop Reliable Autonomy, Reviewer
