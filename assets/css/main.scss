@@ -215,3 +215,308 @@ h1:before, .anchor:before {
   color: #666;
   font-family: $serif; /* Or sans-serif depending on preference, sticking to theme mix potentially */
 }
+
+/* =============================================
+   Publication Section Styles
+   ============================================= */
+
+.pub-year-group {
+  margin-bottom: 2.5em;
+}
+
+.pub-year-label {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #333;
+  border-left: 4px solid #00369f;
+  padding-left: 0.6em;
+  margin-bottom: 1.2em;
+  margin-top: 1.8em;
+}
+
+.pub-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2em;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 1.25em 1.5em;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 54, 159, 0.10);
+    transform: translateY(-2px);
+    border-color: #c8d8f8;
+  }
+
+  @include breakpoint($medium) {
+    flex-direction: row;
+    gap: 1.5em;
+  }
+}
+
+.pub-card-image {
+  flex-shrink: 0;
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+
+  .pub-no-image {
+    color: #aab;
+    font-size: 2.2em;
+    opacity: 0.5;
+  }
+
+  @include breakpoint($medium) {
+    width: 220px;
+    height: 110px;
+  }
+}
+
+.pub-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.pub-card-title {
+  font-size: 1.05em;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #222;
+  margin: 0 0 0.35em 0;
+
+  a {
+    color: #1a1a2e;
+    text-decoration: none;
+    &:hover { color: #00369f; }
+  }
+}
+
+.pub-card-venue {
+  display: inline-block;
+  background: #00369f;
+  color: #fff;
+  font-size: 0.72em;
+  font-weight: 600;
+  padding: 0.15em 0.65em;
+  border-radius: 4px;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+.pub-card-venue-full {
+  font-size: 0.85em;
+  color: #555;
+  font-style: italic;
+  margin-left: 0.4em;
+}
+
+.pub-card-authors {
+  font-size: 0.88em;
+  color: #555;
+  margin: 0.35em 0;
+  line-height: 1.5;
+
+  strong {
+    color: #00369f;
+    font-weight: 600;
+  }
+}
+
+.pub-card-abstract {
+  font-size: 0.84em;
+  color: #777;
+  line-height: 1.6;
+  margin: 0.5em 0 0.7em 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pub-card-links {
+  display: flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+  margin-top: 0.6em;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: 0.78em;
+    font-weight: 600;
+    padding: 0.25em 0.75em;
+    border-radius: 5px;
+    text-decoration: none;
+    border: 1.5px solid;
+    transition: background 0.2s, color 0.2s;
+
+    &.pub-link-paper {
+      border-color: #00369f;
+      color: #00369f;
+      &:hover { background: #00369f; color: #fff; }
+    }
+    &.pub-link-code {
+      border-color: #333;
+      color: #333;
+      &:hover { background: #333; color: #fff; }
+    }
+    &.pub-link-project {
+      border-color: #0d8a5a;
+      color: #0d8a5a;
+      &:hover { background: #0d8a5a; color: #fff; }
+    }
+    &.pub-link-video {
+      border-color: #df2029;
+      color: #df2029;
+      &:hover { background: #df2029; color: #fff; }
+    }
+  }
+}
+
+/* =============================================
+   Blog Post Typography Improvements
+   ============================================= */
+
+.blog-post-content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: #333;
+  max-width: 840px; 
+  margin: 0 auto;
+  padding: 1em 0 3em 0;
+
+  p {
+    margin-bottom: 1.6em;
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #1a1a2e;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-top: 1.8em;
+    margin-bottom: 0.8em;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid #eaebed;
+    padding-bottom: 0.3em;
+    margin-top: 0;
+  }
+
+  h2 { font-size: 1.8rem; }
+  h3 { font-size: 1.4rem; }
+
+  ul, ol {
+    margin-left: 2em;
+    margin-bottom: 1.6em;
+    li {
+      margin-bottom: 0.6em;
+    }
+  }
+
+  strong {
+    color: #000;
+    font-weight: 700;
+  }
+
+  blockquote {
+    border-left: 5px solid #00369f;
+    margin: 1.5em 0;
+    color: #445;
+    font-style: italic;
+    background: #f4f7fb;
+    padding: 1.2em 1.5em;
+    border-radius: 0 8px 8px 0;
+    
+    p { margin-bottom: 0; }
+  }
+
+  a {
+    color: #00369f;
+    text-decoration: none;
+    border-bottom: 1px dotted #00369f;
+    transition: color 0.2s, border-bottom 0.2s;
+    &:hover {
+      color: #df2029;
+      border-bottom: 1px solid #df2029;
+    }
+  }
+}
+
+/* =============================================
+   News Folding Styles
+   ============================================= */
+.news-details {
+  margin-top: 15px;
+  
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #4a5568;
+    outline: none;
+    transition: color 0.2s;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.95em;
+    padding: 4px 0;
+    border-bottom: 1px dotted #cbd5e0;
+    
+    &::-webkit-details-marker {
+      display: none;
+    }
+    
+    &:hover {
+      color: #00369f;
+      border-bottom-color: #00369f;
+    }
+    
+    &::before {
+      content: '▶';
+      font-size: 0.8em;
+      margin-right: 8px;
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &[open] summary {
+    border-bottom-color: transparent;
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
+  }
+}
+
+.news-hidden {
+  margin-top: 10px;
+  padding-left: 12px;
+  border-left: 2px solid #edf2f7;
+}

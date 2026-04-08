@@ -3,17 +3,8 @@ main:
   - title: "About Me"
     url: "/#about-me"
 
-  - title: "News"
-    url: "/#-news"
-
-  - title: "Educations"
-    url: "/#-educations"
-
-  - title: "Internships"
-    url: "/#-internships"
-
-  - title: "Teaching"
-    url: "/#-teaching"
+  - title: "Publications"
+    url: "/publications/"
 
   - title: "Blogs"
     url: "/blogs/"

@@ -5,7 +5,7 @@
 <div itemscope itemtype="http://schema.org/Person" class="profile_box">
 
   <div class="author__avatar">
-    <img src="{{ author.avatar }}" class="author__avatar" alt="{{ author.name }}">
+    <img src="{{ author.avatar | prepend: '/' | replace: '//', '/' }}" class="author__avatar" alt="{{ author.name }}">
   </div>
 
   <div class="author__content">
@@ -144,6 +144,9 @@
       <li><a href="https://en.wikipedia.org/wiki/User:{{ author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w"
             aria-hidden="true"></i> Wikipedia</a></li>
       {% endif %}
+      <li style="margin-top: 1.5em; display: flex; justify-content: center;">
+        {% include visitor_map.html %}
+      </li>
     </ul>
     <div class="author__urls_sm">
       {% if author.uri %}
@@ -255,7 +258,6 @@
       <a href="https://en.wikipedia.org/wiki/User:{{ author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w"
           aria-hidden="true"></i></a>
       {% endif %}
-      {% include visitor_map.html %}
     </div>
   </div>
 </div>

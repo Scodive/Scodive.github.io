@@ -1,0 +1,71 @@
+# Publications data file
+# Add new papers here. They will automatically be grouped by year on the page.
+#
+# Fields:
+#   title:    Full paper title (required)
+#   authors:  Author list as a string. Bold your name with <strong>Your Name</strong>
+#   venue:    Conference/journal name, e.g. "ACL 2026 Findings"
+#   venue_short: Short badge label, e.g. "ACL'26"
+#   year:     Publication year (used for grouping), e.g. 2026
+#   image:    Path to teaser image, e.g. /images/papers/paper1.png
+#   paper:    URL to PDF or arxiv
+#   code:     URL to code repo (optional)
+#   project:  URL to project page (optional)
+#   abstract: One or two sentence description (optional)
+#   highlight: true/false — adds a colored highlight badge (optional)
+#   selected: true/false — whether to show on the homepage (optional)
+
+- title: "Why Agents Compromise Safety Under Pressure"
+  authors: "<strong>Hengle JIANG</strong>, Ke Tang"
+  venue: "ACL 2026 Findings"
+  venue_short: "ACL'26"
+  year: 2026
+  image: /images/papers/agentsafe.png
+  paper: "https://arxiv.org/pdf/2603.14975"
+  abstract: "Why benign agents fail without adversarial attacks? We found that LLM-based Agents exhibit normative drift under compounding task constraints in real-world applications. We provide detailed pressure taxonomy and a safety framework to mitigate such behavior."
+  highlight: true
+  selected: true
+
+- title: "MoViD: View-Invariant 3D Human Pose Estimation via Motion-View Disentanglement"
+  authors: "Yejia Liu<sup>*</sup>, <strong>Hengle JIANG<sup>*</sup></strong>, Haoxian Liu, Runxi Huang, Xiaomin Ouyang"
+  venue: "ACM/IEEE SenSys 2026 (51/271 accepted)"
+  venue_short: "SenSys'26"
+  year: 2026
+  image: /images/papers/pose.png
+  paper: "https://arxiv.org/pdf/2604.03299"
+  code: "https://github.com/HKUST-MINSys-Lab/MoViD"
+  video: "https://www.youtube.com/watch?v=L4Bx_LvPXB8"
+  abstract: "MoViD enables robust, cross-view 3D human pose estimation and real-time edge deployment by explicitly disentangling motion from view information and employing a view-aware inference strategy."
+  selected: true
+
+- title: "WearBCI Dataset: Understanding and Benchmarking Real-World Wearable Brain-Computer Interfaces Signals"
+  authors: "Haoxian Liu, <strong>Hengle JIANG</strong>, Lanxuan Hong, Xiaomin Ouyang"
+  venue: "ACM/IEEE SenSys 2026 (51/271 accepted)"
+  venue_short: "SenSys'26"
+  year: 2026
+  image: /images/papers/wearbci.png
+  paper: "https://doi.org/10.1145/3774906.3802782"
+  code: "https://github.com/HKUST-MINSys-Lab/WearBCI-Dataset"
+  abstract: "WearBCI introduces the first multimodal wearable BCI dataset featuring synchronized EEG, IMU, and egocentric video to systematically benchmark denoising methods under real-world motion artifacts and explore the potential of IMU-assisted signal enhancement."
+  selected: false
+
+- title: "Agentic Pressure: The Endogenous Entropy of Reliable Autonomy"
+  authors: "<strong>Hengle JIANG</strong>, Ziying Luo, Ke Tang"
+  venue: "ICLR 2026 Workshop on Reliable Autonomy"
+  venue_short: "ICLR'26"
+  year: 2026
+  image: /images/papers/agenticpressure.png
+  paper: "https://openreview.net/attachment?id=AwWpOI0Vpc&name=pdf"
+  abstract: "A phenomenological formulzation of Agentic Pressure, starting to study the endogenous risk of reliable agent systems."
+  selected: false
+
+- title: "FreePose: Real-Time View-Invariant 3D Human Pose Estimation via Motion-View Disentanglement"
+  authors: "Yejia Liu<sup>*</sup>, <strong>Hengle JIANG<sup>*</sup></strong>, Xiaomin Ouyang"
+  venue: "ACM MobiCom 2025 Demo"
+  venue_short: "MobiCom'25"
+  year: 2025
+  image: /images/papers/mobicom_demo.png
+  paper: "https://dl.acm.org/doi/pdf/10.1145/3680207.3765586"
+  video: "https://youtu.be/tDIpCcbaRXc"
+  abstract: "A demonstration of real-time view-invariant 3D human pose estimation running on edge devices with under 300ms latency, targeting IoT and mobile robotics applications."
+  selected: false
