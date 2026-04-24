@@ -35,9 +35,9 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 <ul>
 {% for item in site.data.news limit:6 %}
   <li style="margin-bottom: 0.5em;">
-    <em>{{ item.date }}</em>: {{ item.content }}
+    <em>{{ item.date }}</em> {{ item.content }}
     {% if item.papers %}
-    <ul style="list-style-type: circle; padding-left: 7.9em; margin-left: 0em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
+    <ul style="list-style-type: circle; padding-left: 8.0em; margin-left: 0em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
       {% for paper in item.papers %}
       <li>{{ paper }}</li>
       {% endfor %}
@@ -56,7 +56,7 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
     <li style="margin-bottom: 0.5em;">
       <em>{{ item.date }}</em>: {{ item.content }}
       {% if item.papers %}
-      <ul style="list-style-type: circle; padding-left: 1.5em; margin-left: 3.7em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
+      <ul style="list-style-type: circle; padding-left: 2.2em; margin-left: 3.6em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
         {% for paper in item.papers %}
         <li>{{ paper }}</li>
         {% endfor %}

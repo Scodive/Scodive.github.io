@@ -10,10 +10,13 @@ html {
 body {
   margin: 0;
   padding: 0;
-  padding-bottom: 0em;
+  padding-bottom: 5em;
   color: $text-color;
   font-family: $global-font-family;
-  line-height: 1.5;
+  line-height: 1.75;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   &.overflow--hidden {
     /* when primary navigation is visible, the content in the background won't scroll */
@@ -59,7 +62,7 @@ small, .small {
 }
 
 p {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.85em;
 }
 
 u,

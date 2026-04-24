@@ -1,6 +1,8 @@
 ---
 ---
 
+@charset "UTF-8";
+
 /*
  *    Minimal Mistakes Jekyll Theme
  *
@@ -498,7 +500,7 @@ h1:before, .anchor:before {
     }
     
     &::before {
-      content: '▶';
+      content: '\25B6';
       font-size: 0.8em;
       margin-right: 8px;
       display: inline-block;
