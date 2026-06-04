@@ -239,8 +239,7 @@ h1:before, .anchor:before {
 .pub-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1.2em;
+  align-items: stretch;
   background: #fff;
   border: 1px solid #e8e8e8;
   border-radius: 12px;
@@ -253,11 +252,6 @@ h1:before, .anchor:before {
     box-shadow: 0 8px 24px rgba(0, 54, 159, 0.10);
     transform: translateY(-2px);
     border-color: #c8d8f8;
-  }
-
-  @include breakpoint($medium) {
-    flex-direction: row;
-    gap: 1.5em;
   }
 }
 

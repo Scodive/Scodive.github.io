@@ -81,20 +81,21 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
 <div class="pub-year-group">
   {% for pub in selected_pubs %}
   <div class="pub-card">
-    <div class="pub-card-image">
-      {% if pub.image %}
-        <img src="{{ pub.image }}" alt="{{ pub.title }}">
-      {% else %}
-        <span class="pub-no-image">📄</span>
-      {% endif %}
-    </div>
     <div class="pub-card-body">
-      <div class="pub-card-title">
-        {% if pub.paper and pub.paper != "#" %}
-          <a href="{{ pub.paper }}" target="_blank">{{ pub.title }}</a>
-        {% else %}
-          {{ pub.title }}
-        {% endif %}
+      <div class="pub-title-row" style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.8em; margin-bottom: 0.35em;">
+        <div class="pub-card-title" style="margin-bottom: 0;">
+          {% if pub.paper and pub.paper != "#" %}
+            <a href="{{ pub.paper }}" target="_blank">{{ pub.title }}</a>
+          {% else %}
+            {{ pub.title }}
+          {% endif %}
+        </div>
+        <div class="pub-card-links" style="margin-top: 0; display: inline-flex; gap: 0.5em; flex-wrap: wrap; align-items: center;">
+          {% if pub.paper %}<a href="{{ pub.paper }}" class="pub-link-paper" target="_blank"><i class="fas fa-file-pdf"></i> Paper</a>{% endif %}
+          {% if pub.code %}<a href="{{ pub.code }}" class="pub-link-code" target="_blank"><i class="fab fa-github"></i> Code</a>{% endif %}
+          {% if pub.project %}<a href="{{ pub.project }}" class="pub-link-project" target="_blank"><i class="fas fa-globe"></i> Project</a>{% endif %}
+          {% if pub.video %}<a href="{{ pub.video }}" class="pub-link-video" target="_blank"><i class="fab fa-youtube"></i> Video</a>{% endif %}
+        </div>
       </div>
       <div>
         <span class="pub-card-venue">{{ pub.venue_short }}</span>
@@ -104,12 +105,6 @@ My research focuses on building Safe, Robust, and Reliable autonomy systems that
       {% if pub.abstract %}
       <div class="pub-card-abstract">{{ pub.abstract }}</div>
       {% endif %}
-      <div class="pub-card-links">
-        {% if pub.paper %}<a href="{{ pub.paper }}" class="pub-link-paper" target="_blank"><i class="fas fa-file-pdf"></i> Paper</a>{% endif %}
-        {% if pub.code %}<a href="{{ pub.code }}" class="pub-link-code" target="_blank"><i class="fab fa-github"></i> Code</a>{% endif %}
-        {% if pub.project %}<a href="{{ pub.project }}" class="pub-link-project" target="_blank"><i class="fas fa-globe"></i> Project</a>{% endif %}
-        {% if pub.video %}<a href="{{ pub.video }}" class="pub-link-video" target="_blank"><i class="fab fa-youtube"></i> Video</a>{% endif %}
-      </div>
     </div>
   </div>
   {% endfor %}
