@@ -17,16 +17,16 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html) (IEEE Fellow). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and Dr. Dachuan Li. I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Prof. Xiaomin Ouyang](https://xmouyang.github.io). 
+Hi, I am Hengle Jiang. I am a PhD student at Department of Computer Science and Engineering, Southern University of Science and Technology, supervised by [Prof. Ke Tang](https://www.sustech.edu.cn/en/faculties/tangke.html) (IEEE Fellow). I obtained my B.Eng. degree from the same department, where I was fortunate to be mentored by [Prof. Qi Hao](https://cse.sustech.edu.cn/faculty/~haoq/) and [Prof. Dachuan Li](https://scholar.google.com/citations?user=sCANNvMAAAAJ&hl=en). I am also a research intern at [MINSys Group](https://xmouyang.github.io/Team/) @ HKUST CSE, supervised by [Prof. Xiaomin Ouyang](https://xmouyang.github.io).
 
-I'm always open to collaboration! If you have any research idea or want to work together in any project, feel free to reach out — I’d love to connect (jianghl2025@mail.sustech.edu.cn, hjiangbg@connect.ust.hk).
+I am always open to research collaborations. Feel free to reach out via [email](mailto:jianghl2025@mail.sustech.edu.cn) or view my work on [Google Scholar](https://scholar.google.com/citations?user=VhsLK-gAAAAJ&hl=zh-TW).
 
-# Research Interest
+# Research Interests
 My research focuses on building **Safe, Robust, and Reliable autonomy systems** that can operate effectively in complex, real-world environments. 
 
-* **Agent Safety**: We investigate the **endogenous safety** of LLM-based autonomous agents under non-adversarial settings (i.e., safety risks and normative drift emerging from benign constraints). To bridge the gap between static benchmarks and dynamic real-world environments, we introduce the concept of **Agentic Pressure**. 
+* **Agent Safety**: We investigate a new type of safety for LLM-based autonomous agents under non-adversarial settings. We introduce the concept of Agentic Pressure [[ICLR'26](https://arxiv.org/pdf/2609.05995), [ACL'26](https://arxiv.org/pdf/2603.14975)] and find that agents sacrifice safety constraints to achieve task goals when placed under realistic operational pressure without any adversarial inputs. This work helps to bridge the gap between static benchmarks and dynamic real-world environments.
 
-* **Agent Evaluation**: We develop **fine-grained, diagnostic assessment frameworks** to better understand and quantify agent capabilities.
+* **Agent Evaluation**: We develop fine-grained, diagnostic assessment frameworks to better understand and quantify agent capabilities. MOAE is a self-evolving method that jointly optimizes agents for multiple objectives.
 
 
 
@@ -40,7 +40,8 @@ My research focuses on building **Safe, Robust, and Reliable autonomy systems** 
     {% if item.papers %}
     <ul style="list-style-type: circle; padding-left: 8.0em; margin-left: 0em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
       {% for paper in item.papers %}
-      <li>{{ paper }}</li>
+      {% assign linked_pub = site.data.publications | where: "title", paper | first %}
+      <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -59,7 +60,8 @@ My research focuses on building **Safe, Robust, and Reliable autonomy systems** 
       {% if item.papers %}
       <ul style="list-style-type: circle; padding-left: 2.2em; margin-left: 3.6em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
         {% for paper in item.papers %}
-        <li>{{ paper }}</li>
+        {% assign linked_pub = site.data.publications | where: "title", paper | first %}
+        <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
         {% endfor %}
       </ul>
       {% endif %}

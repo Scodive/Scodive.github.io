@@ -1,3 +1,7 @@
+- date: "2026.09"
+  content: "&nbsp;🎉🎉 Our new paper is released on arXiv."
+  papers:
+    - "MOAE: Multi-Objective Agent Evolution with Pareto-Preserving Search"
 - date: "2026.04"
   content: "&nbsp;🎉🎉 One paper is accepted by ACL 2026 Findings."
   papers:
@@ -19,7 +23,3 @@
     - "FreePose: Real-Time View-Invariant 3D Human Pose Estimation via Motion-View Disentanglement"
 - date: "2025.06"
   content: "&nbsp;🏆🏆 I was awarded the Best Undergraduate Thesis Prize from SUSTech."
-- date: "2024.12"
-  content: "&nbsp;🎉🎉 Placeholder for an older achievement."
-- date: "2024.08"
-  content: "&nbsp;🎉🎉 Placeholder for another older achievement."

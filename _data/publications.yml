@@ -15,6 +15,15 @@
 #   highlight: true/false — adds a colored highlight badge (optional)
 #   selected: true/false — whether to show on the homepage (optional)
 
+- title: "MOAE: Multi-Objective Agent Evolution with Pareto-Preserving Search"
+  authors: "<strong>Hengle JIANG</strong>, Qijun Cai, Ziying Luo, Ke Tang"
+  venue: "arXiv Preprint"
+  venue_short: "arXiv"
+  year: 2026
+  paper: "https://arxiv.org/pdf/2609.05992"
+  abstract: "MOAE formulates agent refinement as a Pareto-preserving evolutionary search over complete rollouts, jointly optimizing multiple objectives, including task performance, trajectory quality, and safety, without collapsing them into a fixed scalar objective."
+  selected: true
+
 - title: "Why Agents Compromise Safety Under Pressure"
   authors: "<strong>Hengle JIANG</strong>, Ke Tang"
   venue: "ACL 2026 Findings"
@@ -55,7 +64,7 @@
   venue_short: "ICLR'26"
   year: 2026
   image: /images/papers/agenticpressure.png
-  paper: "https://openreview.net/attachment?id=AwWpOI0Vpc&name=pdf"
+  paper: "https://arxiv.org/pdf/2609.05995"
   abstract: "A phenomenological formulzation of Agentic Pressure, starting to study the endogenous risk of reliable agent systems."
   selected: false
 
