@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="737.345625pt" height="372.129687pt" viewBox="0 0 737.345625 372.129687" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-08T11:21:45.525194</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 372.129687 
+L 737.345625 372.129687 
+L 737.345625 0 
+L 0 0 
+z
+" style="fill: #fafbfd"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 64.46375 293.1865 
+L 705.7725 293.1865 
+L 705.7725 51.264 
+L 64.46375 51.264 
+z
+" style="fill: #fafbfd"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m04c581d19b" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m04c581d19b" x="64.46375" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="64.46375" y="309.9065" transform="rotate(-0 64.46375 309.9065)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m04c581d19b" x="192.7255" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="192.7255" y="309.9065" transform="rotate(-0 192.7255 309.9065)">100</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m04c581d19b" x="320.98725" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="320.98725" y="309.9065" transform="rotate(-0 320.98725 309.9065)">200</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m04c581d19b" x="449.249" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="449.249" y="309.9065" transform="rotate(-0 449.249 309.9065)">300</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m04c581d19b" x="577.51075" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="577.51075" y="309.9065" transform="rotate(-0 577.51075 309.9065)">400</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m04c581d19b" x="705.7725" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="705.7725" y="309.9065" transform="rotate(-0 705.7725 309.9065)">500</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle; fill: #384860" x="385.118125" y="325.222125" transform="rotate(-0 385.118125 325.222125)">独立测试次数 n</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <defs>
+       <path id="m42f26134f5" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="293.1865" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="298.0465" transform="rotate(-0 57.46375 298.0465)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="244.802" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="249.662" transform="rotate(-0 57.46375 249.662)">20</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="196.4175" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="201.2775" transform="rotate(-0 57.46375 201.2775)">40</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="148.033" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="152.893" transform="rotate(-0 57.46375 152.893)">60</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="99.6485" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="104.5085" transform="rotate(-0 57.46375 104.5085)">80</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m42f26134f5" x="64.46375" y="51.264" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="57.46375" y="56.124" transform="rotate(-0 57.46375 56.124)">100</text>
+     </g>
+    </g>
+    <g id="text_14">
+     <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle; fill: #384860" x="31.921875" y="172.22525" transform="rotate(-90 31.921875 172.22525)">未观察到任何失败的概率（%）</text>
+    </g>
+   </g>
+   <g id="line2d_13">
+    <path d="M 65.746368 53.683225 
+L 70.876838 63.12061 
+L 77.289925 74.396127 
+L 83.703012 85.119033 
+L 90.1161 95.316409 
+L 96.529188 105.014012 
+L 102.942275 114.236336 
+L 109.355363 123.006675 
+L 115.76845 131.34718 
+L 122.181538 139.278917 
+L 128.594625 146.82192 
+L 135.007712 153.99524 
+L 141.4208 160.816997 
+L 147.833888 167.30442 
+L 154.246975 173.473894 
+L 160.660062 179.341003 
+L 167.07315 184.920565 
+L 173.486238 190.226673 
+L 179.899325 195.272729 
+L 186.312412 200.071478 
+L 192.7255 204.635041 
+L 200.421205 209.817059 
+L 208.11691 214.695826 
+L 215.812615 219.289089 
+L 223.50832 223.613554 
+L 231.204025 227.684953 
+L 238.89973 231.518093 
+L 246.595435 235.126919 
+L 255.573757 239.071177 
+L 264.55208 242.747482 
+L 273.530403 246.17404 
+L 282.508725 249.367815 
+L 291.487048 252.344622 
+L 301.747988 255.499874 
+L 312.008928 258.411365 
+L 322.269867 261.097929 
+L 333.813425 263.873037 
+L 345.356983 266.408146 
+L 356.90054 268.724012 
+L 369.726715 271.063064 
+L 382.55289 273.178461 
+L 396.661682 275.272537 
+L 410.770475 277.147444 
+L 426.161885 278.969723 
+L 442.835913 280.71098 
+L 460.792557 282.348444 
+L 480.03182 283.865139 
+L 500.5537 285.249755 
+L 522.358197 286.496275 
+L 546.72793 287.659246 
+L 573.662897 288.710928 
+L 603.1631 289.634622 
+L 636.511155 290.451401 
+L 674.98968 291.163346 
+L 705.7725 291.596952 
+L 705.7725 291.596952 
+" clip-path="url(#p9382fb893d)" style="fill: none; stroke: #235a93; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 64.46375 281.090375 
+L 705.7725 281.090375 
+" clip-path="url(#p9382fb893d)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #b8c4d2; stroke-width: 1.5"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 64.46375 293.1865 
+L 64.46375 51.264 
+" style="fill: none; stroke: #cad2dc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 64.46375 293.1865 
+L 705.7725 293.1865 
+" style="fill: none; stroke: #cad2dc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="mc7f520ad46" d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" style="stroke: #ba672f"/>
+    </defs>
+    <g clip-path="url(#p9382fb893d)">
+     <use xlink:href="#mc7f520ad46" x="90.1161" y="95.316409" style="fill: #ba672f; stroke: #ba672f"/>
+    </g>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="115.76845" y="83.220284" transform="rotate(-0 115.76845 83.220284)">20 题：81.8%</text>
+   </g>
+   <g id="PathCollection_2">
+    <g clip-path="url(#p9382fb893d)">
+     <use xlink:href="#mc7f520ad46" x="192.7255" y="204.635041" style="fill: #ba672f; stroke: #ba672f"/>
+    </g>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="218.37785" y="192.538916" transform="rotate(-0 218.37785 192.538916)">100 题：36.6%</text>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#p9382fb893d)">
+     <use xlink:href="#mc7f520ad46" x="447.966383" y="281.202565" style="fill: #ba672f; stroke: #ba672f"/>
+    </g>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="473.618733" y="269.10644" transform="rotate(-0 473.618733 269.10644)">299 题：5.0%</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 14.4px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="64.46375" y="33.264" transform="rotate(-0 64.46375 33.264)">均值误差小不保证检出罕见失败</text>
+   </g>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 10px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="23.1225" y="349.2" transform="rotate(-0 23.1225 349.2)">解析例子 · 独立、同分布、失败概率 1% · P(零失败) = 0.99ⁿ</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9382fb893d">
+   <rect x="64.46375" y="51.264" width="641.30875" height="241.9225"/>
+  </clipPath>
+ </defs>
+</svg>

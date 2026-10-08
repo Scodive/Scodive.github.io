@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="814.303125pt" height="342.465687pt" viewBox="0 0 814.303125 342.465687" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-08T11:21:45.082252</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 342.465687 
+L 814.303125 342.465687 
+L 814.303125 0 
+L 0 0 
+z
+" style="fill: #fafbfd"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 189.25 263.779 
+L 782.73 263.779 
+L 782.73 51.264 
+L 189.25 51.264 
+z
+" style="fill: #fafbfd"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 189.25 60.923773 
+L 653.35136 60.923773 
+L 653.35136 98.316441 
+L 189.25 98.316441 
+z
+" clip-path="url(#p33a6b53369)" style="fill: #235a93"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 189.25 138.825166 
+L 506.16832 138.825166 
+L 506.16832 176.217834 
+L 189.25 176.217834 
+z
+" clip-path="url(#p33a6b53369)" style="fill: #235a93"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 189.25 216.726559 
+L 284.2068 216.726559 
+L 284.2068 254.119227 
+L 189.25 254.119227 
+z
+" clip-path="url(#p33a6b53369)" style="fill: #ba672f"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m3600b69c3c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m3600b69c3c" x="189.25" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="189.25" y="280.499" transform="rotate(-0 189.25 280.499)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m3600b69c3c" x="307.946" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="307.946" y="280.499" transform="rotate(-0 307.946 280.499)">20</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m3600b69c3c" x="426.642" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="426.642" y="280.499" transform="rotate(-0 426.642 280.499)">40</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m3600b69c3c" x="545.338" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="545.338" y="280.499" transform="rotate(-0 545.338 280.499)">60</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m3600b69c3c" x="664.034" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="664.034" y="280.499" transform="rotate(-0 664.034 280.499)">80</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m3600b69c3c" x="782.73" y="263.779" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle" x="782.73" y="280.499" transform="rotate(-0 782.73 280.499)">100</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: middle; fill: #384860" x="485.99" y="296.512125" transform="rotate(-0 485.99 296.512125)">受审查论文中的占比（%）</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <defs>
+       <path id="m2545436fa2" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m2545436fa2" x="189.25" y="79.620107" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="182.25" y="84.480107" transform="rotate(-0 182.25 84.480107)">定义所测对象</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m2545436fa2" x="189.25" y="157.5215" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="182.25" y="162.3815" transform="rotate(-0 182.25 162.3815)">提供构念效度论据</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m2545436fa2" x="189.25" y="235.422893" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 12px; font-family: 'Heiti TC'; text-anchor: end" x="182.25" y="240.282893" transform="rotate(-0 182.25 240.282893)">使用不确定性估计或统计检验</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_6">
+    <path d="M 189.25 263.779 
+L 189.25 51.264 
+" style="fill: none; stroke: #cad2dc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 189.25 263.779 
+L 782.73 263.779 
+" style="fill: none; stroke: #cad2dc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="662.25356" y="83.682295" transform="rotate(-0 662.25356 83.682295)">78.2%</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="515.07052" y="161.583687" transform="rotate(-0 515.07052 161.583687)">53.4%</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="293.109" y="239.48508" transform="rotate(-0 293.109 239.48508)">16.0%</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 14.4px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="189.25" y="33.264" transform="rotate(-0 189.25 33.264)">从定义到测量依据</text>
+   </g>
+  </g>
+  <g id="text_15">
+   <text style="font-size: 10px; font-family: 'Heiti TC'; text-anchor: start; fill: #182d46" x="21.6" y="319.536" transform="rotate(-0 21.6 319.536)">Bean 等，2025 · 445 篇论文 · 29 位专家 · 报告类别可重叠</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p33a6b53369">
+   <rect x="189.25" y="51.264" width="593.48" height="212.515"/>
+  </clipPath>
+ </defs>
+</svg>

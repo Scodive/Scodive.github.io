@@ -1,0 +1,62 @@
+{
+  "checked_on": "2026-10-08",
+  "ahe": {
+    "source": "https://arxiv.org/html/2604.25850v3",
+    "location": "Section 4.3, Figure 3",
+    "benchmark": "Terminal-Bench 2",
+    "tasks": 89,
+    "source_model": "GPT-5.4 high",
+    "target_re_evolution": false,
+    "models": [
+      "deepseek-v4-flash",
+      "qwen-3.6-plus",
+      "gemini-3.1-flash-lite-preview"
+    ],
+    "seed_pass1_percent": [
+      51.7,
+      56.2,
+      36.5
+    ],
+    "evolved_pass1_percent": [
+      61.8,
+      62.5,
+      41.6
+    ]
+  },
+  "crossed_matrix": {
+    "status": "hypothetical, not empirical",
+    "rows": [
+      "A",
+      "B"
+    ],
+    "columns": [
+      "H_A",
+      "H_B"
+    ],
+    "success_percent": [
+      [
+        70,
+        60
+      ],
+      [
+        50,
+        75
+      ]
+    ],
+    "replacement_pp": -20,
+    "adaptation_pp": 25,
+    "interaction_pp": 35
+  },
+  "cost_example": {
+    "status": "illustrative normalized units, not provider prices",
+    "strong_route": 8,
+    "cheap_route": 1,
+    "verification": 0.2,
+    "formula": "1.2 + 8*f",
+    "fallback_break_even": 0.85
+  },
+  "conceptual_figures": [
+    "loop",
+    "architecture"
+  ]
+}

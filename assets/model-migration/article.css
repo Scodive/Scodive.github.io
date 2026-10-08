@@ -1,0 +1,46 @@
+#migration-essay { --bm-ink:#182d46; --bm-muted:#58687b; --bm-blue:#235a93; --bm-line:#dce3ea; color:#29394c; }
+#migration-essay .bm-kicker { font-size:.72em; letter-spacing:.14em; text-transform:uppercase; color:var(--bm-blue); margin-bottom:.8rem; font-weight:700; }
+#migration-essay h1 { font-size:clamp(1.8rem,3.4vw,2.8rem); line-height:1.35; border:0; margin-bottom:.65rem; padding-bottom:0; }
+#migration-essay .bm-deck { font-size:1.12em; line-height:1.7; color:var(--bm-muted); margin-bottom:1rem; }
+#migration-essay .bm-meta { font-size:.74em; color:var(--bm-muted); padding-bottom:1.3rem; border-bottom:1px solid var(--bm-line); margin-bottom:2rem; }
+#migration-essay h2 { font-size:1.62rem; line-height:1.5; margin-top:3.4rem; padding-top:1.2rem; border-top:1px solid var(--bm-line); scroll-margin-top:5rem; }
+#migration-essay h3 { font-size:1.2rem; line-height:1.5; margin-top:2rem; }
+#migration-essay p { margin-bottom:1.2em; }
+#migration-essay .bm-lead { font-size:1.05em; }
+#migration-essay .bm-thesis { border-left:3px solid var(--bm-blue); padding:1rem 1.3rem; margin:1.5rem 0 2rem; background:#f4f7fa; font-size:1.05em; font-weight:600; }
+#migration-essay .bm-thesis p:last-child { margin-bottom:0; }
+#migration-essay .bm-toc { border-top:1px solid var(--bm-line); border-bottom:1px solid var(--bm-line); padding:1rem 0; margin:2rem 0; font-size:.85em; }
+#migration-essay .bm-toc ol { columns:2; column-gap:2rem; margin:.8rem 0 0 1.5rem; }
+#migration-essay .bm-toc li { break-inside:avoid; margin-bottom:.35rem; }
+#migration-essay figure { display:block; margin:2rem 0; }
+#migration-essay figure img { display:block; width:100%; height:auto; border:1px solid #e8edf2; border-radius:2px; }
+#migration-essay figcaption { display:block; font-size:.75em; line-height:1.75; color:var(--bm-muted); margin-top:.7rem; text-align:left; }
+#migration-essay figcaption strong { color:var(--bm-ink); }
+#migration-essay .bm-table { overflow-x:auto; margin:1.8rem 0; border-top:2px solid var(--bm-ink); -webkit-overflow-scrolling:touch; }
+#migration-essay table { width:100%; display:table; margin:0 0 .5rem; font-size:.79em; border-collapse:collapse; table-layout:fixed; line-height:1.7; }
+#migration-essay .bm-table-wide table { min-width:700px; }
+#migration-essay caption { text-align:left; font-size:1.06em; font-weight:700; color:var(--bm-ink); padding:.7rem .5rem; }
+#migration-essay th { background:#eef3f8; text-align:left; color:var(--bm-ink); font-weight:700; }
+#migration-essay th, #migration-essay td { padding:.7rem .55rem; vertical-align:top; border-bottom:1px solid var(--bm-line); overflow-wrap:anywhere; }
+#migration-essay .bm-note { font-size:.8em; line-height:1.8; color:var(--bm-muted); }
+#migration-essay .bm-equation { overflow-x:auto; padding:1rem 1.2rem; background:#f5f7fa; font-family:Georgia,'Times New Roman',serif; font-size:.94em; line-height:1.8; white-space:nowrap; }
+#migration-essay .bm-example { border-left:3px solid #ba672f; padding:.25rem 0 .25rem 1.2rem; margin:1.5rem 0; }
+#migration-essay .bm-example p:last-child { margin-bottom:0; }
+#migration-essay .bm-references { font-size:.78em; line-height:1.75; }
+#migration-essay .bm-references li { margin-bottom:.9rem; scroll-margin-top:5rem; }
+#migration-essay details { border-top:1px solid var(--bm-line); border-bottom:1px solid var(--bm-line); padding:1rem 0; margin:1.5rem 0; }
+#migration-essay summary { cursor:pointer; color:var(--bm-blue); font-weight:600; }
+#migration-essay details[open] summary { margin-bottom:1rem; }
+@media(max-width:640px) {
+ #migration-essay { font-size:1rem; line-height:1.85; }
+ #migration-essay .bm-toc ol { columns:1; }
+ #migration-essay h2 { font-size:1.35rem; margin-top:2.5rem; }
+ #migration-essay figcaption { font-size:.8em; }
+ #migration-essay table { font-size:.83em; }
+}
+#migration-essay .bm-language { display:flex; gap:.35rem; justify-content:flex-end; margin:0 0 1.5rem; }
+#migration-essay .bm-language button { margin:0; padding:.45rem .9rem; font:inherit; font-size:.8em; border:1px solid var(--bm-line); border-radius:3px; background:transparent; color:var(--bm-blue); cursor:pointer; }
+#migration-essay .bm-language button[aria-pressed="true"] { background:var(--bm-ink); color:#fff; border-color:var(--bm-ink); }
+#migration-essay .bm-language button:focus-visible { outline:3px solid #7399c3; outline-offset:3px; }
+#migration-essay [hidden] { display:none !important; }
+#migration-essay [lang="en"] { line-height:1.8; }

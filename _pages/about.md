@@ -41,7 +41,8 @@ My research focuses on building **Safe, Robust, and Reliable autonomy systems** 
     <ul style="list-style-type: circle; padding-left: 8.0em; margin-left: 0em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
       {% for paper in item.papers %}
       {% assign linked_pub = site.data.publications | where: "title", paper | first %}
-      <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
+      {% assign linked_post = site.posts | where: "title", paper | first %}
+      <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% elsif linked_post %}<a href="{{ linked_post.url | relative_url }}">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -61,7 +62,8 @@ My research focuses on building **Safe, Robust, and Reliable autonomy systems** 
       <ul style="list-style-type: circle; padding-left: 2.2em; margin-left: 3.6em; margin-bottom: 0; margin-top: 0.2em; font-size: 0.95em; color: #00369f;">
         {% for paper in item.papers %}
         {% assign linked_pub = site.data.publications | where: "title", paper | first %}
-        <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
+      {% assign linked_post = site.posts | where: "title", paper | first %}
+        <li>{% if linked_pub.paper %}<a href="{{ linked_pub.paper }}" target="_blank" rel="noopener">{{ paper }}</a>{% elsif linked_post %}<a href="{{ linked_post.url | relative_url }}">{{ paper }}</a>{% else %}{{ paper }}{% endif %}</li>
         {% endfor %}
       </ul>
       {% endif %}

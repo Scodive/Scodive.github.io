@@ -1,0 +1,79 @@
+[
+  [
+    "Chen, Zaharia, and Zou",
+    "How is ChatGPT’s behavior changing over time?",
+    "https://arxiv.org/abs/2307.09009",
+    "2023 preprint; historical version comparison.",
+    "2023 预印本；历史版本比较。"
+  ],
+  [
+    "Sclar et al.",
+    "Quantifying Language Models’ Sensitivity to Spurious Features in Prompt Design",
+    "https://arxiv.org/abs/2310.11324",
+    "ICLR 2024.",
+    "ICLR 2024。"
+  ],
+  [
+    "Yang et al.",
+    "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+    "https://arxiv.org/html/2405.15793v3",
+    "NeurIPS 2024; v3, interface analysis.",
+    "NeurIPS 2024；v3，接口分析。"
+  ],
+  [
+    "Lin et al.",
+    "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+    "https://arxiv.org/html/2604.25850v3",
+    "2026 preprint, v3; Section 4.3 and Figure 3.",
+    "2026 预印本 v3；第 4.3 节与图 3。"
+  ],
+  [
+    "Qian et al.",
+    "AI4AI at Test-Time: Strong-to-Weak Capability Transfer via Harnesses",
+    "https://arxiv.org/html/2608.12307v1",
+    "2026 preprint, v1; Section 5.6.",
+    "2026 预印本 v1；第 5.6 节。"
+  ],
+  [
+    "Anthropic",
+    "Quantifying infrastructure noise in agentic coding evals",
+    "https://www.anthropic.com/engineering/infrastructure-noise",
+    "Engineering report, February 2026.",
+    "工程报告，2026 年 2 月。"
+  ],
+  [
+    "Anthropic",
+    "Scaling Managed Agents: Decoupling the brain from the hands",
+    "https://www.anthropic.com/engineering/managed-agents",
+    "Engineering report, April 2026.",
+    "工程报告，2026 年 4 月。"
+  ],
+  [
+    "Khattab et al.",
+    "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+    "https://arxiv.org/abs/2310.03714",
+    "ICLR 2024.",
+    "ICLR 2024。"
+  ],
+  [
+    "Opsahl-Ong et al.",
+    "Optimizing Instructions and Demonstrations for Multi-Stage Language Model Programs",
+    "https://arxiv.org/abs/2406.11695",
+    "EMNLP 2024; MIPRO.",
+    "EMNLP 2024；MIPRO。"
+  ],
+  [
+    "Xia et al.",
+    "Agentless: Demystifying LLM-based Software Engineering Agents",
+    "https://arxiv.org/abs/2407.01489",
+    "2024 manuscript, v2; three-stage baseline.",
+    "2024 稿件 v2；三阶段基线。"
+  ],
+  [
+    "Yao et al.",
+    "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+    "https://arxiv.org/abs/2406.12045",
+    "2024 benchmark paper; repeated-run reliability.",
+    "2024 benchmark 论文；重复运行可靠性。"
+  ]
+]

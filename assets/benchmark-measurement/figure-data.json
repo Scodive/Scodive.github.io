@@ -1,0 +1,64 @@
+{
+  "checked_on": "2026-10-08",
+  "validity_audit": {
+    "n_articles": 445,
+    "expert_reviewers": 29,
+    "defined_phenomenon_pct": 78.2,
+    "validity_evidence_pct": 53.4,
+    "uncertainty_or_statistical_tests_pct": 16.0,
+    "source": "https://arxiv.org/html/2511.04703v1"
+  },
+  "swe_audit": {
+    "selected_n": 138,
+    "full_n": 500,
+    "material_issues_pct": 59.4,
+    "narrow_tests_pct": 35.5,
+    "wide_tests_pct": 18.8,
+    "other_pct": 5.1,
+    "source": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/"
+  },
+  "osworld": {
+    "version": "2.0",
+    "model": "Claude Opus 4.8",
+    "configuration": "maximum thinking, batched tool calls, 500 steps",
+    "binary_completion_pct": 20.6,
+    "partial_score_pct": 54.8,
+    "source": "https://osworld-v2.xlang.ai/"
+  },
+  "analytic_examples": {
+    "not_empirical": true,
+    "rare_failure_rate": 0.01,
+    "zero_failures_probability": {
+      "20": 0.8179069375972308,
+      "50": 0.6050060671375364,
+      "100": 0.3660323412732292,
+      "299": 0.04953625663766235
+    },
+    "minimum_n_for_95pct_detection": 299
+  },
+  "construction_weights": {
+    "type": "analytic_toy_example",
+    "routine": {
+      "n": 5,
+      "a_correct": 5,
+      "b_correct": 0
+    },
+    "hard": {
+      "n": 5,
+      "a_correct": 1,
+      "b_correct": 5
+    },
+    "hard_family_crossover": 0.5555555555555556,
+    "duplicated_hard_records": {
+      "a": 0.4666666666666667,
+      "b": 0.6666666666666666
+    }
+  },
+  "active_figures": {
+    "1": "weights",
+    "2": "validity",
+    "3": "scoring",
+    "4": "information",
+    "5": "rare"
+  }
+}
