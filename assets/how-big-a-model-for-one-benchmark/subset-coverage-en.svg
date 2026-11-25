@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="title-sub-en desc-sub-en">
+  <title id="title-sub-en">What does semantic coverage gain at a 25% training budget?</title>
+  <desc id="desc-sub-en">Full-test accuracy difference in percentage points between greedy k-center semantic coverage and random sampling across three seeds at 25% training budget: Banking77 averages +0.74 pp, CLINC150 averages +1.68 pp with high variance, and GSM8K averages -0.71 pp.</desc>
+  <rect width="960" height="440" fill="#fafbfd"/>
+  <g font-family="Lato, -apple-system, BlinkMacSystemFont, sans-serif">
+    <!-- Header -->
+    <text x="48" y="46" font-size="22" font-weight="700" fill="#14263d">What does semantic coverage gain at a 25% training budget?</text>
+    <text x="48" y="74" font-size="15" fill="#526478">Semantic coverage minus random sampling on the full test set (percentage points across 3 subset seeds)</text>
+
+    <!-- Legend -->
+    <g transform="translate(48, 102)" font-size="13.5" fill="#526478">
+      <circle cx="8" cy="0" r="6" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+      <text x="22" y="4.5">Individual seed</text>
+      <polygon points="154,-7 161,0 154,7 147,0" fill="#14263d"/>
+      <text x="169" y="4.5" font-weight="600" fill="#14263d">Three-seed mean</text>
+    </g>
+
+    <!-- Column header -->
+    <text x="896" y="106" font-size="13.5" font-weight="700" fill="#526478" text-anchor="end">Mean</text>
+
+    <!-- Plot Background -->
+    <rect x="190" y="125" width="595" height="230" fill="#ffffff"/>
+
+    <!-- Vertical Gridlines (x = 190 + (pp + 2.5) * 85) -->
+    <g stroke="#eef2f6" stroke-width="1">
+      <line x1="232.5" y1="125" x2="232.5" y2="355"/>
+      <line x1="317.5" y1="125" x2="317.5" y2="355"/>
+      <line x1="487.5" y1="125" x2="487.5" y2="355"/>
+      <line x1="572.5" y1="125" x2="572.5" y2="355"/>
+      <line x1="657.5" y1="125" x2="657.5" y2="355"/>
+      <line x1="742.5" y1="125" x2="742.5" y2="355"/>
+    </g>
+    <!-- Zero Line -->
+    <line x1="402.5" y1="125" x2="402.5" y2="355" stroke="#7c8ea4" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+    <!-- Row dividers -->
+    <line x1="190" y1="201" x2="785" y2="201" stroke="#f0f4f8" stroke-width="1"/>
+    <line x1="190" y1="278" x2="785" y2="278" stroke="#f0f4f8" stroke-width="1"/>
+
+    <!-- Row 1: Banking77 (y = 163) -->
+    <text x="170" y="168" font-size="15.5" font-weight="700" fill="#14263d" text-anchor="end">Banking77</text>
+    <line x1="446.7" y1="163" x2="479.8" y2="163" stroke="#b9cadb" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="446.7" cy="158" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <circle cx="468.7" cy="168" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <circle cx="479.8" cy="159" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <polygon points="465.1,155 473.1,163 465.1,171 457.1,163" fill="#14263d"/>
+    <text x="896" y="168" font-size="16" font-weight="700" fill="#1e538a" text-anchor="end">+0.74 pp</text>
+
+    <!-- Row 2: CLINC150 (y = 240) -->
+    <text x="170" y="245" font-size="15.5" font-weight="700" fill="#14263d" text-anchor="end">CLINC150</text>
+    <line x1="218.6" y1="240" x2="750.2" y2="240" stroke="#b9cadb" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="218.6" cy="240" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <circle cx="666.8" cy="240" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <circle cx="750.2" cy="240" r="5.5" fill="#ffffff" stroke="#1e538a" stroke-width="2.2"/>
+    <polygon points="545.2,232 553.2,240 545.2,248 537.2,240" fill="#14263d"/>
+    <text x="896" y="245" font-size="16" font-weight="700" fill="#1e538a" text-anchor="end">+1.68 pp</text>
+
+    <!-- Row 3: GSM8K (y = 317) -->
+    <text x="170" y="322" font-size="15.5" font-weight="700" fill="#14263d" text-anchor="end">GSM8K</text>
+    <line x1="299.4" y1="317" x2="402.5" y2="317" stroke="#e4c8b6" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="299.4" cy="317" r="5.5" fill="#ffffff" stroke="#ba672f" stroke-width="2.2"/>
+    <circle cx="325.2" cy="317" r="5.5" fill="#ffffff" stroke="#ba672f" stroke-width="2.2"/>
+    <circle cx="402.5" cy="317" r="5.5" fill="#ffffff" stroke="#ba672f" stroke-width="2.2"/>
+    <polygon points="342.4,309 350.4,317 342.4,325 334.4,317" fill="#14263d"/>
+    <text x="896" y="322" font-size="16" font-weight="700" fill="#ba672f" text-anchor="end">−0.71 pp</text>
+
+    <!-- X-axis Labels -->
+    <g font-size="13" fill="#526478" text-anchor="middle">
+      <text x="232.5" y="378">−2</text>
+      <text x="317.5" y="378">−1</text>
+      <text x="402.5" y="378">0</text>
+      <text x="487.5" y="378">+1</text>
+      <text x="572.5" y="378">+2</text>
+      <text x="657.5" y="378">+3</text>
+      <text x="742.5" y="378">+4</text>
+    </g>
+    <text x="487.5" y="412" font-size="14" font-weight="600" fill="#14263d" text-anchor="middle">Accuracy difference: coverage minus random (percentage points)</text>
+  </g>
+</svg>

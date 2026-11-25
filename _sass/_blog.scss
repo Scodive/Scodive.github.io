@@ -274,6 +274,11 @@
   margin: 0;
   padding: 0 0 2.5rem 0;
 
+  &[data-blog-article] .bm-language-content {
+    // Leave the article toolbar visible when a language link opens directly.
+    scroll-margin-top: 10.5rem;
+  }
+
   .bm-topbar {
     display: flex;
     align-items: center;
@@ -329,6 +334,11 @@
     margin: 0 0 1.25rem 0;
     padding-bottom: 0;
     border-bottom: none;
+
+    .bm-meta__views-num {
+      color: var(--blog-ink);
+      font-weight: 600;
+    }
   }
 
   .bm-deck {

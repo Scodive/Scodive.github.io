@@ -4,7 +4,7 @@ title: "What Is Actually Evolving in a Self-Evolving Agent?"
 title_zh: "Agent 自进化，到底在进化什么？"
 date: 2026-10-14
 author_profile: true
-excerpt: "What self-evolving agents actually repair, why completion alone can mislead selection, and when joint objectives, constraints and Pareto archives become useful. English / 中文."
+excerpt: "What self-evolving agents actually repair, why completion alone can mislead selection, and when joint objectives, constraints and Pareto archives become useful."
 excerpt_zh: "自进化 Agent 到底在修补什么，为什么单一完成率会误导选择，以及多目标优化、硬约束与 Pareto 档案在什么时候变得必要。"
 topic: "Self-evolving agents"
 topic_zh: "自进化 Agent"
@@ -30,19 +30,19 @@ figure_alt_zh: "Agent 自进化循环中变化与继承关系的示意图"
 
 # What Is Actually Evolving in a Self-Evolving Agent?
 
-<p class="bm-meta">October 14, 2026 · Self-evolving agents · 18 min read</p>
+<p class="bm-meta">October 14, 2026 · Self-evolving agents · 18 min read<span id="vercount_container_page_pv" class="bm-meta__views" style="display:none;"> · <strong class="bm-meta__views-num" id="vercount_value_page_pv">--</strong> views</span></p>
 
 <p class="bm-deck">What self-improvement methods actually fix, where their gains stop, and how the need for multi-objective optimization emerges.</p>
 
-Suppose a coding agent learns to retry whenever a test fails. Its completion rate rises. That looks like a successful update—until we notice that it now takes longer, makes many more tool calls, and occasionally edits files outside the permitted scope.
+Imagine a coding agent that picks up a simple habit over training: whenever a test fails, keep retrying. On the dashboard, task completion climbs nicely. It looks like a clean win right up until you look at the traces and realize runs now drag on twice as long, tool calls have more than doubled, and every now and then the agent touches a file outside its permitted directory just to get a green test.
 
-The agent has learned something useful: persistence helps solve difficult tasks. It has also learned an overly broad rule. Should we keep the update, reject it, or search for a version that retries more selectively?
+In one sense, the agent learned something genuinely useful: stubborn persistence solves harder bugs. At the same time, it learned an over-general heuristic with ugly side effects. Do you ship the update, roll it back, or search for a variant that retries only when retrying makes sense?
 
-This is the problem I want to understand through self-evolving agents and recursive self-improvement, or RSI. We are getting better at producing modifications to an agent. Deciding which modifications constitute progress is a separate challenge.
+That tension is what I want to unpack across work on self-evolving agents and recursive self-improvement (RSI). Generating candidate edits to an agent has gotten surprisingly easy; deciding which edits count as real progress is where things still fall apart.
 
 <div class="bm-thesis" markdown="1">
 
-Multi-objective optimization enters the picture when the same change affects several things we care about, and improving one no longer tells us what happened to the others. The first task is to make those effects visible together. Only then can we decide which are negotiable, which are constraints, and which alternatives are worth preserving.
+Multi-objective optimization enters naturally the moment one edit pulls several properties we care about in opposite directions, leaving single metrics silent on the collateral effects. Before choosing what can be traded off, what stays off-limits, or which variants to keep in an archive, those coupled outcomes have to show up in the same decision loop.
 
 </div>
 
@@ -59,35 +59,35 @@ Multi-objective optimization enters the picture when the same change affects sev
 
 </nav>
 
-<h2 id="components-en">01 / What do self-evolving methods actually repair?</h2>
+<h2 id="components-en">What do self-evolving methods actually repair?</h2>
 
-The useful progression in this literature is a sequence of bottlenecks. An agent may fail to retain experience, fail to change how it acts, lack the skill needed for the task, or waste its budget searching for improvements. Different methods intervene at different bottlenecks. 
+One clean way to organize this literature is by bottleneck. An agent might forget every lesson as soon as a run ends, stay boxed in by clumsy tools, lack an underlying skill, or waste most of its search budget generating weak patches. Each family of self-evolution papers pokes at a different layer.
 
 ### When experience disappears after execution
 
-If a failure teaches the agent nothing that survives the next attempt, the system keeps paying to discover the same lesson. Reflexion retains verbal feedback, Voyager builds executable skills, and ACE organizes evolving context into a playbook.[1](#ref-1-en) [2](#ref-2-en) [10](#ref-10-en)
+Without cross-run memory, every failure forces the agent to pay the full tuition all over again. *Reflexion* carries verbal critiques across trials, *Voyager* compiles working code snippets into a reusable skill library, and *ACE* turns execution feedback into an evolving context playbook.[1](#ref-1-en) [2](#ref-2-en) [10](#ref-10-en)
 
-Their shared contribution is **turning execution into reusable experience**. The remaining question is when that experience should apply. “Retry after failure” is useful for a transient error and harmful when an action lacks authorization. Storing a lesson does not establish its scope. A memory system needs to distinguish a general rule from a rule that worked under particular conditions.
+All three tackle the same gap: **turning finished runs into experience the next run can actually use.** Storing a rule, however, does not specify its boundaries. "Retry after a failure" rescues transient network hiccups and turns reckless when the failure was a permission refusal, so memory systems still need a way to track *when* a lesson stops applying.
 
 ### When better instructions cannot fix the action structure
 
-A reminder to “edit carefully” cannot make a coarse editing tool precise. Workflow and code search open a different space: ADAS and AFlow automate agent or workflow design; DGM modifies tools and execution logic, including more targeted editing.[5](#ref-5-en) [6](#ref-6-en) [8](#ref-8-en)
+Telling an agent to "edit carefully" does not fix an imprecise file-patching tool. Changing code and workflow topology opens a much bigger lever: *ADAS* and *AFlow* search over workflows automatically, while *DGM* rewrites its own tools and execution control flow, including sharper edit primitives.[5](#ref-5-en) [6](#ref-6-en) [8](#ref-8-en)
 
-This addresses **limitations of the available operations and their organization**. It also explains why frozen-model improvements can be substantial. The model may already know enough to solve a problem, while the surrounding system makes the right action difficult to perform. Yet a better structure on one workload may remain fragile on another. We still need to identify what the change fixed and which situations it could disrupt.
+What moves here is **the set of actions available and how they compose**, which explains why optimizing around frozen weights can jump scores so sharply. Plenty of times the base model already knows enough to fix the bug, while awkward harness plumbing gets in its way. Even then, a workflow tuned for one bug class can stay surprisingly brittle on the next unless we inspect what changed and where it breaks.
 
 ### When the model needs to learn a capability
 
-Sometimes a better wrapper is insufficient. SEAL rewards generated adaptation procedures according to performance after a weight update. Agent0 and AgentEvolver develop training signals through generated tasks and interaction.[11](#ref-11-en) [12](#ref-12-en) [13](#ref-13-en)
+Scaffolding only goes so far when the base model misses core reasoning steps. *SEAL* rewards generated self-edit directives by downstream performance *after* gradient updates, while *Agent0* and *AgentEvolver* manufacture training tasks and trajectories from environment interaction.[11](#ref-11-en) [12](#ref-12-en) [13](#ref-13-en)
 
-These methods address **the supply and use of learning experience**. Their next bottleneck is the quality of that experience. If a curriculum repeats familiar tasks or rewards a shared mistake, more training does not repair the missing signal. Task generation must be assessed through the distinctions it teaches the learner to make.
+The target here is **the quality and supply of training signal**. As soon as weights start updating, data quality becomes the choke point: repetitive curricula or noisy reward proxies simply bake bad habits into parameters faster. Curriculum builders therefore have to be judged on which real distinctions they teach the policy.
 
-The learning and runtime routes can also feed each other. HELIX proposes a build–update–rebuild loop: evolve harnesses, use verified contrasting trajectories for model learning, then adapt the harness to the updated model. Its reported study covers one harness-evolution round and the resulting training records.[30](#ref-30-en)
+Runtime scaffolding and parameter updates can also interlock. *HELIX* sketches a build–update–rebuild loop that evolves harnesses, feeds contrasting verified traces into model updates, and re-adapts the harness around the new checkpoint (though its published experiment covers one harness round and its training trace export).[30](#ref-30-en)
 
 ### When the improvement process is itself inefficient
 
-RSI moves the question up one level. Promptbreeder modifies mutation prompts; STOP applies a code improver to itself; HyperAgents opens the meta-agent to modification. AIDE² searches research-agent harnesses, while Dream-RSI searches exploration policies using recorded experience.[3](#ref-3-en) [4](#ref-4-en) [14](#ref-14-en) [16](#ref-16-en) [17](#ref-17-en)
+RSI steps back one level from improving the agent to improving the *improver*. *Promptbreeder* mutates the prompts that mutate task prompts; *STOP* runs an optimizer on its own optimizer script; *HyperAgents* exposes both task code and meta-agent logic to edits; *AIDE²* iterates on research harnesses; and *Dream-RSI* updates exploration policies using replayed trajectories.[3](#ref-3-en) [4](#ref-4-en) [14](#ref-14-en) [16](#ref-16-en) [17](#ref-17-en)
 
-The aim is **to improve how the next useful change is found**. A better final agent is one possible result. A procedure that produces better changes under the same budget is a stronger result and needs its own test. Recursion also inherits the evaluator's omissions: a more effective search procedure can become more effective at optimizing an incomplete definition of success.
+The goal shifts to **finding better edits under the same search budget**. Ending up with a stronger task agent is nice; ending up with an update loop that consistently proposes stronger edits is a much stiffer claim and requires its own baseline test. Worse, recursion inherits any blind spot in the evaluator: a smarter search procedure only becomes faster at gaming an incomplete objective.
 
 <figure>
 <picture>
@@ -97,11 +97,11 @@ The aim is **to improve how the next useful change is found**. A better final ag
 <figcaption><strong>Figure 1.</strong> An evolving system has an editable object and a selection loop. The solid path updates the agent; the dashed path also updates the improver.</figcaption>
 </figure>
 
-Across these routes, two decisions recur: what may change, and what evidence justifies keeping the change. The papers expand the first in different ways. The second leads directly to the need for joint evaluation.
+Across all four layers, everything boils down to two engineering levers: what is allowed to mutate, and what evidence earns an update the right to survive. Most papers push hard on the first lever; taking the second seriously pushes straight toward multi-objective evaluation.
 
-<h2 id="objects-en">02 / A higher completion rate can leave the decision unresolved</h2>
+<h2 id="objects-en">A higher completion rate can leave the decision unresolved</h2>
 
-Return to the coding agent. Imagine evaluating three policies on the same 100 tasks. The completion grader checks whether the requested result was produced; a separate audit checks whether the agent stayed within its permitted actions.
+Go back to our coding agent on a 100-task suite, pairing a completion test with an audit checking whether every tool call respected file and command permissions:
 
 <div class="bm-table bm-table-wide bm-case" role="region" aria-label="Illustrative agent update comparison" tabindex="0" markdown="1">
 
@@ -115,47 +115,45 @@ Return to the coding agent. Imagine evaluating three policies on the same 100 ta
 
 <p class="bm-note">Illustrative values for the thought experiment. Completion and authorization are counted separately, so a completed task can still involve an unauthorized action.</p>
 
-A completion-only optimizer chooses P1. A strict time budget could favor P0. A deployment that prohibits unauthorized actions rules out P1 despite its higher completion rate. P2 becomes interesting because it preserves most of the additional completion while reducing the other costs.
+If the selector optimizes raw pass rate alone, P1 wins effortlessly. Under a hard 45-second tail-latency SLA, P0 looks safer. If touching forbidden paths is a strict blocker, P1 is dead on arrival regardless of its 89% solve rate, leaving P2 as the clear practical winner because it preserves almost all the upside while keeping cost and safety intact.
 
-Completion answers whether the requested result was produced. Deployment also asks how it was produced. Once execution affects resources and permissions, **reaching the endpoint and reaching it acceptably become distinct properties**.
+Once agents run real tools under latency budgets and security rules, passing the unit test tells you *whether* the agent crossed the finish line, not *how* it got there. **Reaching the endpoint and reaching it within policy are separate properties.**
 
-Objectives and diagnostic signals serve different purposes. Repeated invalid tool calls may be a diagnostic explanation for latency rather than something we value separately. Evidence checks may help explain reliability without being a sufficient measure of it. We should choose objectives from the deployment requirement, then use diagnostics to explain how a candidate succeeds or fails. Otherwise, adding metrics can simply count the same benefit twice.
+Separating *objectives* from *diagnostics* helps keep scorecards clean too. Counting repeated invalid tool syntax as both a latency hit and its own weighted objective double-counts the same bug. Derive the core objectives directly from deployment constraints, and use finer trajectory stats to diagnose why a policy landed where it did.
 
-<h2 id="coupling-en">03 / Why not improve capability first, then repair the rest?</h2>
+<h2 id="coupling-en">Why not improve capability first, then repair the rest?</h2>
 
-Because the objectives often share the same control decisions. More retries change completion, cost and time together. More verification can detect errors and increase latency. A stricter stopping rule can reduce exposure to unsafe actions and terminate legitimate work too early. A change aimed at one objective therefore needs to be re-evaluated on the others.
+The standard instinct is sequential: push completion up first, then prune token cost and safety regressions afterward. The snag is that capability, latency, and safety usually run through the exact same control knobs. Raising retry limits moves solve rate, API spend, and tail runtime all at once; adding verification catches bugs while adding seconds to every turn; tightening stopping rules cuts unsafe exploration while occasionally cutting legitimate debugging short.
 
-Imagine starting from P1 and applying a cost-saving patch: stop after fewer tool calls. The patch may remove wasted retries—or remove the attempt that solved the difficult cases. Then a capability patch reintroduces retries. Each local change can look good on its own target while the sequence makes little progress. 
+Play out sequential hill-climbing on P1. First someone bolts on a cost patch capping tool calls at 10; maybe it cuts dead loops, or maybe it chops off the last two retries that actually solved the hard tickets. Next cycle, a capability proposer sees those dropped tickets and bumps the retry budget right back up. Every isolated hill-climb looks defensible on its own dashboard while the overall agent treads water.
 
-The useful intervention may be conditional: retry a temporary service failure, fix malformed arguments, stop an unauthorized operation, and reserve verification for consequential edits. These failures can all appear as “task not completed,” yet call for different changes. A vector of scores reveals the effects; trajectory diagnostics can connect those effects to a better policy.
+Real fixes are usually conditional rules: retry transient I/O errors, repair malformed parameters in place, abort on permission denial, and reserve expensive tests for risky edits. All four failures look identical in a binary pass/fail column, yet each demands a surgical edit. Scalar vectors expose the side effects together; trace inspection shows *where* in the mechanism the policy misfired.
 
-Meta-Harness makes this diagnosis concrete by letting its proposer inspect previous code, scores and full execution traces. The useful feedback is not just that a candidate failed, but where its mechanism stopped working.[29](#ref-29-en)
+*Meta-Harness* puts this diagnostic loop directly inside the optimizer by giving its proposer code diffs, evaluation numbers, and raw execution trajectories instead of an opaque average score.[29](#ref-29-en)
 
-A final safety filter remains useful. It can reject P1 for deployment. But it cannot recover a useful policy that the search never generated or discarded earlier. If every generation retains only the highest-completion candidate, P2 may disappear before the deployment constraint is applied. Logging every candidate avoids literal deletion, but the choice of which parents receive more search budget still shapes what comes next. **Selection changes both the final choice and the material available for future search.**
+Why not simply maximize completion during search and slap a safety filter on at deployment time? A deployment gate will happily block P1 from production, yet it cannot magically invent P2 if greedy survival already pruned P2 three generations ago. Even when teams archive every rollout log, deciding which parent checkpoints deserve the next round of mutation spend still steers what the search discovers next. **Selection shapes tomorrow's search pool, not just today's winner.**
 
-Joint optimization therefore brings the relevant requirements into the improvement process: they guide which changes are proposed, retained and developed further. Measuring several properties is only the first step; those measurements must influence the search. A fixed utility, explicit constraints and a set of alternatives offer different ways to do that. 
+Joint optimization pulls deployment constraints upstream into candidate generation, survival, and branching. Scalar scores, explicit constraints, and multi-variant archives are simply different mechanisms for letting those constraints steer the loop early.
 
-There is a further possibility: the apparent trade-off may come from a poor design. Replacing an unreliable tool can increase completion and reduce retries simultaneously. The objective is to discover these joint gains where possible, and make the remaining trade-offs explicit where they persist. Choosing among existing compromises and discovering a policy that improves on them are different achievements.
+Sometimes a perceived trade-off is just sloppy plumbing anyway. Swapping a flaky file-patcher for a reliable diff tool can simultaneously boost solve rate and slash retry calls. Joint diagnostics help spot genuine Pareto improvements alongside true, unavoidable trade-offs.
 
-<h2 id="objectives-en">04 / From several metrics to a joint decision</h2>
+<h2 id="objectives-en">From several metrics to a joint decision</h2>
 
 ### First, identify what cannot be exchanged
 
-If modifying a forbidden file is unacceptable, extra completed tasks cannot compensate for it. That requirement belongs in the feasible set, supported by action-level enforcement where possible. An observed violation disqualifies a candidate for that deployment. Passing a finite test suite still leaves uncertainty about future behavior.
+If deleting forbidden files is unacceptable, completing five extra tickets never compensates for doing it once. Hard boundaries belong inside feasibility checks backed by runtime sandboxing wherever possible: observed violations disqualify a candidate outright (keeping in mind that zero violations on 100 eval tasks still only bounds empirical risk, never proves formal immunity).
 
-This separates two questions that are easily mixed together: “is this candidate admissible?” and “which admissible candidate do we prefer?” Some risks admit an explicitly chosen tolerance; others are hard prohibitions. The optimizer should reflect the actual requirement.
+Explicit constraints untangle two decisions people routinely blur together: "Is this policy safe and compliant to run?" versus "Among compliant candidates, which cost-quality balance fits best?"
 
 ### Next, make preferences explicit when they are known
 
-A weighted utility is reasonable when the exchange rates are stable and defensible. SICA, for example, combines performance, cost and runtime in one utility.[7](#ref-7-en) That is already a way of accounting for several requirements.
+When the trade-off between quality, spend, and runtime is well understood and stable, folding them into a scalar utility is clean and direct. *SICA* does exactly this, blending task success, dollar cost, and wall-clock time into one objective.[7](#ref-7-en)
 
-The sensitivity is easy to see in our example. Temporarily compare completion and calls alone. Subtracting 0.1 percentage point per mean tool call gives P1 a score of 87.6 and P2 a score of 87.2. Raising that penalty to 0.5 gives 82 and 84, reversing the choice. The arithmetic is correct in both cases; the preference changed. Adding back the authorization constraint excludes P1 regardless of those weights.
-
-A weighted score expresses a particular preference. Its ranking depends on those exchange rates and on metric normalization, even when the written weights remain unchanged.
+Our table illustrates how sensitive scalar weights are, even over clean numbers. Ignore authorization for a second and trade completion against tool calls: docking `0.1` percentage points per call scores P1 at `87.6` over P2's `87.2`; bump that penalty to `0.5` points per call and the gap flips (`82` vs. `84`). Both calculations are accurate, yet tiny normalization or weight tweaks flip the champion, and re-enabling the hard authorization check disqualifies P1 either way.
 
 ### Preserve alternatives when one preference would be premature
 
-If the same system will serve several workloads, a single early choice may be wasteful. Among candidates that satisfy the deployment requirements, one may be cheaper and another more effective. A Pareto archive keeps a candidate when no other evaluated, feasible candidate is at least as good on every chosen objective and strictly better on one.
+When a single codebase serves latency-sensitive interactive users alongside offline batch jobs, locking onto one weighted sum prematurely throws away useful variants. Among candidates that pass every hard constraint, keeping the non-dominated Pareto set preserves every policy where no admissible rival equals or beats it on all metrics with a strict win on at least one:
 
 <figure>
 <picture>
@@ -165,13 +163,11 @@ If the same system will serve several workloads, a single early choice may be wa
 <figcaption><strong>Figure 2.</strong> The same hypothetical policies as the table. P0 and P2 remain useful under different resource budgets. P1 has the highest completion rate but fails the authorization requirement. The line connects the two illustrative choices.</figcaption>
 </figure>
 
-This gives P0 and P2 distinct roles: P0 fits a tighter resource budget; P2 offers higher completion at greater cost. The archive postpones the preference decision and provides different starting points for later mutations.
+P0 fits tight latency caps; P2 pays slightly more tool budget for higher resolution, and holding both in an archive delays choosing weights until deployment while giving future mutations diverse stepping stones. When deployment utility is genuinely fixed and stable, single-objective optimization skips unnecessary archive overhead; when trade-offs interact and shift across workloads, maintaining the frontier pulls its weight.
 
-**Joint consideration is needed when relevant effects are coupled and not redundant. Preserving a frontier is useful when several trade-offs remain valuable.** If the deployment utility is fixed and known, searching directly for its optimum may be more efficient than maintaining a broad archive.
+<h2 id="methods-en">What do existing multi-objective methods contribute?</h2>
 
-<h2 id="methods-en">05 / What do existing multi-objective methods contribute?</h2>
-
-Existing multi-objective methods bring these requirements into different parts of the improvement process: workflow search, skill selection and policy learning.
+Recent multi-objective agent work threads these trade-offs directly into workflow search, skill curation, and weight updates:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Problems addressed by multi-objective methods" tabindex="0" markdown="1">
 
@@ -187,44 +183,41 @@ Existing multi-objective methods bring these requirements into different parts o
 
 </div>
 
-MoFlow moves the trade-offs inside the search tree: a node stores multiple attainable outcomes rather than one score. Its convex-hull search supports selection under different linear preference weights from the discovered workflows.[33](#ref-33-en)
+*MoFlow* is a neat twist because it embeds sets of reachable trade-offs inside each search-tree node and uses convex-hull selection to let users pivot across linear preference weights afterward.[33](#ref-33-en) Across these methods, the scope varies just as much as the algorithm: satisfying static platform rules differs from guarding runtime permissions, optimizing reusable skills amortizes search differently than optimizing per-query execution, and *GEPA* uses Pareto survival across *problem instances* to keep complementary puzzle-solvers alive rather than explicitly mapping a cost-safety frontier.[9](#ref-9-en)
 
-These formulations address different requirements. A platform requirement differs from an operational safety requirement. A reusable skill and a per-query policy have different opportunities to amortize their search cost. GEPA offers another distinction: its Pareto selection preserves strengths across problem instances, rather than automatically defining a quality–cost–safety frontier.[9](#ref-9-en)
+Our own work on **MOAE** focuses on per-query policy evolution with the base model, tools, and outer architecture held fixed: diagnostic feedback guides compact edits to planning, tool verification, and stopping rules, scored over full rollouts and filtered into an empirical Pareto archive before picking a candidate to emit.[23](#ref-23-en)
 
-Our work **MOAE** takes the per-query route: the model, tools and architecture remain fixed, while candidate policies change planning, tool use, verification and stopping. Objective-specific diagnostics guide changes; complete rollouts supply evaluation; an empirical archive precedes the final deployment choice.[23](#ref-23-en)
+The recurring design idea across this table is decoupling **what search keeps alive** from **what one production caller receives**. And beyond deployable policies sits a third asset: keeping informative failures and paired contrast traces as training/diagnostic fuel (as *HELIX* emphasizes), cleanly separated from the set of deployable finalists.[30](#ref-30-en)
 
-The broader design idea is to separate **what the search should preserve** from **what one deployment should return**. The value of those alternatives depends on candidate coverage and evaluation quality.
+<h2 id="evidence-en">Multi-objective search leaves several shared problems open</h2>
 
-There is also a third purpose for keeping a candidate: learning from it. A failed harness can supply a useful negative example, while two successful ones can reveal an unnecessary step—a distinction made explicit in HELIX.[30](#ref-30-en) I would keep deployable options and diagnostic records separately: poor deployment performance need not erase useful evidence.
-
-<h2 id="evidence-en">06 / Multi-objective search leaves several shared problems open</h2>
-
+Putting multiple metrics on a Pareto chart solves selection blindness, yet five harder headaches carry straight over across every self-evolving loop:
 
 ### A vector of proxies can still miss the real requirement
 
-Adding objectives repairs an omission only if the new signals measure something meaningful. A judge can reward fluent explanations instead of grounded evidence. A tool-use metric can reward fewer calls while missing the checks those calls performed. Multiple weak proxies do not become reliable merely because they are optimized together.
+Multi-objective optimizers are only as honest as the signals fed into them. An LLM judge can still reward eloquent excuses over verified facts, and a tool-call penalty can still encourage skipping sanity checks. Combining weak proxy metrics does not automatically manufacture grounded truth.
 
-Evolving the evaluator, as RQGM explores, makes the signal itself adaptable.[15](#ref-15-en) It also makes historical comparison harder. My preference would be to retain stable external checks alongside the evolving evaluation, so that changing behavior and changing standards can be distinguished.
+Co-evolving evaluators alongside agents, as *RQGM* explores, keeps rubrics from saturating.[15](#ref-15-en) The price is losing a fixed yardstick over time, so practical systems still need frozen external checks anchored outside the co-evolution loop to distinguish genuine gains from metric drift.
 
 ### A useful skill may become harmful in a different combination
 
-*When Self-Evolution Backfires* traces a failure chain: an admitted defective skill influences the skills distilled later, so deleting the original can leave its descendants in place. Its VaG method checks skills before admission and evaluates their joint contribution.[31](#ref-31-en) *Coalition-Aware Skill Reliability* examines how a skill's contribution changes with its partners and deployment domain, using coalition-aware selection and transfer-time masking.[32](#ref-32-en)
+Shared memory adds temporal coupling. *When Self-Evolution Backfires* traces a nasty failure mode where one buggy skill poisons subsequent distilled skills, so deleting the original bad entry leaves its corrupted descendants running wild; its *VaG* gate audits candidates jointly before admission.[31](#ref-31-en) *Coalition-Aware Skill Reliability* similarly tracks how skill utility shifts across skill pairings and domains via coalition-aware gating and transfer masking.[32](#ref-32-en)
 
-The question becomes “what does this update do inside the current system?” A local gain deserves checks on combinations and future reuse. This adds a time dimension to joint evaluation: a rule can help today's task and make tomorrow's updates less reliable.
+Once edits persist, evaluating an update in isolation is incomplete: you also have to test how it composes with existing skills and whether it corrupts the *next* generation of updates.
 
 ### A noisy frontier can preserve lucky candidates
 
-A candidate that looks excellent on one rollout may be fortunate rather than robust. With many objectives, more candidates can appear incomparable, increasing the burden of deciding which ones deserve another evaluation. A frontier can then grow faster than confidence in it.
+With stochastic rollouts, one lucky draw on a difficult task looks indistinguishable from genuine skill. Add four or five evaluation axes and almost any outlier avoids domination by scoring high on one noisy corner, causing empirical Pareto frontiers to balloon far faster than statistical confidence in any single point.
 
-This suggests a budget question beyond mutation: when should we generate a new policy, repeat a promising one, or test a suspected failure? A useful archive should retain uncertainty and failure evidence alongside point scores. “Nondominated in observed results” is a statement about the current evidence, not a permanent property of an agent.
+Search budgets therefore need to balance mutation against replication: when to generate a fresh edit, when to re-roll a promising frontier point to tighten error bars, and when to probe suspected failure slices. Storing variance estimates and negative traces directly inside the archive makes it harder to mistake "non-dominated on one rollout" for a durable capability gain.
 
 ### Progress on selected tasks does not establish transfer or recursion
 
-The existing results are valuable, but they support different claims:
+Headline numbers across self-evolution papers often establish narrower claims than quick summaries suggest:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Selected quantitative evidence and its scope" tabindex="0" markdown="1">
 
-| Source | Reported observation | What it establishes—and what remains open |
+| Source | Reported observation | What it establishes, and what remains open |
 |:--|:--|:--|
 | [DGM][r8] | Coding success rose from **20% to 50%** on its **200-task** SWE-bench Verified evaluation after 80 iterations. | Evidence for better coding-agent implementations under that protocol; not a 50% result on the entire Verified set. |
 | [AIDE²][r16] | **7 accepted improvements in 8 days**; external evaluation covered **4 benchmarks**. | Improved research agents. Their superiority as outer-loop improvers remained inconclusive because of noise and limited replication. |
@@ -232,27 +225,30 @@ The existing results are valuable, but they support different claims:
 
 </div>
 
-A better agent on unseen tasks is evidence for transfer beyond its selection set. A better **improver** requires a further comparison: let original and evolved improvers start from matched agents, with matched budgets and unseen task families, then compare the gains they produce. Private examples used repeatedly to select updates belong to the improvement process, even if their contents are hidden from the inner agent.
+Scoring higher on unseen test tasks supports generalization past the training slice. Proving an *evolved improver* is genuinely stronger demands a cleaner experiment: freeze the baseline and evolved improvers, start both from identical base agents under matched search budgets on unseen task families, and compare the delta they produce. Any hidden dev set reused across 80 rounds of hill-climbing belongs to the search budget, even if the inner task prompt never sees it directly.
 
-For persistent updates, another test is whether they survive a model or tool change. This connects evolution to the [agent deployment gap]({{ '/the-anchor-of-logic-and-the-sands-of-probability/' | relative_url }}). An inherited workflow may encode assumptions about the old model. A memory entry or tool patch may likewise carry a defect into future executions, a concern emphasized in recent safety synthesis.[28](#ref-28-en)
+And for anything persisted to disk (skills, memory notes, code patches), durability across underlying upgrades ties straight back to the [agent deployment gap]({{ '/the-anchor-of-logic-and-the-sands-of-probability/' | relative_url }}): inherited artifacts often overfit old model quirks or carry latent defects across runs, a risk surveyed in recent safety reviews.[28](#ref-28-en)
 
 ### Search itself consumes the resources being optimized
 
-A cheap final policy may have been expensive to discover. A reusable workflow costing 100 USD to find and saving 0.10 USD per use needs 1,000 uses to break even before maintenance. Per-query search has a different accounting problem: it needs to justify its cost on that query. Reports should separate search, evaluation and deployed execution instead of combining them into an ambiguous “efficiency” claim.
+A sleek runtime policy can hide an enormous discovery bill. Paying `$100` in search calls to shave `$0.10` per task requires 1,000 production calls just to break even before factoring maintenance; per-query evolution faces the tighter hurdle of paying off its search cost *within that single query*. Keeping search spend, evaluation spend, and steady-state deployment cost on separate ledger lines stops vague "efficiency" claims from muddying the economics.
 
-<h2 id="research-en">07 / What would demonstrate a better improvement process?</h2>
+<h2 id="research-en">What would demonstrate a better improvement process?</h2>
 
-I would return to the retry example and ask for an explanation that predicts behavior. Perhaps selective retries work because they distinguish temporary errors from missing permissions. Then the evaluation should vary those conditions while keeping the task goal similar. If the improvement disappears under that small change, the claimed lesson was too broad.
+Come back once more to our retrying coding agent. If "selective retries" actually works because it distinguishes transient server hiccups from missing permissions, design an ablation suite that toggles those two failure causes independently while holding the core problem fixed. If the gain evaporates when error semantics flip, the evolved rule never learned the real boundary.
 
-This is why [case construction]({{ '/what-do-benchmarks-measure/' | relative_url }}) is part of agent evolution. The suite decides which consequences of an update become visible. A suite full of retry-friendly tasks encourages one policy; paired cases that separate recoverable failures from forbidden actions can reveal a more useful distinction.
+This is where [benchmark case design]({{ '/what-do-benchmarks-measure/' | relative_url }}) stops being passive measurement and turns into part of optimization itself. A suite skewed toward transient timeouts teaches one lesson; paired counterfactual cases separating recoverable errors from prohibited edits force the update loop to learn the right distinction.
 
-To test whether joint optimization actually helps, I would compare it with completion-only search plus a final filter, a fixed weighted utility, constrained search, and sequential tuning. All should receive the same candidate interface and comparable total evaluation budgets. The final comparison should use declared deployment preferences and independent tasks, not only the metric favored by the proposed optimizer.
+To test whether joint multi-objective evolution truly beats simpler heuristics, benchmark it head-to-head against four grounded baselines under identical mutation APIs and equal evaluation budgets: greedy completion plus a deployment gate, a fixed scalarized utility, constrained search, and sequential one-metric-at-a-time tuning. Judge the winners on *independent* tasks using pre-committed deployment preferences rather than the internal proxy optimized during search.
 
-Three observations would make the result informative: does joint evaluation recover usable candidates that the other procedures miss; do retained alternatives serve genuinely different requirements; and do targeted diagnostics generate joint gains rather than merely select different compromises? Archive size alone answers none of these questions. Hypervolume summarizes how much objective space a set of candidates covers relative to a reference point. Comparisons need fixed scales and a fixed reference, alongside actual deployment outcomes.
+Three empirical signals decide whether the extra machinery pays off:
+1. Does joint optimization discover admissible candidates that sequential or post-hoc filtering misses?
+2. Do items along the archived frontier serve genuinely distinct production regimes rather than clustering around sampling noise?
+3. Do trace-informed diagnostics uncover genuine Pareto improvements rather than merely shuffling points along the same old trade-off curve?
 
-A reader can apply the same reasoning to the next RSI paper: identify the bottleneck repaired, inspect what is inherited, trace which signals select it, and ask what remains invisible to those signals. Then check whether the evidence supports a better answer, a better reusable agent, or a better process for producing improvements.
+(Raw archive size proves nothing, and hypervolume comparisons only hold water with fixed bounds, a fixed reference point, and downstream deployment validation.)
 
-The motivation for multi-objective evolution follows from this chain. A single agent action can affect several requirements. A single completion score cannot identify all of those effects. Joint evaluation makes them visible; constraints express what is unacceptable; preferences choose among acceptable outcomes; and an archive can preserve choices that remain useful. **The research challenge is to make these decisions reliable enough that successive updates accumulate useful capability.**
+That same checklist makes reading new self-evolution papers surprisingly sharp: trace what bottleneck actually mutates, what persists across runs, which metrics filter survivors, and what blind spots stay hidden from those metrics. Multi-objective framing is not extra decoration; it is simply what happens when a single edit alters capability, cost, and safety together, and we refuse to stay blind to two-thirds of the consequences.
 
 <h2 id="paper-map-en">Paper-by-paper guide</h2>
 
@@ -376,19 +372,19 @@ Two adjacent cases make the target boundary clear: [AlphaEvolve][r25] evolves ta
 
 # Agent 自进化，到底在进化什么？
 
-<p class="bm-meta">2026 年 10 月 14 日 · 自进化 Agent · 约 18 分钟</p>
+<p class="bm-meta">2026 年 10 月 14 日 · 自进化 Agent · 约 18 分钟<span id="busuanzi_container_page_pv" class="bm-meta__views" style="display:none;"> · <strong class="bm-meta__views-num" id="busuanzi_value_page_pv">--</strong> 次阅读</span></p>
 
-<p class="bm-deck">自我改进方法修复了什么，它们的收益止步于哪里，以及多目标优化为什么会自然成为下一个问题。</p>
+<p class="bm-deck">自我改进方法到底修好了什么，收益又在哪里撞墙，以及多目标优化是怎么自然变成刚需的。</p>
 
-假设一个编程 Agent 学会了“测试失败就继续重试”。任务完成率提高了，看起来是一次成功的更新。接着我们发现，它运行得更久，调用了更多工具，还偶尔修改了授权范围之外的文件。
+设想一个编程 Agent 在进化过程中摸索出一条很直观的经验：“只要测试挂了，就再试一次。”看榜单上的任务完成率，确实一路往上走。但点开执行轨迹就会发现另一面：单次耗时拉长了一倍多，工具调用翻倍，偶尔为了把报错压下去，它甚至会改动授权范围之外的文件。
 
-这个 Agent 学到了有用的东西：坚持尝试有助于解决难题。但它也学到了一条适用范围过宽的规则。我们应该保留这次更新，直接放弃，还是继续寻找一种更有选择性的重试方式？
+从某个角度看，它确实学会了一件好事——遇到硬骨头不轻易放弃；但同时它也把一条适用面过宽的启发式塞进了策略里。面对这种更新，是咬牙上线、直接退回，还是接着找一个更懂分寸的“选择性重试”版本？
 
-这是我想通过 self-evolving agents 和递归自我改进（RSI）理解的问题。我们越来越擅长让系统产生修改，但判断什么修改值得留下，仍然是另一项挑战。
+这正是研究 self-evolving agents 和递归自我改进（RSI）时最容易被忽略的关口：今天我们已经很擅长让系统自动提出改法，难的从来是**判断哪一次修改才算得上真正的进步**。
 
 <div class="bm-thesis" markdown="1">
 
-当同一个改动会影响几个重要属性，而其中一个变好又无法说明其他属性发生了什么，多目标优化就有了具体的必要性。首先要让这些影响同时可见，然后才能决定：哪些可以取舍，哪些必须满足，哪些不同方案值得保留。
+只要一次改动会同时牵动几件彼此制衡的事，光靠某一项指标变好就看不清全貌，多目标优化自然就会走进决策中心。第一步先把这些相互牵连的后果摆到同一张桌面上，接下来才谈得上哪些维度可以交换、哪些红线绝不让步、又有哪些不同取舍的方案值得留作备选。
 
 </div>
 
@@ -405,35 +401,35 @@ Two adjacent cases make the target boundary clear: [AlphaEvolve][r25] evolves ta
 
 </nav>
 
-<h2 id="components-zh">01 / 自进化方法真正修复了什么？</h2>
+<h2 id="components-zh">自进化方法真正修复了什么？</h2>
 
-理解这些工作，可以从一系列瓶颈出发：Agent 可能留不住经验，无法改变行动方式，缺少完成任务所需的能力，也可能把大量预算浪费在寻找改进上。不同方法处理的是不同瓶颈。
+把这批文献放在一起看，最清晰的脉络其实是“堵点转移”：有时候 Agent 是跑完一轮就把教训忘光，有时候是被笨拙的工具和流程卡死，有时候是模型底层压根缺那块能力，还有些工作是在替“怎么找改法”本身提效。不同路线修补的其实是不同层的瓶颈。
 
 ### 经验在执行结束后消失
 
-如果一次失败没有留下任何能影响后续尝试的东西，系统就会反复付出代价，重新发现同一个教训。Reflexion 保留文字反思，Voyager 积累可执行技能，ACE 把持续更新的上下文组织成经验手册。[1](#ref-1-zh) [2](#ref-2-zh) [10](#ref-10-zh)
+如果上一轮踩过的坑留不到下一轮，系统就得一次次交同样的学费。*Reflexion* 把文字反思写进跨轮次记忆，*Voyager* 把跑通的代码沉淀成可调用的技能库，*ACE* 则把不断演化的上下文整理成一套经验手册。[1](#ref-1-zh) [2](#ref-2-zh) [10](#ref-10-zh)
 
-它们共同解决的是：**让执行产生可以复用的经验。** 接下来的问题，是这些经验应该在什么时候生效。“失败后重试”对暂时性错误可能有效，遇到缺少权限的操作时却可能有害。把经验存下来，并不能证明它的适用范围。记忆系统还需要区分一般规则，以及只在某些条件下成立的规则。
+这几类方法瞄准的是同一件事：**别让执行过的经验白白流掉。** 可惜记下一条规则，不等于标清它的适用边界。“失败后重试”遇到临时网络抖动很有用，碰上权限被拒时却纯属乱撞。光会存经验还不够，记忆系统还得分辨清哪些是通用规律，哪些只在特定条件下成立。
 
 ### 更好的指令也改变不了行动结构
 
-一句“仔细编辑”无法把粗糙的编辑工具变得精确。工作流和代码搜索开放了另一种改进空间：ADAS 和 AFlow 自动设计 Agent 或工作流，DGM 则修改工具与执行逻辑，包括更精确的文件编辑方式。[5](#ref-5-zh) [6](#ref-6-zh) [8](#ref-8-zh)
+如果编辑器本身一次只能整文件重写，提示词里喊再多遍“务必小心修改”也于事无补。改动工作流和工具代码打开了另一扇门：*ADAS* 与 *AFlow* 自动搜索 Agent 拓扑与代码工作流，*DGM* 则干脆放开手去改工具定义和执行控制逻辑，换上更精准的文件编辑原语。[5](#ref-5-zh) [6](#ref-6-zh) [8](#ref-8-zh)
 
-这类方法处理的是：**可用操作及其组织方式造成的限制。** 这也解释了为什么固定底层模型仍然能带来明显收益。模型可能已经具备解决问题所需的知识，只是周围的系统让正确操作很难执行。不过，一种结构在某类任务上有效，换到另一类任务上仍然可能出问题。我们还需要知道，改动具体修复了什么，又可能破坏什么。
+这类工作松动的是**可用动作空间与组织方式**。很多时候基座模型本来就懂怎么解题，纯粹是被顺手度极差的外围管线绊住了脚，所以不动权重也能刷出大涨幅。但换个角度看，围绕某类工作流磨出来的强结构换个场景照样可能水土不服，依然得查明它到底修掉了哪类问题、又踩中了哪类新约束。
 
 ### 模型本身缺少某种能力
 
-有时，改好外围系统仍然不够。SEAL 根据权重更新之后的表现，奖励生成的适应方案。Agent0 和 AgentEvolver 则通过生成任务与环境交互，构造训练所需的信号。[11](#ref-11-zh) [12](#ref-12-zh) [13](#ref-13-zh)
+光换外围脚手架有时确实不够。*SEAL* 让模型自己生成微调数据或适应指令，再按**权重更新之后**的表现回传奖励；*Agent0* 与 *AgentEvolver* 则通过自动命题和环境交互来生产训练信号。[11](#ref-11-zh) [12](#ref-12-zh) [13](#ref-13-zh)
 
-它们处理的是：**学习经验从哪里来，以及如何利用。** 下一道瓶颈就变成了经验质量。如果课程只是重复熟悉的任务，或者奖励了大家共同犯下的错误，更多训练也无法补上缺失的信号。评价任务生成，需要看它究竟教会学习者区分了什么。
+它们补的是**学习信号的供给与利用效率**。一旦动了模型权重，瓶颈马上变成样本质量：要是课程一直在翻炒熟悉题型，或者奖励代理不小心放过了投机答案，多训几轮只会把毛病焊得更牢。评判任务生成器好不好，最终要看它究竟教会策略分清了哪些关键区别。
 
-学习与运行框架也可以相互推动。HELIX 提出“构建—更新—重建”的循环：先演化框架，再把验证过的对比轨迹用于模型学习，随后根据更新后的模型调整框架。论文报告的是一轮框架演化及其产生的训练记录。[30](#ref-30-zh)
+外围架构和权重更新也能互相喂养。*HELIX* 提出了“构建—更新—重建”闭环：先演化外围框架，再挑出经验证的对比轨迹拿去训练模型，随后再回头调整框架适配新权重（不过原论文的完整闭环验证只做到了一轮框架演化及其训练轨迹产出）。[30](#ref-30-zh)
 
 ### 寻找改进的过程本身效率不高
 
-RSI 把问题再向上推进一层。Promptbreeder 修改生成变异的提示词，STOP 用代码改进程序修改它自身，HyperAgents 开放 meta-agent 的修改权限。AIDE² 搜索研究 Agent 的运行框架，Dream-RSI 则利用记录下来的经验搜索探索策略。[3](#ref-3-zh) [4](#ref-4-zh) [14](#ref-14-zh) [16](#ref-16-zh) [17](#ref-17-zh)
+RSI 把镜头又往后拉了一格，不再只改任务 Agent，而是顺手去改那个“负责提改进的人”。*Promptbreeder* 连用来改写提示词的“变异提示”也一起进化；*STOP* 让代码优化器反过来重写自身代码；*HyperAgents* 打开了 meta-agent 的修改权限；*AIDE²* 专门打磨科研 Agent 的框架；*Dream-RSI* 则借回放历史经验去搜寻更聪明的探索策略。[3](#ref-3-zh) [4](#ref-4-zh) [14](#ref-14-zh) [16](#ref-16-zh) [17](#ref-17-zh)
 
-目标是：**让下一次有用的改动更容易被找到。** 最终得到一个更好的 Agent，是一种结果；在相同预算下更擅长产生后续改进，则是更强的结果，需要单独检验。递归也会继承评估器的遗漏：搜索能力提高，可能让系统更有效地优化一个并不完整的成功标准。
+走到这一层，目标已经成了**在同等预算下更快找对下一个好改法**。最终产出一个更好的任务 Agent 算一重收获；证明改进器自身越改越会找方法则是另一重强得多、也必须单设对照的主张。同时递归有个天然风险：它也会一并放大评估器的盲区——搜索器越聪明，就越擅长朝你不完整的评分标准里钻空子。
 
 <figure>
 <picture>
@@ -443,11 +439,11 @@ RSI 把问题再向上推进一层。Promptbreeder 修改生成变异的提示�
 <figcaption><strong>图 1.</strong> 一个进化系统包含可修改的对象，以及决定改动能否留下的循环。实线路径更新 Agent，虚线路径进一步更新改进器。</figcaption>
 </figure>
 
-这几条路线都绕不开两个决定：允许修改什么，以及凭什么留下修改。不同论文以不同方式扩展了前者，后者则把我们带到了共同评估的问题上。
+把这四条路线合到一起看，核心无非两道关：准许修改系统的哪一部分，以及凭什么证据批准修改留下。大多数论文在前一关上花样翻新，真到了后一关就绕不开多目标评估。
 
-<h2 id="objects-zh">02 / 完成率提高了，选择仍然可能没有答案</h2>
+<h2 id="objects-zh">完成率提高了，选择仍然可能没有答案</h2>
 
-回到编程 Agent。假设我们在相同的 100 个任务上比较三种策略。完成度评分器检查是否产出了要求的结果，另一个审计过程检查 Agent 是否始终在授权范围内行动。
+回到开头的编程 Agent。在 100 道测试题上同时运行“完成度判定器”与“权限范围审计”，看看下面三套策略的对比结果：
 
 <div class="bm-table bm-table-wide bm-case" role="region" aria-label="Agent 更新的假设比较" tabindex="0" markdown="1">
 
@@ -461,47 +457,45 @@ RSI 把问题再向上推进一层。Promptbreeder 修改生成变异的提示�
 
 <p class="bm-note">数字为假设示例。完成度与授权情况独立统计，因此完成任务的运行也可能包含越权操作。</p>
 
-只看完成率，优化器会选 P1。严格限制耗时，可能会选 P0。如果部署要求禁止越权操作，P1 即使完成率最高也不能采用。P2 值得关注，是因为它保留了大部分新增的完成能力，同时降低了其他代价。
+只盯着通过率看，优化器会毫不犹豫选中 P1；如果卡死 45 秒的尾延迟上限，只有 P0 勉强过线；一旦线上一票否决越权修改文件，完成率最高的 P1 同样直接出局——反倒是 P2 成了最站得住的选择，几乎吃下了全部通过率涨幅，同时守住了延迟和权限边界。
 
-完成率回答有没有做到，部署还要问是怎么做到的。执行过程开始涉及资源与权限之后，**到达终点，以及以可接受的方式到达终点，就成为了不同属性。**
+一旦 Agent 要花真金白银调工具、又要在权限红线内干活，“做没做成”和“怎么做成”就彻底分家了。**能走到终点，与规规矩矩地走到终点，本来就是两项不同的能力指标。**
 
-目标与诊断信号需要分开。反复调用无效工具，可能是解释延迟的诊断信号；证据检查次数可能有助于解释可靠性，但并不等于可靠性本身。我们应该从部署需求中确定目标，再用诊断信息解释候选为什么成功或失败。否则，多加几个指标，也可能只是把同一种收益重复计算。
+顺便也要把**优化目标**与**诊断信号**拆开算。比如反复调用错参数固然能解释耗时为什么涨了，但它本质上是延迟上升的原因记录；如果把每次参数出错和端到端耗时同时放进加权目标里，等于对同一个毛病罚了两遍分。目标应该严格从真实上线约束里定，轨迹诊断指标留着帮你排查“候选为什么成、为什么败”。
 
-<h2 id="coupling-zh">03 / 为什么不先提高能力，再修成本与安全？</h2>
+<h2 id="coupling-zh">为什么不能一个目标一个目标地修？</h2>
 
-因为这些目标经常受同一组决策影响。增加重试，会同时改变完成率、成本和时间。增加验证，可能发现更多错误，也会增加延迟。更严格的停止规则，可以减少危险操作的机会，也可能让正常任务过早结束。因此，一次针对某个目标的修改，仍然需要在其他相关目标上重新评估。
+工程上最容易想到的省事路径是“先把完成率刷上去，回头再慢慢砍成本、补安全护栏”。问题在于，这几个维度偏偏拧在同一套控制开关上：多给两次重试机会，完成率、API 费用和尾延迟会一起往上蹿；加上一步自检可能捞回几个 bug，但每次调用都要多等好几秒；收紧提前终止规则能压住乱逛的风险，有时却恰好把还在认真排错的正常任务给掐断了。
 
-假设从 P1 出发，再加一个省钱的补丁：工具调用达到上限就停止。这个补丁可能删掉无效重试，也可能删掉恰好解决难题的那次尝试。随后，为了恢复完成率，又加回重试。每次局部修改都可能改善自己的目标，整个过程却没有取得多少进展。
+不妨想象从 P1 接着往下做逐项修补：第一轮工程师打了个省钱补丁，强行把工具上限卡在 10 次——它可能刚好砍掉了瞎转圈，也完全可能恰好切掉了最后那两次救命的重试；下一轮负责提能力的开发者看到难题又失败了，转头又把重试上限放回去。每一轮局部分数都好像挺合理，整套系统却只在原地打转。
 
-有用的改动可能是一组条件规则：服务暂时出错时重试，参数格式错误时修正，操作越权时停止，对影响较大的编辑保留验证。这些情况都可能表现为“任务没完成”，却需要不同的修改。多个分数让后果可见，轨迹诊断则帮助我们把这些后果与更好的策略联系起来。
+真正顶用的修改往往长成一组条件分支：临时接口报错就退避重试，参数格式写错就当场修正，撞上权限拒绝立刻收手，只有高风险编辑才补跑全量测试。在“完成/失败”那一栏里，四种问题看上去全都一模一样；只有在多维指标和执行轨迹同时摊开后，修改器才知道该往哪根神经下刀。
 
-Meta-Harness 让提出修改的 Agent 检索此前的代码、分数和完整轨迹，使这种诊断可以落到具体行为上。反馈的价值，是帮助系统找到哪一步机制出了问题。[29](#ref-29-zh)
+*Meta-Harness* 就把这种“看病下药”直接塞进了提出改法的环节里，让 proposer 直接查阅过往代码版本、各维分数以及完整执行轨迹，而不只是对着一个光秃秃的平均分瞎猜。[29](#ref-29-zh)
 
-最后再加安全过滤，仍然有用：它可以阻止 P1 被部署。但它无法找回搜索从未生成、或者早已丢弃的策略。如果每一代只留下完成率最高的候选，P2 可能在部署约束介入之前就消失了。记录全部候选可以避免彻底丢失，但后续把搜索预算分给哪些父代，仍然会影响下一步能找到什么。**筛选不仅决定最后选谁，也决定后续搜索还能从什么出发。**
+那干脆搜索时全力冲完成率、部署前再套一层安全拦截门行不行？拦截门当然能把 P1 挡在生产门外，但它变不出一个搜索早期就被淘汰掉的 P2。哪怕团队把所有历史轨迹全记进了日志，下一轮把有限的变异算力分给哪几个父代，照样决定着搜不搜得到好方案。**筛选决定的不只是最后留下谁，还决定了下一轮搜索还能从哪些候选出发。**
 
-因此，共同优化要让相关要求参与整个改进过程：提出什么修改、保留哪些候选、继续探索哪些方向。测量多个属性只是第一步，测量结果还要影响搜索。固定效用、显式约束和保留一组方案，是实现这一点的不同方式。
+共同优化说白了就是把线上的真约束提前请进搜索环里，让它直接参与“提什么改法、留哪个版本、往哪支继续搜”。多目标效用、硬性门槛与 Pareto 档案，本质上只是让这些约束尽早插手的三种工具。
 
-还有一种容易被忽略的可能：看起来必须取舍，只是因为当前设计不好。换掉一个不可靠的工具，可能同时提高完成率、减少重试。我们应该尽量发现这样的共同改进，再把确实存在的取舍明确呈现出来。在现有的取舍中选择不同方案，与发现比它们更好的策略，是两种不同的进展。
+当然还有一种最划算的情况：有些所谓的“两难取舍”，纯粹只是因为当前实现太糙。把一个动不动格式出错的补丁工具换成稳妥的 diff 接口，往往能同时拉高通过率、顺便砍掉一半无谓重试。多维诊断恰好能帮你把这类实打实的联合改进从真正的硬取舍里挑出来。
 
-<h2 id="objectives-zh">04 / 从多个指标，走到共同决策</h2>
+<h2 id="objectives-zh">从多个指标，走到共同决策</h2>
 
 ### 先确定什么不能交换
 
-如果修改禁止访问的文件不可接受，那么多完成几道题不能抵消这件事。这个要求应当决定候选是否可用，并在可能时通过操作层面的权限控制落实。已经观察到违规的候选，不适合这样的部署；通过有限测试，仍然不能消除未来行为的不确定性。
+如果误改受保护配置文件属于绝不容忍的红线，那多做出几道题也填不平一次越权事故。这类底线必须放进可行域筛选条件里，能靠运行沙箱硬隔离的尽量用硬隔离兜底——一旦在评测里踩了红线直接一票淘汰（同时清醒记住，有限测试零违规只意味着经验风险受控，不代表形式化安全证明）。
 
-这样可以分开两个容易混在一起的问题：“这个候选是否符合要求”，以及“符合要求的候选里更喜欢哪一个”。某些风险可以设置明确的容忍范围，另一些行为则属于禁止事项。优化方式应当反映真实需求。
+把硬门槛单拎出来，能立刻厘清两个老被搅浑的问题：“这个策略合不合规、能不能上线？”和“在都合规的候选中，我们更偏爱哪一组性价比？”
 
 ### 偏好明确时，就把它写清楚
 
-当不同目标之间的交换关系稳定、且有依据时，加权效用是合理的。SICA 就把表现、成本和运行时间合成一个效用分数。[7](#ref-7-zh) 这已经是一种同时考虑多个要求的方式。
+如果项目对质量、费用和延迟之间的交换比例已经非常明确且长期稳定，把它们揉成一个加权效用函数简单又直接。*SICA* 就是这样把任务成功度、花销和运行耗时合到一个总效用分里的。[7](#ref-7-zh)
 
-用前面的例子可以看清权重的影响。暂时只比较完成率和调用数：每次平均工具调用扣 0.1 个百分点，P1 得 87.6，P2 得 87.2；改成扣 0.5 个百分点，两者变成 82 和 84，排序反转。两次计算都没有错，改变的是偏好。如果再加上禁止越权的约束，无论这些权重如何设置，P1 都会被排除。
-
-加权分数表达的是一种具体偏好。排序既取决于交换关系，也取决于指标如何归一化；即使写出来的权重没变，实际取舍也可能改变。
+拿前面那张小表试算一下就知道单靠权重有多敏感。暂时不看权限红线、只换算完成率和调用次数：每次平均调用扣 `0.1` 个百分点时，P1 是 `87.6`、P2 是 `87.2`，P1 险胜；只要把罚分调到每次 `0.5` 个百分点，分数瞬间倒挂成 `82` 比 `84`。两遍算术都没错，仅仅是尺子和偏好稍微挪了一格；而一旦加上那条不可越权的硬约束，不管权重怎么调，P1 都只能直接退场。
 
 ### 一次选择太早时，就保留不同方案
 
-如果同一个系统要服务多种任务需求，过早确定唯一方案可能造成浪费。在满足部署要求的候选中，有的更便宜，有的完成率更高。Pareto 档案保留这样的候选：在已评估且符合要求的方案中，没有另一个方案在所有选定目标上都至少同样好，并且至少一个目标更好。
+要是同一个 Agent 框架既要伺候对延迟极敏感的实时对话用户，又要跑追求高成功率的夜间批处理作业，过早拍板唯一权重反而会浪费掉大批可用候选。在所有跨过安全与权限门槛的合规策略中，维持一套非支配 Pareto 档案——只留下那些“没有另一个合规对手在所有关注指标上都不输它、且至少有一项严格压过它”的候选：
 
 <figure>
 <picture>
@@ -511,13 +505,11 @@ Meta-Harness 让提出修改的 Agent 检索此前的代码、分数和完整轨
 <figcaption><strong>图 2.</strong> 与表格对应的假设策略。P0 和 P2 适合不同资源预算，P1 虽然完成率最高，却不符合授权要求。连线用于连接这两个示例方案。</figcaption>
 </figure>
 
-于是，P0 和 P2 各有用途：P0 适合更紧的资源预算，P2 用更多成本换取更高完成率。档案推迟了偏好选择，也为后续变异保留了不同起点。
+这样 P0 和 P2 就各有归宿：P0 扛住低成本预算档，P2 多花一点工具调用换更高完成率，还顺带给下一代变异留出了两条不同的起跑线。反之，如果线上场景和成本换算早就钉死了几年不变，单目标直冲最优通常更省事；档案真正值钱的地方，在于取舍彼此耦合又会随场景摆动的时候。
 
-**当重要影响相互耦合、又不能彼此替代时，需要共同考虑；当多种取舍仍然有价值时，保留前沿才有意义。** 如果部署效用已经明确且长期不变，直接寻找它的最优解，可能比维护一个宽泛的档案更有效率。
+<h2 id="methods-zh">现有多目标方法具体增加了什么？</h2>
 
-<h2 id="methods-zh">05 / 现有多目标方法具体增加了什么？</h2>
-
-现有多目标方法把这些要求带进了不同的改进环节：工作流搜索、技能选择，以及策略学习。
+眼下这批多目标自进化工作，大致顺着三个切入口把多种约束带进了搜索和训练环节：工作流拓扑搜索、技能包筛选与底层策略学习。
 
 <div class="bm-table bm-table-wide" role="region" aria-label="多目标方法所解决的选择问题" tabindex="0" markdown="1">
 
@@ -533,40 +525,37 @@ Meta-Harness 让提出修改的 Agent 检索此前的代码、分数和完整轨
 
 </div>
 
-MoFlow 把取舍带进了搜索树内部：一个节点保留多种可达结果，再通过凸包搜索，从已发现的工作流中支持不同线性偏好权重下的选择。[33](#ref-33-zh)
+*MoFlow* 挺有意思的一点，是把多种可达取舍直接存进搜索树节点里，之后再用凸包选择按用户不同的线性偏好实时挑出对应工作流。[33](#ref-33-zh) 而放眼整张表，各家瞄准的问题性质其实很不一样：满足平台形式规范不同于防住运行期越权，能反复摊销搜索成本的通用技能也不同于单次查询实时适应；像 *GEPA* 同样用了 Pareto 筛选，但它保的是跨不同题目的互补优势，并非刻意画一条“质量—成本—安全”前沿。[9](#ref-9-zh)
 
-这些方法回应了不同的需求。平台规范不等于操作安全，可复用技能与单次查询策略也有不同的成本摊销方式。GEPA 还提供了另一个区别：它的 Pareto 选择保留不同题目上的互补优势，并不自动构成质量、成本、安全这几个维度的前沿。[9](#ref-9-zh)
+我们自己的工作 **MOAE** 走的是单查询适应路线：保持底层模型、工具集和大框架不动，专门在执行前用分目标诊断去改动规划、工具核验和停止策略，用完整 rollout 实测后收进 Pareto 档案，把最终选哪一档推迟到输出门槛之前。[23](#ref-23-zh)
 
-我们的工作 **MOAE** 采用单个查询的设置：模型、工具与架构固定，候选策略改变规划、工具使用、验证和停止方式。不同目标的诊断信息指导修改，完整执行提供评估证据，经验档案先于最终部署选择建立。[23](#ref-23-zh)
+穿透这些不同实现，真正通用的设计思想是把**搜索过程中该保住的多样性**和**单次交付时必须选出的最终答案**拆开看。至于那些跑砸了但很说明问题的失败路径或成功对比，也该作为诊断语料单独存下（就像 *HELIX* 所强调的那样），既不污染可部署候选池，也不浪费反面经验。[30](#ref-30-zh)
 
-其中可以推广的设计思路，是分开**搜索中值得保留什么**，以及**某次部署最终返回什么**。这些方案的价值，取决于候选覆盖范围与评估质量。
+<h2 id="evidence-zh">多目标搜索之后，哪些共同问题仍然存在？</h2>
 
-保存候选还有第三种用途：从中学习。失败的框架可能提供有用的负例，两条成功轨迹的差别也可能暴露多余步骤，HELIX 明确讨论了这种经验价值。[30](#ref-30-zh) 我会把可部署方案与诊断记录分开保存，让暂时表现不好的候选也能留下有用的证据。
-
-<h2 id="evidence-zh">06 / 多目标搜索之后，哪些共同问题仍然存在？</h2>
-
+把指标画成多目标前沿只能解决“别看漏其他维度”，下面这五个老问题几乎在所有自进化环里照样存在：
 
 ### 多个代理指标，仍然可能遗漏真实要求
 
-增加一个目标，只有在新信号测到了有意义的东西时，才修复了原来的遗漏。评分器可能奖励解释流畅，而不是证据充分；工具效率指标可能奖励少调用，却没有识别被省掉的那些检查。几个薄弱的代理指标放在一起优化，并不会自动变得可靠。
+加一个评价维度，前提是那道新信号真的咬住了业务关心的问题。裁判模型一样可能偏袒写得天花乱坠的空话而放过没依据的结论；工具效率惩罚一样可能逼着 Agent 省掉最关键的二次核验。几个有漏洞的代理指标堆在一起多目标优化，并不会负负得正变可靠。
 
-RQGM 探索让评估器一起进化，使评价信号本身也能改变。[15](#ref-15-zh) 但历史结果也因此更难比较。我倾向于在可变评估之外保留稳定的外部检查，以便区分行为改变，以及评价标准改变。
+像 *RQGM* 让评估器和 Agent 一块协同进化，能防止裁判很快过时失效。[15](#ref-15-zh) 代价是失去了固定的纵向标尺，所以实际系统里总还得在闭环外钉住几把不随演化改动的外部测试，才能分清到底是 Agent 真强了，还是裁判自己放松了尺子。
 
 ### 有用的技能，换一种组合可能反而有害
 
-*When Self-Evolution Backfires* 追踪了一条失败链：有缺陷的技能入库后，会影响后续技能的提炼；删除源头，仍然可能留下已经继承问题的后代。它提出的 VaG 在入库前检查技能，并评估组合贡献。[31](#ref-31-zh) *Coalition-Aware Skill Reliability* 进一步检查技能贡献如何随搭配和部署领域改变，通过组合感知选择与迁移时屏蔽来处理问题。[32](#ref-32-zh)
+一旦改动持久写入共享记忆或技能库，时间耦合就跟着来了。*When Self-Evolution Backfires* 揭露过一条很具体的传染链：一条带缺陷的技能混进库里之后，会污染后续提炼出来的衍生技能，哪怕回头删掉罪魁祸首，它的污染后代依然留在系统里作祟；文中提出的 *VaG* 会在准入前联合检验技能与已有库的相互作用。[31](#ref-31-zh) *Coalition-Aware Skill Reliability* 则用组合感知的准入机制与迁移屏蔽，专门追踪同一个技能换了搭档或领域后贡献度怎么剧烈变化。[32](#ref-32-zh)
 
-问题因此变成了“这次更新放进当前系统后，会产生什么影响”。局部收益还需要接受组合与后续复用的检验。共同评估也由此增加了时间维度：一条规则今天可能有用，却让明天的更新更不可靠。
+这意味着评估一次更新时，只测“它单干行不行”是不够的，还得验“它放进现有技能池里搭伙行不行、会不会带坏下一批学出来的规则”。
 
 ### 带噪声的前沿，可能保留的是幸运候选
 
-某个候选在一次运行中表现很好，可能只是运气好。目标变多以后，也会有更多候选看起来互有优劣，难以直接淘汰。档案可能增长得很快，对其中候选的信心却没有同步增加。
+在带随机性的多轮执行里，某个候选碰巧蒙对一道难题，看起来就像天降神兵。目标维度一多，几乎任何撞大运的异常样本都能凭某一维擦边亮眼而躲过支配淘汰，导致经验 Pareto 档案迅速膨胀，可信度却完全没跟上。
 
-于是，预算问题不只在于如何产生变异，还包括什么时候应该生成新策略、重复评估有潜力的策略，或者专门检验一个疑似失败条件。有用的档案应当同时保留不确定性和失败证据。“在当前观测中不被支配”，描述的是现有证据，并不是 Agent 永久具有的属性。
+因此搜索预算不止要管“怎么产生新变异”，还要管资源该怎么分配：什么时候生成新改法、什么时候给前沿上有希望的候选多复跑几轮压低方差、什么时候专测高危边界。把重复方差和已知反例一并记录进档案，才不至于把“单次侥幸不被支配”误认成稳定实力。
 
 ### 在选定任务上进步，不等于迁移或递归能力已经成立
 
-已有结果很有价值，但它们支持的是不同层次的主张：
+看几份有代表性的定量结果就知道，报告的涨幅和外推范围之间往往隔着一层窗口纸：
 
 <div class="bm-table bm-table-wide" role="region" aria-label="代表性定量证据及适用范围" tabindex="0" markdown="1">
 
@@ -578,27 +567,30 @@ RQGM 探索让评估器一起进化，使评价信号本身也能改变。[15](#
 
 </div>
 
-在未见任务上表现更好，支持改进具有超出选择集的效果。要证明**改进器本身**更强，还需要下一步比较：让原始改进器与进化后的改进器，从匹配的 Agent 出发，使用相同预算，在未见任务族上比较各自带来的提升。用于反复筛选更新的私有样本，即使具体内容对内层 Agent 不可见，也已经参与了改进过程。
+在未见过的测试题上拿到更高分，证明改动确实泛化出了最初的挑选题集；可真想宣称“改进器自己进化得更会找改法了”，必须做另一场对照：让初始改进器和进化后的改进器站在完全相同的起点 Agent 上，拿着一样的预算去攻全新的任务家族，比谁拉出的净涨幅更大。别忘了，哪怕内层提示从没直接见过那 200 道挑选用的测试题，只要外层循环拿它们反复筛了 80 轮候选，这批样本就已经实打实耗进优化成本里了。
 
-对于持久更新，还需要检查它能否经受模型或工具变化。这把进化问题与 [Agent Deployment Gap]({{ '/the-anchor-of-logic-and-the-sands-of-probability/' | relative_url }}) 联系起来：继承下来的工作流可能包含对旧模型的假设，记忆或工具补丁也可能把缺陷带入后续执行。近期安全综述同样关注这种持久状态带来的风险。[28](#ref-28-zh)
+至于那些会被持久化保存下来的产物——技能、经验笔记、工具补丁——它们能不能抗住底层模型升级换代，又会直接连回到上一篇谈的 [模型迁移与部署落差]({{ '/the-anchor-of-logic-and-the-sands-of-probability/' | relative_url }})。许多留下来的经验暗含着对旧模型习性的依赖，甚至会把隐蔽缺陷一路捎给未来的执行，近期关于自进化安全的综述也把这类持久状态污染列作了核心风险。[28](#ref-28-zh)
 
 ### 搜索本身，也在消耗我们试图优化的资源
 
-最终策略便宜，不代表找到它的过程便宜。假设寻找可复用工作流花了 100 美元，每次使用节省 0.10 美元，那么不计维护成本，需要使用 1,000 次才回本。单查询搜索面对的是另一种账：它必须在当前查询上解释这笔开销。报告应当分开搜索、评估和部署执行，而不是都放进一个含义不清的“效率提升”。
+最终上线策略跑起来再便宜，也掩盖不了搜出它花了多少钱。花 100 美元算力搜出一个可复用工作流、每次执行省下 0.10 美元，不计后续维护成本就已经得跑满 1,000 次才能打平本钱；单查询现场演化面临的算术更苛刻，必须在当下这一条请求里把搜索花销赚回来。把“搜索成本”“评测成本”和“稳态执行成本”分开记账，才不会被一句含糊的“效率提升”带偏。
 
-<h2 id="research-zh">07 / 怎样证明改进过程真的更好了？</h2>
+<h2 id="research-zh">怎样证明改进过程真的更好了？</h2>
 
-我会回到重试的例子，要求一种能够预测行为的解释。假如选择性重试有效，是因为它区分了临时错误和缺少权限，那么评估就应当在任务目标相近的情况下，改变这两个条件。如果稍微换一下条件，收益就消失了，说明原来总结出的经验过于宽泛。
+再回到那只爱重试的编程 Agent。假如研究者认为“选择性重试”奏效是因为区分开了临时超时与权限不足，验证办法很简单：保持任务目标大致相同，专门构造一批只切换错误成因（网络超时 vs. 权限拒绝）的对照题。条件微调一下收益就烟消云散的话，那刚才总结出的经验不过是一句过拟合规则。
 
-这就是为什么 [case 如何构建]({{ '/what-do-benchmarks-measure/' | relative_url }}) 属于 Agent 进化问题。测试集决定一次更新的哪些后果能够被看见。大量适合重试的题会鼓励一种策略；把可恢复故障与禁止操作区分开的成对案例，则可能揭示更有用的规则。
+这也恰恰说明为什么 [测试题如何构造]({{ '/what-do-benchmarks-measure/' | relative_url }}) 本身就是 Agent 进化不可或缺的一环。测试集长什么样，决定了一套优化循环能看到哪些后果：题库里全是重启一下就好的软报错，系统必然学会无脑重试；只有把可恢复故障与严禁越界操作成对放进同一张考卷，进化环才有机会学到真正讲究分寸的行为规则。
 
-要验证共同优化是否有用，我会比较：只优化完成率、最后再过滤；固定加权效用；约束搜索；逐项目标调优，以及保留多个目标方案的搜索。它们应当使用相同的候选修改接口，以及可比的总评估预算。最终比较依据事先声明的部署偏好和独立任务，而不是只报告新优化器偏爱的那个指标。
+真想实证多目标联合优化值不值那份复杂度，最好的办法是在同一套代码编辑接口与等额总评估预算下，跟四个实在基线正面交锋：只拼完成率再后置拦截、固定标量加权、硬约束搜索，以及单目标逐轮修补。最终裁判必须依据事前锁定的真实部署偏好和独立测试集来打分，绝不能偏袒新优化器自己最顺眼的那项代理指标。
 
-三个观察会让结果更有解释力：共同评估是否找到了其他流程遗漏的可用候选；保留下来的不同方案是否确实服务于不同需求；定向诊断是否产生了共同改进，而不只是选中了另一种妥协。档案更大，本身无法回答这些问题。超体积概括一组方案相对参考点覆盖了多大的目标范围。比较时要固定目标尺度和参考点，并结合实际部署表现。
+实验里看三条硬证据就够决定胜负：
+1. 联合评估有没有找回那些只靠后置过滤或逐项调优早就漏掉的好策略？
+2. 档案前沿保下来的几个方案，是不是确实各自服务于不同的线上预算与需求，而非随机采样的噪点？
+3. 基于执行轨迹的诊断改法，是不是真的挖出了“同时变好”的联合帕累托改进，而不是只在旧的苦差事之间挪位置？
 
-读下一篇 RSI 论文时，也可以沿着这条线追问：它修复了什么瓶颈，下一次执行继承了什么，哪些信号决定保留，哪些影响仍然不可见。然后判断证据究竟支持一个更好的答案、一个更好的可复用 Agent，还是一个更好的改进过程。
+（档案留了几十个点说明不了问题，用超体积比大小也只有在锁定边界、固定参考点并挂钩真实交付效果时才算数。）
 
-多目标进化的动机就从这里逐步形成：Agent 的同一个行动会影响几个要求，单一完成率无法识别全部影响；共同评估让这些影响可见，约束表达不可接受的行为，偏好决定如何选择可接受的结果，档案则可以保留仍然有价值的不同方案。**真正的研究挑战，是让这些决定足够可靠，使连续更新能够积累有用的能力。**
+顺着这套检查表去读下一篇 RSI 论文，思路也会格外清楚：先看它到底在改系统的哪一层堵点、什么东西会遗传到下一轮、靠哪几个信号决定谁能活下来，再反问一句“还有哪些真实代价躲在这些信号的盲区外”。多目标视角从来不是为了给算法加戏，仅仅是因为当一次修改会同时改写能力、开销与安全时，我们没法假装看不见另外那三分之二的后果。
 
 <h2 id="paper-map-zh">逐篇论文对照</h2>
 

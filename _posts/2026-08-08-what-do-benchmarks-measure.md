@@ -4,7 +4,7 @@ title: "What Makes a Benchmark Worth Testing?"
 title_zh: "怎样设计一个真正有评测价值的 Benchmark？"
 date: 2026-08-08
 author_profile: true
-excerpt: "How case construction shapes scores, what a smaller test set preserves, and how to build evidence for the decisions we actually care about. English / 中文."
+excerpt: "How case construction shapes scores, what a smaller test set preserves, and how to build evidence for the decisions we actually care about."
 excerpt_zh: "题目构造如何暗中决定评分规则，小规模测试集究竟保留了什么，以及如何为真正关心的决策构建可靠证据。"
 topic: "Benchmark design"
 topic_zh: "评测设计"
@@ -30,23 +30,23 @@ figure_alt_zh: "评分规则与题目构造如何影响评测结果的示意图"
 
 # What Makes a Benchmark Worth Testing?
 
-<p class="bm-meta">August 8, 2026 · Benchmark design · 16 min read</p>
+<p class="bm-meta">August 8, 2026 · Benchmark design · 16 min read<span id="vercount_container_page_pv" class="bm-meta__views" style="display:none;"> · <strong class="bm-meta__views-num" id="vercount_value_page_pv">--</strong> views</span></p>
 
 <p class="bm-deck">How case construction shapes scores, what a smaller test set preserves, and how to build evidence for the decisions we actually care about.</p>
 
-A question has kept coming back in our work on agent evaluation: **if a small subset of cases tells us almost as much as the full benchmark, what were the other cases contributing?**
+A single question keeps coming back in our work on agent evaluation: **if a handful of cases gives us almost the same signal as the full benchmark, what was the rest of the suite actually doing?**
 
-That question reaches beyond saving inference calls. A thousand cases can repeat the same failure condition. A difficult suite can give weaker models an uninformative wall of zeros. Two models can obtain the same score while differing sharply in tool use, state tracking, recovery, and efficiency. A smaller suite may preserve the average while erasing precisely those differences.
+This is about more than trimming API bills. A thousand test cases can endlessly repeat the same failure mode, just as an overly brutal suite hands weaker models an uninformative wall of zeros. Two agents can walk away with the exact same headline score while differing dramatically in tool discipline, state tracking, recovery, and efficiency, yet a naive subsampled test set can match the average while erasing those exact distinctions.
 
-The ranking example makes the problem tangible: A solves six out of ten cases; B solves five, but all five are difficult. Calling A “better” silently assumes that the ten successes have equal value. Where did that assumption come from? Often, from how many cases happened to be collected or generated.
+Consider a simple ten-task ranking problem: model A solves six out of ten tasks; model B solves five, and every one of those five is hard. Calling A "better" silently presupposes that all ten successes carry equal weight. Where did that weighting come from? Usually not from a principled decision model, but from whichever variants happened to be scraped or generated in bulk.
 
 <div class="bm-thesis" markdown="1">
 
-**Case construction is already part of the scoring rule.** The production process determines which demands enter a benchmark and how much weight they receive. Compression may faithfully preserve that score without validating its weights or preserving the evidence needed for other evaluation goals.
+**Case construction is already part of the scoring rule.** The way cases are sourced and balanced decides which demands enter a benchmark and how heavily each counts. Compressing a test set can faithfully track that aggregate number without ever validating its implicit weights or keeping the diagnostic evidence other decisions depend on.
 
 </div>
 
-The practical question is therefore: how do we build a set of cases that provides enough distinct, trustworthy evidence for a stated decision?
+The practical problem, then, is how to assemble a benchmark that gives distinct, trustworthy evidence for a stated evaluation decision instead of mistaking headcount for rigor.
 
 <nav class="bm-toc" aria-label="Contents" markdown="1">
 
@@ -64,43 +64,43 @@ The practical question is therefore: how do we build a set of cases that provide
 
 </nav>
 
-<h2 id="compression-en">01 / What does a smaller test set preserve?</h2>
+<h2 id="compression-en">What does a smaller test set preserve?</h2>
 
-“Evaluate performance” can mean estimating a fixed benchmark’s mean, ordering nearby models, predicting utility on future work, or describing behavior across several goals. These are different statistical targets.
+When people say "evaluate performance," they routinely conflate four distinct statistical goals: estimating a static benchmark mean, ranking two closely matched models, predicting utility on unseen production traffic, or profiling behavior across several operational criteria. A test subset built for one of these rarely solves the others automatically.
 
-tinyBenchmarks showed that 100 selected examples could estimate scores on roughly 14,000 MMLU questions in its studied settings. Anchor Points similarly exploited relationships between item outcomes across models to reduce evaluation cost.[16](#ref-16-en) [17](#ref-17-en) But *How Reliable is Language Model Micro-Benchmarking?* found that strong aggregate prediction need not yield reliable comparisons between close models; in its settings, distinguishing such models could require up to about 250 examples, where random sampling became competitive.[18](#ref-18-en)
+Take micro-benchmarking. In its studied settings, *tinyBenchmarks* showed that just 100 curated questions could estimate overall scores across roughly 14,000 MMLU items, and *Anchor Points* similarly leaned on cross-model item correlations to shrink evaluation cost.[16](#ref-16-en) [17](#ref-17-en) Yet *How Reliable is Language Model Micro-Benchmarking?* found that low aggregate estimation error does not guarantee reliable head-to-head ordering between close models; separating nearby contenders in its experiments required around 250 items, at which point plain random sampling looked competitive.[18](#ref-18-en)
 
-There are at least three reasons a benchmark can be compressible. Its cases may repeat the same challenge. The calibration models may have highly correlated abilities, so they respond similarly even to substantively different cases. Or the prediction target may simply be a mean: recovering one number is easier than recovering an entire behavior profile.
+A benchmark can compress neatly for at least three very different reasons: the items keep repeating the same bottleneck, the calibration models share strongly correlated skill profiles so even diverse items move together, or the target is simply a single scalar mean (which is much easier to reconstruct than a multi-dimensional behavior profile).
 
-A useful thought experiment exposes the assumption. Two models can behave identically on a selected subset and differently everywhere else. Observations on the subset alone cannot tell them apart. Prediction becomes possible through assumptions about cross-item relationships, model populations, or task structure—and those assumptions need validation on new models.
+A quick thought experiment makes the hidden assumption obvious. Two models can behave identically on a curated subset and diverge everywhere else, leaving no signal inside the subset to tell them apart. Compression works only insofar as cross-item correlations, model populations, or task structures stay consistent, and every new model architecture puts those assumptions back on trial.
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
 | Intended use | Evidence the suite must retain | What a low score-estimation error leaves open |
 |---|---|---|
-| Estimate a fixed suite’s mean | Calibration on held-out models | Whether the original suite represents useful work |
+| Estimate a fixed suite's mean | Calibration on held-out models | Whether the original suite represents useful work |
 | Compare nearby models | Paired differences and uncertainty | Whether a small gap has the correct sign |
 | Diagnose several behaviors | Evidence for each goal and interpretable omissions | Whether a rare behavior disappeared during selection |
 | Screen costly failures | Detection within relevant risk strata | Whether a high mean hides an important tail |
-| Choose a deployment model | Utility on an independent workload | Whether the benchmark’s weights match actual needs |
+| Choose a deployment model | Utility on an independent workload | Whether the benchmark's weights match actual needs |
 
 </div>
 
-Our development comparisons sharpened a related distinction: more failed cases did not always mean broader coverage of task families, and improvements on individual coverage measures did not imply a better overall trade-off. Those observations concern coverage and cost. Establishing score preservation requires a separate held-out score-estimation experiment.
+Our own subset experiments sharpened a related divide: packing more failing tasks into a sample did not automatically broaden coverage across task families, nor did gains on an individual coverage metric guarantee a better overall trade-off. Coverage and score fidelity move independently, which is why claiming score preservation always demands a separate held-out estimation check.
 
-**Compression is evidence about a prediction problem. It becomes evidence about benchmark quality only after we specify what information the benchmark was meant to preserve.**
+At bottom, compression tells us about a prediction problem over scores; it only says something about benchmark *quality* once we spell out what decision-relevant information the full suite was meant to capture.
 
-<h2 id="weights-en">02 / The hidden step: case counts become weights</h2>
+<h2 id="weights-en">The hidden step: case counts become weights</h2>
 
-Partition a benchmark into non-overlapping task families. Family g contains n<sub>g</sub> cases, with model m achieving a family mean s<sub>mg</sub>. The ordinary mean is:
+Suppose we partition a benchmark into disjoint task families. If family `g` holds `n_g` items and model `m` scores an average `s_mg` on that family, the ordinary benchmark average is simply:
 
 <div class="bm-equation">S<sub>D</sub>(m) = Σ<sub>g</sub> (n<sub>g</sub> / N) s<sub>mg</sub></div>
 
-The factor n<sub>g</sub>/N is a weight. If a workflow is easy to generate or verify, producing more variants increases its influence on the score. A production convenience has become an evaluation preference.
+That ratio `n_g / N` acts as a silent priority weight. Whenever one workflow happens to be easy to synthesize or verify programmatically, generating extra variants gives it outsized control over the final leaderboard. Production convenience quietly turns into an evaluation preference.
 
-Equal weighting is well motivated when cases are sampled from the target workload and successes have comparable value. Multiple cases can also improve precision within a family. The problem arises when convenience sampling or generation quotas quietly stand in for workload frequency, error cost, or a declared scientific priority.
+Equal item weighting makes total sense when tasks come from genuine production sampling and every success brings roughly similar value, or when extra samples narrow confidence intervals within a family. It breaks down the moment synthetic quotas or scraping convenience stand in for real traffic frequencies, error costs, or stated research goals.
 
-Consider the ten-case example. A solves all five routine cases and one of five hard cases. B solves none of the routine cases and all five hard cases. Now copy each hard-case record once, leaving every model response unchanged.
+Go back to our ten-task example. Model A passes all five routine tasks and one of five hard ones; model B fails every routine task and passes all five hard ones. Now duplicate each of the five hard records once without changing a single model trajectory or answer:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -112,19 +112,19 @@ Consider the ten-case example. A solves all five routine cases and one of five h
 
 </div>
 
-This is a constructed counterexample: copying deterministic records adds no independent task evidence, but moves the hard-family weight from 1/2 to 2/3. Repeated stochastic executions are a different operation: they can reduce execution noise.
+Obviously copying static records is a constructed counterexample that adds zero new evidence while lifting the hard family's weight from 1/2 to 2/3 (unlike repeated stochastic rollouts, which actually reduce execution variance). Even so, it illustrates how fragile raw averages are.
 
-Let p be the hard-family weight in the intended use. Keeping the two family means fixed gives:
+Call `p` the weight assigned to the hard family in the real downstream setting. Holding both within-family means constant gives:
 
 <div class="bm-equation">U<sub>A</sub>(p) = 1 − 0.8p &nbsp;&nbsp; U<sub>B</sub>(p) = p &nbsp;&nbsp; U<sub>A</sub> = U<sub>B</sub> ⇔ p = 5/9 ≈ 55.6%</div>
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/weights-en.svg' | relative_url }}" alt="Figure 1 · A ranking is conditional on task weights. Analytic toy example: the curves cross at p = 5/9. The vertical guides show the original mix and the duplicated hard-case mix."><figcaption><strong>Figure 1 · A ranking is conditional on task weights.</strong> Analytic toy example: the curves cross at p = 5/9. The vertical guides show the original mix and the duplicated hard-case mix.</figcaption></figure>
 
-A has the higher observed utility below that threshold; B has the higher utility above it. Equivalently, if each hard-case success is worth r times a routine success, B wins when r > 1.25. **Difficulty itself does not choose p or r.** An obscure hard task can be unimportant, while a simple everyday task can matter enormously.
+Below `55.6%`, A leads; above it, B takes over. Put in terms of value ratio, if every hard-task success is worth `r` routine wins, B comes out ahead whenever `r > 1.25`. **Difficulty by itself settles neither `p` nor `r`.** An obscure puzzle can be irrelevant to users, while an everyday bread-and-butter task can dominate business impact.
 
-*The Benchmark Lottery* provides an empirical counterpart: choosing four of SuperGLUE’s eight tasks yields 70 combinations and six different first-place models.[21](#ref-21-en) The important design question is what justifies the combination.
+*The Benchmark Lottery* captured this cleanly in real NLP benchmarks: picking four out of SuperGLUE's eight tasks creates 70 valid subsets and produces six different top-ranked models.[21](#ref-21-en) The real design burden lies in explaining why the chosen mix deserves to carry the verdict.
 
-This suggests a concrete separation: set family weights from the intended use, and allocate cases within families to improve precision. More variants should not automatically create more importance. For overlapping goals, aggregation needs an explicit overlap rule rather than the partition formula above.
+The cleaner engineering split is explicit weighting: derive family weights from the intended workload or decision value, and spend case count inside each family purely to tighten estimation precision. More synthetic permutations should never buy extra vote share, and whenever tasks serve overlapping goals, aggregation needs an explicit rule rather than pretending families sit in neat silos.
 
 <details markdown="1"><summary>Would item response theory automatically put B ahead?</summary>
 
@@ -132,9 +132,9 @@ In the simplest Rasch model, it would not. With the same complete item set, fixe
 
 </details>
 
-<h2 id="frontier-en">03 / What frontier labs choose to measure</h2>
+<h2 id="frontier-en">What frontier labs choose to measure</h2>
 
-Model releases reveal which kinds of work their authors emphasize: engineering changes, professional deliverables, business automation, computer use, and scientific workflows. The following snapshot was checked on October 8, 2026.
+Frontier model cards offer a live snapshot of what labs currently care to prove: software patches, professional deliverables, SaaS automation, GUI computer use, and science workflows. The table below reflects release reports checked on October 8, 2026:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -146,15 +146,15 @@ Model releases reveal which kinds of work their authors emphasize: engineering c
 
 </div>
 
-My reading is that these selections serve three needs: relevance to product workflows, checkable outputs, and room to distinguish strong models at meaningful cost. That explains their usefulness as evaluation choices; the public reports do not disclose the complete internal selection process.
+Seen together, these suites converge around three practical criteria: real overlap with high-value work, verifiable end states, and enough headroom to separate top models before budgets explode. Public release blogs summarize outcomes well enough, though they leave internal suite selection criteria largely unstated.
 
-The benchmark name alone is insufficient to compare scores. Offline versus combined online/offline tasks, binary completion versus partial reward, one run versus best-of-three, and different tool permissions or agent frameworks define different measurements. A useful model claim is conditional on **the task set, weights, framework, budget, and scorer version**.
+Even across the same headline suite, bare benchmark names rarely support direct apples-to-apples comparisons. Offline vs. hybrid online/offline runs, strict binary pass vs. partial credit, pass@1 vs. best-of-3, tool sandboxes, and scaffolding changes all alter the measurement instrument itself. A model claim only means something relative to its **task version, family mix, scaffold, compute budget, and grader**.
 
-Adoption by a frontier lab establishes influence. To understand why a benchmark deserves confidence, we need to inspect its construction.
+Seeing a benchmark in a frontier launch tells you it has industry influence. Checking whether it merits real trust means opening up how the items were built.
 
-<h2 id="construction-en">04 / What careful construction actually does</h2>
+<h2 id="construction-en">What careful construction actually does</h2>
 
-“Human-written,” “expert-designed,” and “algorithmically generated” describe production methods. Their value comes from the checks those methods enable.
+Labels like "human-written," "expert-crafted," or "algorithmically generated" only describe the assembly line; what makes a benchmark credible are the verification gates wired into that pipeline.
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -170,21 +170,21 @@ Adoption by a frontier lab establishes influence. To understand why a benchmark 
 
 </div>
 
-DeepSWE makes the acceptance process concrete. Each task includes a prompt, verifier, and reference solution; checks focus on observable behavior, exercise alternative valid implementations, and include repeated runs for flakiness. That supports confidence in individual tasks. Representativeness is a separate question: active open-source repositories above a popularity threshold define a particular slice of engineering. A fixed framework controls conditions but does not establish equal suitability for every model; the native-framework comparison in the construction report used ten tasks.[22](#ref-22-en)
+DeepSWE shows what disciplined task acceptance looks like in practice: every item ships with a prompt, behavioral tests, and a working reference patch, checks alternate valid solutions, and runs repeated trials to weed out flakiness.[22](#ref-22-en) That gives real confidence at the *single-task* level. Still, representativeness is a separate check, since filtering active open-source repos above a popularity bar captures one particular slice of software engineering, and holding a single harness constant controls noise without guaranteeing equal model fit (notably, the native-framework spot check covered ten tasks).
 
-AutomationBench deliberately creates ambiguous records, stale information, and business rules embedded in messages. Its checks include required actions and prohibited side effects. In the official example, satisfying five of six assertions gives partial credit; full success requires all six. These choices make “update a record” materially different from “update the correct record and avoid damaging another.” The family quotas still need a rationale if the score is to estimate an actual workload.[6](#ref-6-en)
+AutomationBench approaches realism from the state side by intentionally planting ambiguous record names, stale fields, and policy constraints buried inside messages, paired with assertions covering both required actions and forbidden side effects.[6](#ref-6-en) Passing five of six checks earns partial credit in its reference example, while full success requires all six, cleanly distinguishing "edited a record" from "edited the right record without touching anything else." Even then, the relative share of each business function still has to be justified if scores are meant to reflect real office workloads.
 
-Algorithmic generation can make goals explicit too. AutoBencher optimizes dimensions including difficulty, topic importance, and novel performance patterns.[11](#ref-11-en) The next step is to validate the connection between those construction goals and the judgment the resulting suite supports.
+Automated generators can enforce crisp criteria too: *AutoBencher*, for instance, optimizes generated suites directly for difficulty, topic relevance, and performance divergence.[11](#ref-11-en) The missing step in many generated suites is verifying whether those synthetic targets actually translate into sound downstream model judgments.
 
-The wider evidence shows why this connection matters. In *Measuring what Matters*, 29 experts reviewed 445 benchmark papers.[12](#ref-12-en)
+Looking across the field more broadly, that validation gap shows up almost everywhere. In *Measuring what Matters*, 29 domain experts audited 445 benchmark papers:[12](#ref-12-en)
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/validity-en.svg' | relative_url }}" alt="Figure 2 · Defining a target and validating its measurement are separate steps. Bean et al., 445 papers: 78.2% defined the phenomenon, 53.4% provided construct-validity evidence, and 16.0% used uncertainty estimates or statistical tests. Categories overlap; these are rates of reported practices."><figcaption><strong>Figure 2 · Defining a target and validating its measurement are separate steps.</strong> Bean et al., 445 papers: 78.2% defined the phenomenon, 53.4% provided construct-validity evidence, and 16.0% used uncertainty estimates or statistical tests. Categories overlap; these are rates of reported practices.</figcaption></figure>
 
-<h2 id="response-en">05 / A response is a clue; execution makes it interpretable</h2>
+<h2 id="response-en">A response is a clue; execution makes it interpretable</h2>
 
-An agent task labeled “state tracking” can fail before the agent reaches the relevant state change. It can also succeed through a valid path that never requires remembering old feedback. In both cases, the task result is meaningful, but the label overstates the evidence for that specific capability.
+Take an agent task tagged as a "state-tracking" eval. On a hard run, the agent might crash on a broken file path before ever reaching the state mutation step; on an easy run, it might pass through a completely legitimate shortcut that skips consulting old feedback at all. Either outcome is fair game as an end-to-end datapoint, yet neither justifies stamping that score as proof of state-tracking ability.
 
-OSWorld 2.0 already analyzes whether challenges were encountered, blocked, or left untested.[9](#ref-9-en) This suggests a stronger way to use response examples: inspect the gap between the demand a case claims to test and the demand its execution actually exercises.
+OSWorld 2.0 already moves in this direction by distinguishing challenges an agent actually ran into, got blocked from reaching, or bypassed completely.[9](#ref-9-en) Extending that habit turns execution traces into an audit of construct validity: checking whether what the benchmark *claims* to stress is what the trajectory actually encountered.
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -198,55 +198,55 @@ OSWorld 2.0 already analyzes whether challenges were encountered, blocked, or le
 
 </div>
 
-A useful audit follows five links: what the task promises to measure; which information and states execution actually reaches; whether the intervention preserves a valid task; whether matched and restoration controls isolate the intended change; and whether the interpretation transfers to another model family.
+A reliable behavioral audit checks five links in sequence: what the task says it tests, which facts and states the rollout actually touched, whether ablations keep the task solvable, whether matched placebo and restoration controls isolate the active factor, and whether the same pattern holds across distinct model families.
 
-Legal alternative paths matter. If a task permits either a batch query or several smaller queries, both should pass when they produce the right result. If a purported memory task can be solved entirely from the current request, that is evidence against its memory interpretation, not necessarily against its value as an end-to-end task.
+Crucially, valid alternative paths deserve protection rather than penalty. If a user requirement can be solved cleanly via one batched query or three sequential queries, both routes should pass. If a purported memory benchmark turns out to be solvable straight from the final prompt, that undermines its diagnostic label as a memory probe without erasing its utility as an end-to-end workflow test.
 
-The denominators matter too. Reporting only trajectories that reached the challenge can make a model that fails early look strong on the few surviving runs. Retain both the overall task denominator and the challenge-reach denominator, with missing execution or scoring evidence shown separately.
+Denominators matter just as much. Conditioning metrics exclusively on trajectories that survived long enough to hit the target obstacle flatters models that fail cheaply at step two. Always keep both denominators visible (all attempted tasks alongside target-reached trajectories) and separate execution crashes or missing grader logs cleanly.
 
-**The research opportunity is to identify systematic mismatches between claimed demands and observed evidence, then show that repairing them improves an independent evaluation decision.**
+Tracing these mismatches between intended capability labels and executed evidence, then showing that fixing them changes downstream model selection for the better, is one of the highest-leverage openings in evaluation research.
 
-<h2 id="scoring-en">06 / The scorer is part of the experiment</h2>
+<h2 id="scoring-en">The scorer is part of the experiment</h2>
 
-A verifier can reject a correct implementation because it expects an unstated function name, or accept a wrong implementation because it checks only a convenient output. Passing a reference solution establishes one positive example. A stronger acceptance test also exercises valid alternatives and deliberately wrong solutions.
+A sloppy verifier can fail a perfectly valid patch just because it hardcoded an unmentioned helper name, or wave through a broken hack because it only asserted one superficial printout. Checking that a reference solution passes establishes exactly one positive datapoint; serious verifier acceptance requires testing plausible alternative solutions alongside adversarial bad ones.
 
-OpenAI’s audit of 138 selected difficult SWE-bench Verified tasks reported material test or specification issues in 59.4% of that audited set.[13](#ref-13-en) This directly identifies a mechanism by which model scores can reflect verifier requirements that the task did not state.
+OpenAI's audit of 138 hard tasks sampled from SWE-bench Verified made this gap tangible: 59.4% of those audited tasks carried substantive test or specification defects.[13](#ref-13-en) Once hidden test expectations diverge from the problem prompt, benchmark scores quietly measure unstated test assumptions rather than task competence.
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/scoring-en.svg' | relative_url }}" alt="Figure 3 · Correct grading and metric meaning are two different questions. Left: the selected 138-task SWE audit, not the full 500-task suite; 40.6% is the remainder outside the listed issue categories. Right: OSWorld 2.0, Opus 4.8, maximum thinking, batched calls, 500 steps. Binary completion is 20.6%; mean partial reward is 54.8%. Sources: [13] and [9]."><figcaption><strong>Figure 3 · Correct grading and metric meaning are two different questions.</strong> Left: the selected 138-task SWE audit, not the full 500-task suite; 40.6% is the remainder outside the listed issue categories. Right: OSWorld 2.0, Opus 4.8, maximum thinking, batched calls, 500 steps. Binary completion is 20.6%; mean partial reward is 54.8%. Sources: [13] and [9].</figcaption></figure>
 
-The right panel illustrates a different issue: a perfectly implemented metric can still be misread. Partial credit measures progress toward delivery; binary completion measures whether the entire requirement was met. A partial score of 54.8% does not mean 54.8% of tasks were completed.
+Even when the grading script has zero bugs, aggregate metrics are still easy to misinterpret, as the right-hand panel highlights. Mean partial credit tracks incremental progress toward goal state, whereas binary completion measures full delivery: scoring 54.8% partial reward on OSWorld 2.0 alongside 20.6% binary completion does not mean the agent finished half its tasks.
 
-Recent protocol audits also test whether unintended strategies can earn high scores. One causal-discovery example raised a score from 0.018 to 0.639 by exploiting a variable-ordering pattern in the generator.[14](#ref-14-en) An agent-safety audit found that labeling every example “unsafe” achieved F1 = 0.690 on R-Judge, exceeding five of 21 models that made differentiated judgments.[15](#ref-15-en) These are concrete tests of the relationship between the scoring rule and the behavior it is meant to reward.
+Protocol audits have also uncovered trivial gaming paths hiding in plain sight. In a causal-discovery evaluation, exploiting generator variable ordering jumped a baseline from 0.018 to 0.639.[14](#ref-14-en) On the R-Judge safety benchmark, a trivial baseline labeling every single example "unsafe" scored F1 = 0.690, beating five out of 21 models making nuanced predictions.[15](#ref-15-en) Stress-testing graders against degenerate strategies checks whether the metric rewards competence or artifacts.
 
-A benchmark acceptance suite should therefore contain both sides: behaviors that deserve credit and behaviors that should be rejected, including unintended side effects.
+Every new benchmark item therefore needs negative test cases just as badly as a golden solution: known wrong patches, lazy shortcuts, and forbidden side effects should all trigger predictable failure.
 
-<h2 id="budget-en">07 / Under a fixed budget, optimize the evidence you need</h2>
+<h2 id="budget-en">Under a fixed budget, optimize the evidence you need</h2>
 
-Harder cases help when current models are saturated. When almost every model fails, adding more difficult cases can produce little additional information about their differences. In a one-dimensional Rasch model with unit discrimination, item information is p(1 − p), maximized at p = 0.5.
+Adding harder items breaks ties when top models cluster near the ceiling, yet once every candidate model fails almost everywhere, piling on impossible questions stops adding discriminative signal. Under a basic one-dimensional Rasch model with unit discrimination, Fisher item information follows `p(1 - p)`, peaking at `p = 0.5`:
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/information-en.svg' | relative_url }}" alt="Figure 4 · Difficulty is relative to the population being measured. Analytic Rasch curve, I(θ) = p(1 − p), with p = σ(θ − b). It describes information for local ability estimation; business importance and failure cost are separate quantities."><figcaption><strong>Figure 4 · Difficulty is relative to the population being measured.</strong> Analytic Rasch curve, I(θ) = p(1 − p), with p = σ(θ − b). It describes information for local ability estimation; business importance and failure cost are separate quantities.</figcaption></figure>
 
-Rare-failure screening has another sample-size logic. With independent cases and a true failure probability of 1%, the probability of observing no failures in n trials is 0.99<sup>n</sup>.
+Catching rare catastrophic failures obeys a completely different sample-size law. If independent runs fail silently 1% of the time, the chance of seeing zero failures across `n` runs is `0.99^n`:
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/rare-en.svg' | relative_url }}" alt="Figure 5 · Estimating a mean and detecting a rare failure require different designs. In this independent 1% failure model, zero failures remain likely after 20 tests (81.8%) or 100 tests (36.6%). At least 299 tests give roughly a 95% chance of observing one or more failures."><figcaption><strong>Figure 5 · Estimating a mean and detecting a rare failure require different designs.</strong> In this independent 1% failure model, zero failures remain likely after 20 tests (81.8%) or 100 tests (36.6%). At least 299 tests give roughly a 95% chance of observing one or more failures.</figcaption></figure>
 
-For multi-goal agent evaluation, the useful output is often a vector: evidence for tool use, feedback retention, state updates, recovery, and quality-preserving efficiency. A high value on one axis does not fill a missing axis.
+That tension is why useful multi-goal evaluations output a vector rather than pretending one scalar summarizes everything: tool accuracy, memory retention, state updates, error recovery, and latency-bounded efficiency answer orthogonal questions. Strong results on four axes do not fill a missing fifth.
 
-Coverage should have a defined unit. Let U<sub>g</sub> be the set of audited behavioral conditions for goal g, and E<sub>g</sub>(S) the conditions supported by acceptable execution evidence from selected cases S. A simple distinct-condition coverage is:
+To talk concretely about coverage, pick an explicit unit. Let `U_g` denote the audited behavioral conditions under goal `g`, and `E_g(S)` the distinct conditions actually exercised and verified in subset `S`:
 
 <div class="bm-equation">C<sub>g</sub>(S) = |E<sub>g</sub>(S) ∩ U<sub>g</sub>| / |U<sub>g</sub>|</div>
 
-Here the difficult work is defining and auditing the conditions. If a hundred variants all support the same condition, they increase repeated observations, not the number of distinct conditions. Report those counts separately. An empty or unassessed U<sub>g</sub> is unknown coverage, not 100%.
+Counting deduplicated conditions forces honesty: generating a hundred paraphrases of the same constraint raises sample count, not distinct coverage `C_g(S)`, so repetition and breadth should be reported separately. (And leaving `U_g` undefined means coverage is unknown, never 100%.)
 
-CheckList’s capability-by-test-type organization offers a useful precedent.[20](#ref-20-en) Stateful agents add the requirement that the condition must actually occur during execution. Label coverage, tool-call coverage, and interpretable behavioral coverage consequently answer different questions.
+CheckList demonstrated this matrix discipline cleanly for static NLP by crossing capabilities against test types.[20](#ref-20-en) Stateful agent benchmarks carry an extra burden: the test case only counts if the trajectory *actually hits* the condition at runtime, meaning label coverage, tool-call coverage, and behaviorally verified coverage measure very different things.
 
-A Pareto frontier can preserve trade-offs between coverage, redundancy, quality, and cost when no suite wins on all of them. Its meaning is conditional on the objectives and candidate pool. The objectives themselves need validation against the evaluation decision.
+When no compact subset maximizes coverage, low redundancy, estimation accuracy, and inference cost simultaneously, keeping a Pareto frontier preserves legitimate engineering trade-offs. Even then, a frontier only reflects the objectives fed into it, so those objectives still need validation against the real deployment choice.
 
-<h2 id="protocol-en">08 / Design a case, then design the suite</h2>
+<h2 id="protocol-en">Design a case, then design the suite</h2>
 
-Consider an illustrative task: **update the correct order using the approval valid at a specified time, notify its owner, and leave other orders unchanged.** The environment contains two similarly named orders, an earlier approval, and a later change message.
+Take a concrete workflow case: **update the right customer order using the latest valid approval prior to the cutoff timestamp, notify its owner, and leave every other order untouched.** Inside the sandbox sit two similarly named orders, an earlier approval email, and a superseding amendment.
 
-Calling this a “memory and planning” task is only the beginning. Its construction should specify the following.
+Tagging this item "memory and planning" is only a loose summary. Turning it into a reliable measurement unit takes seven explicit checks:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -262,15 +262,15 @@ Calling this a “memory and planning” task is only the beginning. Its constru
 
 </div>
 
-This brings the interpretation closer to observable behavior: “the agent read the new approval but used the old state” is more actionable than “the agent lacks memory.” A task that supports only end-to-end completion can remain valuable without receiving a finer diagnostic label.
+Working down that checklist ties failure analysis directly to observables: saying "the agent fetched the amended approval yet still wrote back the stale value" gives engineers something actionable to debug, whereas saying "the agent lacks memory" does not. Meanwhile, tasks that only offer reliable end-to-end grading can remain valuable workload samples without pretending to isolate fine-grained cognitive traits.
 
-At suite level, the construction order matters. Start with the decision and its goals; identify independent task families and behavioral conditions; assign weights from the intended use; construct and accept instances; use model responses to detect gaps and redundancy; then freeze the suite for independent evaluation. If diagnostic challenges and representative workload samples are both useful, retain both groups with their own interpretation.
+At the suite level, build order prevents silent bias. Define the decision and goals first; carve out independent task families and behavioral conditions; assign explicit weights anchored in the use case; verify individual tasks; probe early model rollouts for blind spots and clones; and finally freeze the benchmark for independent testing. When both diagnostic stress tests and representative production slices matter, score and interpret them as separate groups rather than mashing them into one opaque average.
 
-Dynamic collection, as in Dynabench, can discover new failures.[19](#ref-19-en) Retaining an anchor set alongside versioned challenge sets helps distinguish model progress from changes to the measuring instrument.
+Periodic additions modeled after *Dynabench* help track emerging failure modes over time, while pairing those versioned updates with a frozen anchor split lets teams tell genuine model progress apart from drift in the test set itself.[19](#ref-19-en)
 
-<h2 id="validation-en">09 / Three claims worth testing</h2>
+<h2 id="validation-en">Three claims worth testing</h2>
 
-The argument becomes a research program when it specifies results that could prove it wrong. These are the three hypotheses I would prioritize; they remain to be tested on the target agent tasks.
+A framework only earns its keep if we spell out what empirical outcomes could prove it wrong. Three testable claims stand out right away on realistic agent benchmarks:
 
 <div class="bm-table bm-table-wide" role="region" aria-label="Comparison table" tabindex="0" markdown="1">
 
@@ -282,19 +282,19 @@ The argument becomes a research program when it specifies results that could pro
 
 </div>
 
-For each comparison, freeze the evaluation goals, selectors, acceptance rules, and tolerances before the target run. Use independent evidence for the final judgment: a separate workload for model selection, confirmed behavioral defects for diagnosis, or new task families for transfer. Reusing the selection response as the sole success metric would only show that the optimizer optimized its objective.
+To keep any of these comparisons honest, lock in evaluation goals, selection criteria, acceptance bars, and tolerances before scoring held-out models. Final validation has to run on genuinely independent evidence: separate deployment workloads for model selection, verified behavioral failures for diagnostics, and held-out task families for transfer. Evaluating a selector on the exact development responses used to pick the cases merely proves the selector converged on its own objective.
 
-Cost accounting should include task construction, model probing, and recurring evaluation. Report both equal-case-count and equal-total-cost comparisons. A costly selection stage can be worthwhile when reused many times; the break-even point is part of the result.
+Cost accounting needs to look at the full lifecycle too, bundling item authoring, model probing, and ongoing inference runs together, then comparing selectors at both equal task count and equal total spend. Paying heavily up front to curate a compact suite can pay off handily over dozens of evaluations, provided the break-even volume is measured openly.
 
-A stopping rule should answer the original question about “how many cases are enough”: enough for which goals, with what uncertainty, on which population? Additional cases become unnecessary for a declared use when their marginal improvement in independent goal satisfaction or decision quality falls below a prespecified tolerance. A flat development score alone cannot establish that condition.
+All of this circles back to a principled stopping rule for suite size: enough for *which* judgment, with *what* error bars, over *which* model population? Extra cases stop earning their keep once their marginal contribution to independent goal evidence or ranking accuracy drops below a declared threshold, rather than whenever a development loss curve happens to look flat.
 
 ## The question every additional case should answer
 
-A benchmark does more than collect tasks. It distributes attention among demands, turns those demands into observable events, decides which events count as success, and aggregates the results into a judgment.
+A benchmark does far more than store a folder of prompts. It allocates attention across user needs, turns capabilities into observable traces, codifies what counts as success, and condenses those verdicts into a decision.
 
-That is why compression, construction, scoring, and ranking belong in the same discussion. If production quotas determine the weights, a compact suite may reproduce an arbitrary preference very efficiently. If task labels are unsupported by execution, broad nominal coverage may hide missing evidence. If the scorer rewards the wrong behavior, adding cases can make a biased judgment look more precise.
+Because those four steps lock together, suite compression, task authoring, grader validation, and leaderboard aggregation cannot be engineered in isolation. If generation convenience sets family counts, a distilled subset only reproduces an arbitrary priority faster. If execution never touches the labeled skill, nominal coverage hides blind spots. If the scorer leaks credit to shortcuts, running more tasks just gives sharper precision around the wrong metric.
 
-The constructive alternative is to make each link inspectable: justify the mix, verify the case, observe the challenge, test the scorer, and validate the resulting decision. **For every additional case, ask which judgment it improves—and what new evidence makes that improvement possible.**
+The alternative is straightforward if unglamorous: make every step auditable. Justify family weights, test alternative and broken paths, verify challenge exposure, stress-test the scorer, and validate against independent choices. For every extra test case added to a suite, we should be able to point to the exact decision it sharpens and the new evidence it brings that existing cases could not supply.
 
 <h2 id="references-en">Sources and figure data</h2>
 
@@ -304,27 +304,27 @@ The constructive alternative is to make each link inspectable: justify the mix, 
 
 </div>
 
-<div id="bm-content-zh" class="bm-language-content" lang="zh-CN" markdown="1" hidden>
+<div id="bm-content-zh" class="bm-language-content" lang="zh-CN" hidden markdown="1">
 
 # 怎样设计一个真正有评测价值的 Benchmark？
 
-<p class="bm-meta">2026 年 8 月 8 日 · 评测设计 · 约 16 分钟</p>
+<p class="bm-meta">2026 年 8 月 8 日 · 评测设计 · 约 16 分钟<span id="busuanzi_container_page_pv" class="bm-meta__views" style="display:none;"> · <strong class="bm-meta__views-num" id="busuanzi_value_page_pv">--</strong> 次阅读</span></p>
 
-<p class="bm-deck">题目构建如何进入分数，小题集究竟保住了什么，以及怎样为真正关心的判断设计证据。</p>
+<p class="bm-deck">题目构建如何暗中定下评分规则，小题集到底保住了什么，以及怎样为真正关心的决策搭建证据。</p>
 
-在做 Agent 评测时，一个问题反复出现：**如果只用一小部分 case，就能获得接近完整 benchmark 的信息，其余题目究竟贡献了什么？**
+做 Agent 评测做得越久，一个问题就越绕不开：**如果只挑出一小撮 case，就能还原出接近整套 benchmark 的结果，那剩下的几百上千道题到底在干什么？**
 
-这不只是节省模型调用的问题。一千道题可能反复检验同一种失败条件；很难的题集可能只让弱模型得到一排无法解释的零。两个模型总分相同，工具使用、状态跟踪、错误恢复和效率却可能截然不同。小题集可以保住平均分，同时丢掉恰好最值得了解的差别。
+这绝不只是一笔算力账。一千道题里，可能翻来覆去测的都是同一道门槛；一整份难到离谱的考卷，也可能只给弱模型留下一排毫无区分度的零分。更微妙的是，两个模型哪怕最后拿了完全一样的平均分，在工具使用、状态追踪、出错恢复和执行效率上也可能差得极远——而一个只盯着保住均分的精简子集，往往会在对齐平均分的同时，把这些真正关键的差异抹得干干净净。
 
-排名的例子让问题变得具体：A 答对十题中的六题；B 答对五题，但五题都是难题。称 A“更好”，暗含了十次成功价值相同的假设。这个假设从哪里来？很多时候，它来自各类题目恰好被收集或生成了多少道。
+拿一个极简的十道题排序例子就能看穿问题所在：模型 A 做对了 10 题里的 6 题，模型 B 做对了 5 题，但全是最难的那 5 题。凭 6 比 5 宣布 A “更强”，暗含了一句没人挑明的前提——这十道题每道题的价值一模一样。可这份“等价值”的假设是从哪来的？现实中大多并非出自谨慎的价值权重设计，仅仅取决于当初哪种题更好爬、更好造，恰好攒下了多少道。
 
 <div class="bm-thesis" markdown="1">
 
-**题目构建本身就是评分规则的一部分。** 生产过程决定哪些需求进入 benchmark，以及它们占多大权重。压缩可以忠实保留这个分数，却没有验证权重是否合理，也没有保证其他评测目标所需的证据仍然存在。
+**题目构造本身就是评分规则的一部分。** 怎么出题、怎么配额，早就决定了哪些能力需求能走进考卷，以及各自说话有多大分量。把题集压缩做小，可以精准还原出这个原始总分，但既无法替它证明权重本身合不合理，也保不住其他评测决策真正需要的行为证据。
 
 </div>
 
-因此，真正需要回答的是：怎样构建一组题，为事先明确的判断提供足够、可靠且不过度重复的证据？
+真正值得花心思回答的是：怎样组一套测试题，才能为我们关心的具体判断提供充分、可信且不虚胖的证据，而不是拿题海数量凑出“科学”的错觉？
 
 <nav class="bm-toc" aria-label="文章目录" markdown="1">
 
@@ -342,15 +342,15 @@ The constructive alternative is to make each link inspectable: justify the mix, 
 
 </nav>
 
-<h2 id="compression-zh">01 / 小题集到底保住了什么？</h2>
+<h2 id="compression-zh">小题集到底保住了什么？</h2>
 
-“评估性能”可能指估计固定题集的平均分、区分相近模型、预测未来工作的效用，也可能指描述多个目标上的行为。这些是不同的统计对象。
+平时随口说的“评估性能”，其实常常混着四件统计上完全不同的事：估算固定题库的平均分、给实力接近的两个模型排前后、预测上线真实业务后的实际效用，或是刻画模型在多个维度上的行为短板。面向其中一件事凑出的小题集，很少能顺带把另外三件事也一起做好。
 
-tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 MMLU 的成绩。Anchor Points 同样利用题目结果在模型之间的关联降低评测成本。[16](#ref-16-zh) [17](#ref-17-zh) 但 *How Reliable is Language Model Micro-Benchmarking?* 发现，总体预测准确未必保证相近模型之间的可靠比较；在其设置中，区分这类模型可能需要多达约 250 道题，此时随机抽样也开始有竞争力。[18](#ref-18-zh)
+看看微型评测（micro-benchmarking）的文献就很清楚。在 *tinyBenchmarks* 的实验设定里，只挑 100 道题就能比较准地估算约 14,000 道 MMLU 题目的总成绩；*Anchor Points* 也同样利用不同题目在各个模型之间的得分相关性来砍掉评测开销。[16](#ref-16-zh) [17](#ref-17-zh) 但随后的 *How Reliable is Language Model Micro-Benchmarking?* 紧接着指出了边界所在：总分估计误差小，并不保证能稳稳排清两个水平接近的模型——在它的设定下，真想把相近对手拉开区分度，题量往往得回到 250 题左右，而到这个规模时，单纯随机抽样也已经差不多一样有效了。[18](#ref-18-zh)
 
-一个 benchmark 可压缩，至少有三种解释。题目可能反复测同一种挑战；校准模型的能力可能高度相关，因而对实质不同的题也表现相似；预测目标也可能只是平均数——恢复一个数，本来就比恢复整个行为画像容易。
+一套 benchmark 能被大幅压缩，至少可能出自三种截然不同的原因：题库本身大量重复考察同一类难点；拿来校准的那批模型能力高度同质化，面对不同题目几乎同涨同落；或者我们预测的本来就只是一个标量平均分——还原出“一个数”，天生就比还原一整张多维能力画像容易得多。
 
-一个思想实验可以揭示其中的假设。两个模型可以在选定子集上完全一致，在其余题上完全不同。只观察子集，无法区分它们。预测之所以可行，依赖的是跨题关系、模型群体或任务结构的假设，而这些假设需要在新模型上验证。
+不妨做个小思想实验：完全可以有两个模型，在精挑出来的子集上答得一模一样，到了子集之外的题目上却表现迥异。单靠这个子集里的任何观测，根本分不出它们谁是谁。抽样预测之所以能成立，靠的是题间关联、模型分布和任务结构保持稳定；一旦换上训练范式截然不同的新模型，这些隐含前提都得重新接受检验。
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
@@ -364,21 +364,21 @@ tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 
 
 </div>
 
-我们的开发比较也让一个相关区别变得清楚：更多失败 case 未必覆盖更多任务家族，单项覆盖指标提高也未必形成更好的综合取舍。这些观察涉及覆盖与成本；要证明总分保真，需要另做留出模型上的成绩估计实验。
+我们在开发对比里也一次次撞见同一个落差：多塞进几道失败案例，未必就能多覆盖几个任务家族；单看某一项覆盖率指标往上走，也绝不保证综合权衡就一定更好。覆盖广度与成本控制是一回事，能不能守住总分预测精度又是另一回事——后者永远需要独立的留出模型估分实验来作证。
 
-**压缩提供的是关于预测问题的证据。只有明确 benchmark 原本要保留什么信息，才能进一步讨论它对题集质量意味着什么。**
+说到底，压缩表现得好，证明的是“总分可预测”；至于被保留下来的信息值不值得信，还得先问清楚这套 benchmark 最初到底想衡量什么。
 
-<h2 id="weights-zh">02 / 隐藏的一步：题目数量变成了权重</h2>
+<h2 id="weights-zh">隐藏的一步：题目数量变成了权重</h2>
 
-把题集划分为不重叠的任务家族。家族 g 有 n<sub>g</sub> 道题，模型 m 在其中的平均成绩为 s<sub>mg</sub>。通常的平均分就是：
+假设我们把题库划成互不重叠的任务家族。如果家族 `g` 塞进了 `n_g` 道题，模型 `m` 在这一族里的均分是 `s_mg`，那平时习以为常的总均分其实是：
 
 <div class="bm-equation">S<sub>D</sub>(m) = Σ<sub>g</sub> (n<sub>g</sub> / N) s<sub>mg</sub></div>
 
-其中 n<sub>g</sub>/N 就是权重。如果某种工作流容易生成或验证，多做一些变体就会提高它对总分的影响。生产上的便利，变成了评测中的偏好。
+公式里每个 `n_g / N` 都相当于一票权重。只要某类任务恰好更容易合成或者更好写自动化断言，随手多造几十道变体，就能显著抬高它在排行榜上的话语权。造题时的省事，不知不觉就成了评测里的偏心。
 
-当题目来自目标工作负载的合理抽样，且各次成功价值相近时，等权有充分理由。同一家族的多道题也能提高组内估计精度。问题出在便利采样或生成配额悄悄替代了真实频率、错误代价或明确的研究重点。
+如果题目本就按真实业务流量抽样，或者同家族里加题纯粹为了压低估计方差，等权当然说得通。麻烦出在“为了方便爬数或凑够整数配额”的题目占比，悄悄替我们拍板了真实场景的业务频率、出错代价和研究优先级。
 
-回到十道题的例子。五道常规题，A 全对、B 全错；五道难题，A 对一道、B 全对。现在把每条难题记录复制一次，所有模型响应都保持不变。
+回到刚才那十道题的例子：五道常规题，A 全对、B 全错；五道难题，A 对一道、B 全对。现在不做任何实质改动，只把那五条难题记录原封不动复制一遍：
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
@@ -390,19 +390,19 @@ tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 
 
 </div>
 
-这是一个构造反例：复制确定性的记录没有增加独立任务证据，却把难题家族的权重从 1/2 提高到了 2/3。重复随机执行是另一回事，它可以减少执行噪声。
+把确定性记录原样复制两份当然是个刻意构造的极简反例——它不像对非确定性 Agent 多跑几轮 rollout 那样能降低运行噪声，实质上零新增任何独立证据，却硬生生把难题家族的权重从 `1/2` 抬到了 `2/3`。
 
-令目标用途中的难题家族权重为 p，保持两类题的组内均值不变，则：
+如果真实业务中难题家族占的比重是 `p`，固定两组各自的准确率，两者的期望效用分别是：
 
 <div class="bm-equation">U<sub>A</sub>(p) = 1 − 0.8p &nbsp;&nbsp; U<sub>B</sub>(p) = p &nbsp;&nbsp; U<sub>A</sub> = U<sub>B</sub> ⇔ p = 5/9 ≈ 55.6%</div>
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/weights-zh.svg' | relative_url }}" alt="图 1 · 排名依赖任务权重。解析构造例子：两条曲线在 p = 5/9 相交。竖虚线对应原题集和难题记录复制后的题集。"><figcaption><strong>图 1 · 排名依赖任务权重。</strong>解析构造例子：两条曲线在 p = 5/9 相交。竖虚线对应原题集和难题记录复制后的题集。</figcaption></figure>
 
-低于这一阈值，A 的观测效用更高；高于这一阈值，B 更高。等价地，如果每次难题成功的价值是常规题的 r 倍，r > 1.25 时 B 领先。**难度本身不能决定 p 或 r。** 冷门难题可能不重要，高频简单任务却可能极其重要。
+`p` 不到 `55.6%` 时 A 赢，跨过去就是 B 反超；换算成单题价值倍率 `r`，只要一道难题顶得上 `1.25` 道常规题以上，B 就应该排在前面。关键在于：**题目本身有多难，并不能替你决定 `p` 或 `r` 该取多少。** 一道偏门极难题在实际生产里可能压根没人碰，而一道简单的高频常规操作一旦出错却可能代价惨重。
 
-*The Benchmark Lottery* 给出了实际研究中的对应现象：从 SuperGLUE 的八项任务中选四项，70 种组合产生了六个不同的第一名。[21](#ref-21-zh) 设计上真正需要回答的是：为什么选择这种组合？
+*The Benchmark Lottery* 早在传统 NLP 基准里就拿出过现成证据：仅仅从 SuperGLUE 的 8 个子任务里挑出 4 个来算总榜，70 种合法组合竟能选出 6 个不同的第一名。[21](#ref-21-zh) 设计考卷时真正逃不掉的问题是：你凭什么选用这一套组合与比例？
 
-由此可以明确区分两件事：根据用途确定家族权重，根据估计精度分配家族内部的题量。更多变体不应自动制造更高的重要性。对于相互重叠的目标，聚合时还需要明确处理重叠，不能直接套用上面的分区公式。
+工程上更清醒的做法是把两件事解耦：由真实业务或科学目标来拍板**各任务家族占多少权重**，而**每个家族内部放多少道题**则只服务于压低测算误差。多生成几套等价变体，不该白白多赚几张投票；遇到任务目标彼此交叠时，也得把合并规则挑明，别装作各家族全都能井水不犯河水。
 
 <details markdown="1"><summary>题目反应理论会自动把 B 排到前面吗？</summary>
 
@@ -410,9 +410,9 @@ tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 
 
 </details>
 
-<h2 id="frontier-zh">03 / 头部公司选择测什么？</h2>
+<h2 id="frontier-zh">头部公司选择测什么？</h2>
 
-模型发布报告展示了作者重点关注哪些工作：工程修改、专业交付物、业务自动化、电脑操作和科学工作流。下面是截至 2026 年 10 月 8 日核对的代表性报告。
+从各家大模型的发布报告里，大致能看清当前行业最急于证明的能力版图：工程代码改动、专业知识交付、SaaS 业务自动化、桌面操作与科学研究流程。下面是截至 2026 年 10 月 8 日核对的三份代表性发布配置：
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
@@ -424,15 +424,15 @@ tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 
 
 </div>
 
-我的理解是，这些选择服务于三种需要：贴近产品工作流、交付物可以检查、在有意义的成本下区分强模型。这解释了它们作为评测选择的用途；公开报告没有披露完整的内部筛选过程。
+在我看来，这一轮选型其实围着三项共同需求转：够贴近真实产品工作流、终点状态可以被稳定验收、在花得起的算力下还能拉出强模型之间的身位。不过公开报告终究偏重结果展示，各家内部究竟怎么筛选和裁剪题池，外人大多看不到全貌。
 
-只有 benchmark 名称，不足以比较分数。离线任务与在线离线合并任务、完整完成率与部分得分、单次运行与三次取优、不同工具权限或 Agent 框架，定义的是不同测量。一个有用的模型结论，依赖于**题集、权重、框架、预算和评分版本**。
+更常见的一个误区是：光看榜单上写着同一个 benchmark 名字，就直接拿分数拉通比较。离线的还是在线离线混跑、严格全对才算分还是按步骤给部分分、跑一轮还是三次取最好、外围配了什么工具权限和脚手架——只要其中一项变了，量出来的就已经不是同一把尺子。一条靠得住的模型分数结论，永远绑定在**题集版本、家族权重、外围框架、预算上限与评分脚本**这五件事上。
 
-被头部公司采用说明实际影响力。要理解一个 benchmark 为什么值得信任，还需要进入它的构建过程。
+头部实验室用不用某个 benchmark，只能说明它有影响力；值不值得我们把决策押上去，还得拆开看它是怎么把题做出来的。
 
-<h2 id="construction-zh">04 / 认真构题，具体做了什么？</h2>
+<h2 id="construction-zh">认真构题，具体做了什么？</h2>
 
-“人工编写”“专家设计”“算法生成”描述的是生产方式。它们的价值来自这种方式具体支持了哪些检查。
+“纯人工手写”“领域专家设计”“算法自动生成”听上去像三种流派，其实说的都只是生产工艺；真正让一套题集立得住的，是工艺流程里卡住了多少道质量关。
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
@@ -448,21 +448,21 @@ tinyBenchmarks 在其研究设置中，用 100 道精选题估计约 14,000 道 
 
 </div>
 
-DeepSWE 把验收过程写得很具体。每题包含题面、判定器和参考解；检查聚焦可观察行为，检验合法替代实现，并通过重复运行检查不稳定性。这些工作支持逐题质量。代表性则是另一层问题：超过关注度门槛的活跃开源仓库，对应特定工程工作范围。固定框架控制了条件，但没有自动证明它对每个模型同样适配；构建报告中的原生框架对照使用了十道题。[22](#ref-22-zh)
+DeepSWE 的工程验收流程很值得细看：每道题必须配齐题面、行为判定器和可跑通的参考解，测试专门对着可观察行为下断言，兼容不同的合法实现写法，还要靠重复运行排掉不稳定用例。[22](#ref-22-zh) 这套做法把**单题质量**兜得很扎实。但单题靠谱不自动等于全局有代表性——按热度门槛筛出的活跃开源仓库代表的是特定工程切面，而且用同一套固定框架控变量，也不等于这框架天然对各家模型一视同仁（顺带一提，原构建报告里测试原生框架差异时也只用了十道题）。
 
-AutomationBench 有意放入同名记录、过期信息，以及藏在消息中的业务规则。检查同时覆盖必须发生的操作和禁止出现的副作用。官方例子中，六项断言通过五项只获得部分分，全部通过才算完整成功。这让“更新了记录”与“更新了正确记录且没有破坏其他记录”成为实质不同的结果。如果要用总分估计真实工作负载，任务家族配额仍需要依据。[6](#ref-6-zh)
+AutomationBench 则从业务状态复杂度入手：特意往测试环境里塞重名记录、过期字段和藏在聊天消息里的业务约束，验收时既查该做的改了没有，也查不该碰的记录有没有受损。[6](#ref-6-zh) 官方示例里，6 条断言过 5 条只能拿部分分，6 条全过才算真正完成——这就把“随便改了一条记录”与“改对目标且零误伤”明确分开了。当然，真要拿它的总分代表某个岗位的工作负载，六大业务线的配额比例依然需要额外论证。
 
-算法生成也可以把目标显式化。AutoBencher 优化难度、主题重要性、新性能模式等维度。[11](#ref-11-zh) 接下来需要验证的是：这些构建目标，与最终题集能够支持的判断之间有什么联系。
+即便是算法自动生成的考卷，同样可以把设计目的摆上桌面，比如 *AutoBencher* 会顺着难度、主题重要性和行为分叉度直接去优化生成出的测试集。[11](#ref-11-zh) 真正关键的后一步在于验证：这些被优化出来的建构指标，到底有没有换来更靠谱的下游评判。
 
-更大范围的证据说明了这种联系为何重要。*Measuring what Matters* 中，29 位专家审查了 445 篇 benchmark 论文。[12](#ref-12-zh)
+把视野放大到整个领域，这恰恰是最普遍的短板。在 *Measuring what Matters* 这项综述里，29 位专家一起审计了 445 篇 benchmark 论文：[12](#ref-12-zh)
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/validity-zh.svg' | relative_url }}" alt="图 2 · 定义目标与验证测量是不同环节。Bean 等人审查 445 篇论文：78.2% 定义所测对象，53.4% 提供构念效度论据，16.0% 使用不确定性估计或统计检验。类别可重叠，统计的是论文报告中的做法。"><figcaption><strong>图 2 · 定义目标与验证测量是不同环节。</strong>Bean 等人审查 445 篇论文：78.2% 定义所测对象，53.4% 提供构念效度论据，16.0% 使用不确定性估计或统计检验。类别可重叠，统计的是论文报告中的做法。</figcaption></figure>
 
-<h2 id="response-zh">05 / 响应提供线索，执行使它可以解释</h2>
+<h2 id="response-zh">响应提供线索，执行使它可以解释</h2>
 
-一个标为“状态跟踪”的 Agent 任务，可能在模型遇到相关状态变化之前就失败；也可能通过不需要保留旧反馈的合法路径成功。两种情况下任务结果都有意义，但标签可能夸大了它对指定能力提供的证据。
+很多贴着“状态跟踪”标签的 Agent 测试题，在实跑时经常出现两种假象：模型可能刚起步就卡在文件路径报错上，压根没走到考验状态更新的那一步；反过来，它也可能走了一条完全合规的近路，压根没用到历史反馈就把题做完了。无论哪种情况，任务本身算过还是算不过都很合理，但硬把结果归因到“状态跟踪能力有多强”，证据就虚了。
 
-OSWorld 2.0 已经分析挑战被触达、被阻断或未测试的情况。[9](#ref-9-zh) 这提示了一种更有力的响应分析：检查题目声称要测的需求，与执行中真正发生的需求之间的差距。
+OSWorld 2.0 已经开始在报告里统计每个内置难点究竟是“真被触发了”、“中途被前置故障挡住了”还是“全程被绕过去了”。[9](#ref-9-zh) 沿着这条路再推一步，执行轨迹本身就能变成构念效度（construct validity）的检验尺：看一道题号称要考的难点，在真实跑起来时到底考没考到。
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
@@ -476,61 +476,61 @@ OSWorld 2.0 已经分析挑战被触达、被阻断或未测试的情况。[9](#
 
 </div>
 
-有用的审计可以沿五个环节展开：任务承诺测什么；执行真正触达了哪些信息和状态；干预后任务是否仍然有效；匹配对照与恢复对照能否隔离目标变化；这套解释能否迁移到另一个模型家族。
+一套靠得住的行为审计，通常要串起五个问题：题面承诺测什么？执行轨迹里实际读取并触发了哪些信息与状态？把关键因素删掉做消融时，题目本身是否还保持合法可解？做完配对的安慰剂修改和信息恢复对照后，变化是不是真的锁定在了目标机制上？这套解释换到另一家模型家族上还能不能成立？
 
-合法替代路径很重要。任务允许批量查询或多次小查询时，只要达到正确结果，两者都应通过。如果一道声称测记忆的题仅靠当前请求就能解决，这削弱的是它的记忆解释，而不一定是它作为端到端任务的价值。
+在这个过程里，一定要保护好合法的替代解法。只要能正确交付，一次性批量查询和分几轮小查询都应该算通过；要是某道号称测长程记忆的题，后来发现单看最后一句输入就能直接解出来，那它丢掉的是“测记忆”的标签依据，并不妨碍它继续作为端到端工程样本留在库里。
 
-分母也很重要。只报告触达挑战的轨迹，可能让经常前序失败的模型在少数幸存执行上显得很强。应同时保留总体任务分母与挑战触达分母，并单列执行或评分证据缺失。
+分母的口径同样马虎不得。如果只挑那些“成功走到了关键难点”的轨迹来算得分，反而会把早早就挂在第二步的模型衬托得格外亮眼。务必把全量任务分母和难点触达分母同时摆出来，再把运行崩溃、评分异常导致的样本缺失单列一栏。
 
-**值得研究的，是找出“声称测到的需求”与“实际获得的证据”之间的系统性错配，再证明修复能够改善独立的评测判断。**
+在研究上，最划算的切入口之一就是系统排查“标签宣称测什么”与“轨迹实际露出了什么”之间的错配，再用实证证明：修补这些错配真的能改写独立的模型选型结论。
 
-<h2 id="scoring-zh">06 / 评分器也是实验的一部分</h2>
+<h2 id="scoring-zh">评分器也是实验的一部分</h2>
 
-判定器可能因为预设了题面没有要求的函数名而拒绝正确实现，也可能因为只检查一个方便的输出而接受错误实现。参考解能通过，只建立了一个正例。更完整的验收还需要合法替代解，以及刻意构造的错误解。
+再精细的题目，配上一个粗糙的评分脚本也会全盘走样。判定器完全可能因为暗自写死了题面根本没提到的函数名，把一份完全正确的代码拒之门外；也可能因为图省事只盯了一个浅层输出，把糊弄过去的错解当成满分放行。标准参考解能跑通，顶多证明了一个正例可用；真正严谨的验收套件，既要能放行合法的替代解法，也得稳稳拦住刻意构造的错误实现。
 
-OpenAI 对 SWE-bench Verified 中选出的 138 道困难题进行审计，在该审计集合的 59.4% 中发现实质性的测试或说明问题。[13](#ref-13-zh) 这直接指出了一种机制：模型成绩可能反映的是题面没有声明的判定器要求。
+OpenAI 对 SWE-bench Verified 中挑出的 138 道高难题做的专项审计，把这件事摆在了明面上：在这批被审计题目里，高达 59.4% 存在实质性的单元测试或题意规范缺陷。[13](#ref-13-zh) 只要判定脚本预设的要求没在题面写明，最终榜单量出来的就不再纯粹是模型水平，而是模型猜对隐藏测试偏好的运气。
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/scoring-zh.svg' | relative_url }}" alt="图 3 · 判分正确与指标含义是两个问题。左：SWE 审计选择的 138 题，而非完整 500 题；40.6% 是所列问题之外的剩余比例。右：OSWorld 2.0，Opus 4.8、maximum thinking、批量调用、500 步；完整完成率 20.6%，平均部分得分 54.8%。来源：[13]、[9]。"><figcaption><strong>图 3 · 判分正确与指标含义是两个问题。</strong>左：SWE 审计选择的 138 题，而非完整 500 题；40.6% 是所列问题之外的剩余比例。右：OSWorld 2.0，Opus 4.8、maximum thinking、批量调用、500 步；完整完成率 20.6%，平均部分得分 54.8%。来源：[13]、[9]。</figcaption></figure>
 
-右图说明另一类问题：即使指标实现完全正确，也可能被错误解读。部分得分衡量朝交付目标推进了多少；完整完成率衡量全部要求是否满足。54.8% 的部分得分，不等于 54.8% 的任务已经完成。
+哪怕代码层面零 bug，指标本身照样会被念歪——图 3 右侧就是现成例子。部分得分反映的是朝着终点推进了多远，二值完成率衡量的才是整套交付是否全部过关；把 54.8% 的平均部分分听成“模型完成了一半以上的任务”，和实际 20.6% 的完整通过率之间差着一大截。
 
-近期协议审计也检验了非预期策略能否拿到高分。一个因果发现案例利用生成器中的变量排列规律，将得分从 0.018 提高到 0.639。[14](#ref-14-zh) 一项 Agent 安全审计发现，把 R-Judge 中所有例子都判为“不安全”，F1 可达 0.690，超过 21 个作出区分判断的模型中的五个。[15](#ref-15-zh) 这些是在具体检验评分规则与预期奖励行为之间的关系。
+近来的评测协议审计还抖出了不少靠走捷径拿高分的漏洞：某个因果发现测试被发现能利用题面变量的排列规律，硬把得分从 0.018 刷到 0.639；[14](#ref-14-zh) 在 Agent 安全基准 R-Judge 上，只要无脑把所有样本一律判成“不安全”，F1 竟然就能拿到 0.690，直接超过 21 个认真做区分判断模型里的 5 个。[15](#ref-15-zh) 拿退化策略和投机取巧去撞评分器，正是检验“规则奖励的到底是不是能力”最直接的办法。
 
-因此，benchmark 的验收应同时包含值得给分的行为，以及应当拒绝的行为，包括不应发生的副作用。
+所以做题集的验收测试时，负例和正例同样不可或缺：错解、偷懒近路和禁止出现的副作用，都必须稳定触及红线才行。
 
-<h2 id="budget-zh">07 / 固定预算下，优化真正需要的证据</h2>
+<h2 id="budget-zh">固定预算下，优化真正需要的证据</h2>
 
-当前模型接近满分时，提高难度有助于扩大区分空间；几乎所有模型都失败时，继续加难题可能很少增加关于模型差别的信息。在区分度为 1 的单维 Rasch 模型中，单题信息量为 p(1 − p)，在 p = 0.5 时最大。
+当顶尖模型纷纷刷到接近满分时，加难题能帮你重新拉开分差；可一旦题难到几乎所有模型全军覆没，继续往上堆更难的题，几乎提供不了任何关于强弱差异的新信息。在区分度取 1 的单维 Rasch 模型里，每道题提供的 Fisher 信息量等于 `p(1 - p)`，刚好在通过率 `p = 0.5` 时达到峰值：
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/information-zh.svg' | relative_url }}" alt="图 4 · 难度要相对于被测群体来谈。Rasch 解析曲线，I(θ) = p(1 − p)，p = σ(θ − b)。它描述局部能力估计的信息量；业务重要性和失败代价是另外的量。"><figcaption><strong>图 4 · 难度要相对于被测群体来谈。</strong>Rasch 解析曲线，I(θ) = p(1 − p)，p = σ(θ − b)。它描述局部能力估计的信息量；业务重要性和失败代价是另外的量。</figcaption></figure>
 
-稀有失败筛查有另一套样本量逻辑。假设各题独立，真实失败概率为 1%，n 次测试中一次失败都看不到的概率是 0.99<sup>n</sup>。
+但如果你关心的是揪出罕见的高危事故，样本量账本就得彻底换一套算法。在各次测试相互独立、真实事故率只有 `1%` 的前提下，连测 `n` 次一次都没撞见的概率依然有 `0.99^n`：
 
 <figure><img loading="lazy" src="{{ '/assets/benchmark-measurement/rare-zh.svg' | relative_url }}" alt="图 5 · 估计均值与检出罕见失败需要不同设计。在这个独立、失败率为 1% 的模型中，测 20 题仍有 81.8% 的概率看不到失败，测 100 题为 36.6%。至少 299 题才有约 95% 的机会观察到一次或更多失败。"><figcaption><strong>图 5 · 估计均值与检出罕见失败需要不同设计。</strong>在这个独立、失败率为 1% 的模型中，测 20 题仍有 81.8% 的概率看不到失败，测 100 题为 36.6%。至少 299 题才有约 95% 的机会观察到一次或更多失败。</figcaption></figure>
 
-对于多目标 Agent 评测，有用的输出往往是一个向量：工具使用、反馈保留、状态更新、错误恢复，以及保证质量前提下的效率。一维的高分不会补上另一维的证据缺失。
+正因如此，成熟的多目标 Agent 评测给出的往往是一张维度向量，而不是硬压成一个总分：工具调用合规度、长程反馈记忆、状态写回准确性、异常恢复和质量受约束下的效率，各管各的问题。前四项拿满，补不上第五项的缺口。
 
-覆盖需要明确单位。令 U<sub>g</sub> 为目标 g 下经过审计的行为条件集合，E<sub>g</sub>(S) 为所选题集 S 通过合格执行证据支持的条件。一个简单的去重条件覆盖率是：
+真要谈“覆盖全不全”，得先说清楚按什么单位数。令 `U_g` 表示目标 `g` 下所有经过梳理审计的行为条件集合，`E_g(S)` 表示被选中的测试集 `S` 在实际合格执行中真正证实测到的条件，那么去重后的独立条件覆盖率就是：
 
 <div class="bm-equation">C<sub>g</sub>(S) = |E<sub>g</sub>(S) ∩ U<sub>g</sub>| / |U<sub>g</sub>|</div>
 
-这里最难的工作是定义并审计行为条件。如果一百个变体都支持同一条件，它们增加的是重复观测，而非独立条件的数量。这两类计数应分别报告。U<sub>g</sub> 为空或尚未审计时，覆盖是未知，而非 100%。
+最费功夫的一步恰恰在于把 `U_g` 定义清楚并逐条审计。换一百种说法来问同一个约束条件，增加的是重复观测数，而不是独立覆盖率 `C_g(S)`——重复度和广度必须分开记账。（至于 `U_g` 压根还没定义或审计的情况，覆盖率叫“未知”，绝对不是 100%。）
 
-CheckList 按“能力维度 × 测试类型”组织行为测试，是一个有用的先例。[20](#ref-20-zh) 有状态 Agent 又增加了一项要求：相关条件必须在执行中实际发生。因此，标签覆盖、工具调用覆盖、可解释的行为覆盖，回答的是不同问题。
+当年 CheckList 按“语言能力维度 × 测试类型”搭起行为测试矩阵，给静态 NLP 树了很好的样板。[20](#ref-20-zh) 到有状态的 Agent 这里又多出一层要求：行为条件不仅要写在题面里，还必须在真实执行中确实发生过。因此，标签覆盖率、工具调用覆盖率和经执行证实的行为覆盖率，根本在回答三个不同层面的问题。
 
-当没有一套题在所有目标上都最佳时，Pareto 前沿可以保留覆盖、冗余、质量与成本之间的取舍。它的含义依赖目标定义和候选池；目标本身仍需要根据评测决策验证。
+在覆盖度、低冗余、分数还原和评测预算无法同时拉满时，用 Pareto 前沿把几组合理取舍并排留下来很有用；但也别忘了，前沿本身高度依赖你输进去了哪些优化目标，那些目标反过来依然要接受真实部署场景的检验。
 
-<h2 id="protocol-zh">08 / 先设计一道题，再设计一组题</h2>
+<h2 id="protocol-zh">先设计一道题，再设计一组题</h2>
 
-考虑一道示例任务：**根据指定时刻有效的审批，更新正确订单，通知负责人，不改动其他订单。** 环境中存在两个同名订单、一份较早审批，以及一条后来的变更消息。
+不妨落到一道具体例题来看：**在指定截止时刻前依据最新有效的审批记录，更新正确的订单、通知对应负责人，并确保其余订单丝毫不受影响。** 沙箱环境里特意放进了两笔名字相近的订单、一封更早的批准邮件，以及一条随后推翻旧结论的变更消息。
 
-把它称为“记忆与规划”任务只是开始。构建时还应明确以下内容。
+给这道题打上“记忆与规划”的标签只是开头。真要把它做进可信赖的基准里，至少得过一遍下面七层设计检查：
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
 | 设计层 | 具体要求 | 验收检查 |
 |---|---|---|
-| 任务合同 | 实体身份、截止时刻、审批优先级、收件人、禁止改动 | 必要信息可通过允许的访问方式获得 |
+| 任务契约 | 实体身份、截止时刻、审批优先级、收件人、禁止改动 | 必要信息可通过允许的访问方式获得 |
 | 初始状态 | 明确旧审批与后续消息的关系 | 可复现重置；冲突真实存在且可解决 |
 | 合法解 | 允许批量查询，也允许逐步查询 | 不同正确实现都能通过 |
 | 错误解 | 错订单、过期审批、漏通知、多通知 | 逐项拒绝这些特定错误 |
@@ -540,38 +540,39 @@ CheckList 按“能力维度 × 测试类型”组织行为测试，是一个有
 
 </div>
 
-这样，解释会更接近可观察行为：“Agent 读到了新审批，却使用了旧状态”，比“Agent 缺乏记忆”更便于检查和修复。只支持端到端完成判断的任务，也可以保留价值，无需贴上更细的诊断标签。
+走完这七层检查，问题定位会直接落在可观察证据上：“Agent 其实读到了最新的变更批文，写回时却沿用了缓存里的旧状态”，远比一句泛泛的“Agent 记忆力不好”好修得多。当然，那些只能稳定验收最终结果、不好拆细归因的任务，也依然可以保留作端到端测试样本，大可不必勉强贴上细粒度诊断标签。
 
-到了题集层面，构建顺序很重要。先明确决策与目标；识别独立任务家族和行为条件；根据用途设定权重；构造并验收实例；用模型响应检查缺口与冗余；最后冻结题集，进入独立评估。如果诊断挑战和代表性工作样本都有用途，就保留两组及各自的解释。
+把视角拉高到整套题集的搭建顺序，先后次序同样大有讲究：先锁定这份评测要服务什么决策、看重哪些目标；再划定相互独立的任务家族和行为条件清单，按实际用途拍板家族权重；接着逐题验收正反例与消融对照；再用少量前期模型试跑把题集里的盲区和雷同用例扫出来；最后冻结题库，专供后续独立评估。如果既想要压力诊断题、又想要贴近真实分布的代表性样本，最稳妥的是分两组单独计分解释，而不是揉进一个糊涂均分里。
 
-Dynabench 这样的动态收集可以发现新失败。[19](#ref-19-zh) 同时保留锚定集与分版本挑战集，有助于区分模型进步和测量工具本身的变化。
+长期运行还可以参考 *Dynabench* 的动态补题思路，不断把新露头的高危失败收进版本化挑战集，同时保留一组始终冻结的锚定子集，用来区分到底是模型真进步了，还是考卷本身悄悄改了难度。[19](#ref-19-zh)
 
-<h2 id="validation-zh">09 / 三个值得检验的主张</h2>
+<h2 id="validation-zh">三个值得检验的主张</h2>
 
-当论证明确哪些结果会推翻它时，才能形成研究计划。下面是我会优先检验的三个假设；它们还需要在目标 Agent 任务上验证。
+一套评测方法论只有亮出“什么样的实验结果能把我推翻”，才算真正立住了研究计划。在真实的 Agent 任务上，下面这三条假设最值得优先拿数据验证：
 
 <div class="bm-table bm-table-wide" role="region" aria-label="对照表" tabindex="0" markdown="1">
 
 | 假设 | 实验 | 会削弱该假设的结果 |
+|---|---|---|
 | 生产配额实质影响模型比较 | 固定模型结果与独立任务内容，改变家族重复倍率；比较普通均值与明确家族权重 | 排名本来就稳定，或原频率已符合用途 |
 | 总分保真与目标保真可以分离 | 在独立审计的目标、相近模型比较和新模型家族上检查保分子集 | 低成本成绩估计法同样保住全部必要证据 |
 | 响应辅助构建改善独立判断 | 在匹配信息与总成本下，与随机、分层、结构、难度、成绩估计基线比较 | 简单基线持平、收益仅限源模型，或构建成本抵消收益 |
 
 </div>
 
-每次比较，都应在目标运行前冻结评测目标、选题规则、验收规则和容忍度。最终判断使用独立证据：模型选择用另一份工作负载，诊断用已确认的行为缺陷，迁移用新的任务家族。如果只用选题时的响应作为成功指标，就只是证明优化器优化了自己的目标。
+每一组对照实验开始前，评测目标、选题算法、验收门限和误差容忍范围都得提前冻结好。最终裁判必须落在真正独立的证据上：模型选型要拿到另一套业务负载里验，行为归因要对照人工确认过的缺陷，泛化迁移要上新任务家族。如果拿当初用来挑题的同一批响应分数回头自夸“效果很好”，那不过是证明选择器确实迎合了自己的目标函数。
 
-成本核算应包含构题、模型探测与后续评测，同时报告相同题数和相同总成本的比较。昂贵的选题阶段在多次复用后可能值得，收支平衡点也是结果的一部分。
+核算成本也不能只盯最终推理那几毛钱：构题、用参考模型探测响应、再到后续反复评测的总开销全都要算进来，同时报告“同题量”和“同总预算”两条对比线。前期重金细挑出来的精简题集，在高频复用的回归流水线里照样能快速回本，而这个收支平衡点本身就是重要实验结果。
 
-停止增题的规则，应回答最初的“多少题才够”：对什么目标、允许多大不确定性、面向哪个群体才够？当新增题对独立需求满足或决策质量的边际改善低于预先设定的容忍度时，才能说它对声明用途已不再必要。开发曲线变平，本身不足以建立这个结论。
+到这里，一开始那个“到底多少道题才够”的问题才有了严肃的停止规则：不是看开发曲线什么时候走平，而是看再多加一批题，对独立目标证据或最终决策质量的边际改善是不是已经跌破事先定好的容忍阈值——针对**特定决策、特定误差要求与特定模型群体**，够了才算真的够了。
 
 ## 每增加一道题，都应该回答的问题
 
-一个 benchmark 所做的，不只是收集任务。它在不同需求之间分配注意力，把需求转成可观察事件，决定哪些事件算成功，再把结果聚合为判断。
+说到底，benchmark 从来不只是把一批提示词和测试用例打包在一起。它暗中决定着我们把注意力分给哪些需求、把能力拆解成哪些可观察事件、拿什么尺子判别成败，又如何把成百上千条结果汇总成一个拍板结论。
 
-因此，压缩、构建、评分与排名需要放在同一个讨论中。如果生产配额决定权重，小题集可能只是高效复现了一种缺乏依据的偏好；如果任务标签缺少执行支持，广泛的名义覆盖可能掩盖证据缺口；如果评分器奖励了错误行为，增加题量可能让有偏的判断看起来更加精确。
+这四道工序环环相扣，根本没法拆开单看：如果生成便利决定了各族题量配额，再怎么精简压缩也只是更快地复刻了某种缺乏依据的偏心；如果轨迹根本没踩中标称的难点，再高的名义覆盖率背后也是证据空白；如果评分脚本还在给投机取巧送分，加题越多只会让有偏的榜单个个看起来更加精确。
 
-可执行的改进，是让每个环节都能检查：解释题集组合，验收任务，观察挑战，检验评分器，验证最终决策。**每增加一道题，都应追问：它改善了哪一个判断，又提供了什么新的证据，使这种改善成为可能？**
+实打实的解法其实很朴素，就是把每个环节摊开在阳光下：交代清家族配比的理由，拿合法替代解和刻意错误解双向压测评分器，盯着轨迹核实挑战真被触达，再把整套选择交回独立决策里校验。**往考卷里多加任何一道新题之前，都值得先追问一句：它到底让哪一个具体判断更准了？又带来了什么既有题目提供不了的新证据？**
 
 <h2 id="references-zh">资料与图表数据</h2>
 
