@@ -78,7 +78,7 @@
       {% endif %}
       {% if author.github %}
       <li><a href="https://github.com/{{ author.github }}"><i class="fab fa-fw fa-github" aria-hidden="true"></i>
-          Github</a></li>
+          GitHub</a></li>
       {% endif %}
       {% if author.stackoverflow %}
       <li><a href="https://www.stackoverflow.com/users/{{ author.stackoverflow }}"><i
@@ -144,7 +144,7 @@
       <li><a href="https://en.wikipedia.org/wiki/User:{{ author.wikipedia }}"><i class="fab fa-fw fa-wikipedia-w"
             aria-hidden="true"></i> Wikipedia</a></li>
       {% endif %}
-      <li style="margin-top: 1.5em; display: flex; justify-content: center;">
+      <li class="author__visitor-item">
         {% include visitor_map.html %}
       </li>
     </ul>

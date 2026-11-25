@@ -11,10 +11,11 @@ body {
   margin: 0;
   padding: 0;
   padding-bottom: 5em;
-  color: $text-color;
+  color: #253547;
   font-family: $global-font-family;
-  font-weight: 450;
-  line-height: 1.72;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.65;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -319,10 +320,21 @@ nav {
 }
 
 /*
-   Global animation transition
+   Interactive transitions & reduced motion
    ========================================================================== */
 
-b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a, tr, td, form button, input[type="submit"], .btn, .highlight, .archive__item-teaser {
-  -webkit-transition: $global-transition;
-  transition: $global-transition;
+a, button, input[type="submit"], .btn {
+  transition: color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,24 +1,37 @@
 ---
 layout: default
 title: "When the Model Changes, What Happens to the Agent?"
+title_zh: "模型换了，Agent 为什么变了？"
 date: 2026-05-07
 last_modified_at: 2026-10-08
 author_profile: true
 excerpt: "Why an agent tuned for one model can change behavior on another, and how to measure, adapt, and validate a model migration. English / 中文."
+excerpt_zh: "为什么在一个模型上调顺的 Agent 换到另一个模型后行为会走样，以及如何测量、适配并验证一次模型迁移。"
+topic: "Agent architecture"
+topic_zh: "Agent 架构"
+reading_time: "15 min read"
+reading_time_zh: "约 15 分钟"
+figure_en: "/assets/model-migration/architecture-en.svg"
+figure_zh: "/assets/model-migration/architecture-zh.svg"
+figure_alt_en: "Architecture diagram separating stable task contracts from replaceable model-specific adapters"
+figure_alt_zh: "将稳定任务契约与可替换模型适配层解耦的架构图"
 ---
 
 <link rel="stylesheet" href="{{ '/assets/model-migration/article.css' | relative_url }}">
 <div id="migration-essay" class="blog-post-content">
-<div class="bm-language" role="group" aria-label="Article language / 文章语言">
-<button type="button" data-bm-language="en" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
-<button type="button" data-bm-language="zh" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+<div class="bm-topbar">
+<a class="bm-back-link" href="{{ '/blogs/' | relative_url }}" data-en="All essays" data-zh="全部文章">All essays</a>
+<div class="bm-language" role="tablist" aria-label="Article language / 文章语言">
+<button type="button" role="tab" data-bm-language="en" aria-selected="true" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
+<button type="button" role="tab" data-bm-language="zh" aria-selected="false" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+</div>
 </div>
 
 <div id="bm-content-en" class="bm-language-content" lang="en" markdown="1">
 
-<p class="bm-kicker">Research essay · Agent architecture</p>
-
 # When the Model Changes, What Happens to the Agent?
+
+<p class="bm-meta">May 7, 2026 · Agent architecture · 15 min read</p>
 
 <p class="bm-deck">Model swaps, version upgrades, and the gap between the model we optimize for and the one we deploy.</p>
 
@@ -254,9 +267,9 @@ The deepest shift is to treat model compatibility as a maintained empirical prop
 
 <div id="bm-content-zh" class="bm-language-content" lang="zh-CN" markdown="1" hidden>
 
-<p class="bm-kicker">Research essay · Agent architecture</p>
-
 # 模型换了，Agent 为什么变了？
+
+<p class="bm-meta">2026 年 5 月 7 日 · Agent 架构 · 约 15 分钟</p>
 
 <p class="bm-deck">模型替换、版本升级，以及“围绕一个模型优化，却用另一个模型生产”的迁移问题。</p>
 

@@ -5,8 +5,10 @@
 .masthead {
   position: sticky;
   top: 0;
-  background-color: white;
-  border-bottom: 1px solid $border-color;
+  background-color: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  border-bottom: 1px solid #dbe3ec;
   -webkit-animation: intro 0.3s both;
           animation: intro 0.3s both;
   -webkit-animation-delay: 0.15s;
@@ -16,7 +18,7 @@
   &__inner-wrap {
     @include container;
     @include clearfix;
-    padding: .5em;
+    padding: 0.45rem 1rem;
     font-family: $sans-serif-narrow;
 
     @include breakpoint($x-large) {
@@ -44,10 +46,7 @@
 }
 
 .masthead__menu-home-item {
-  @include breakpoint($medium) {
-    display: block !important;
-  }
-  display: none !important;
+  display: table-cell;
 }
 
 .masthead__menu-item {
@@ -55,9 +54,23 @@
   list-style-type: none;
   white-space: nowrap;
 
+  a {
+    font-size: 0.875rem;
+    color: #526478;
+    font-weight: 500;
+  }
+
   &--lg {
-    padding-right: 2em;
+    padding-right: 1.5rem;
     font-weight: 700;
+
+    a {
+      font-family: $serif;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: #14263d;
+      letter-spacing: -0.02em;
+    }
   }
 }
 

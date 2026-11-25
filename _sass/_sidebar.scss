@@ -121,6 +121,7 @@
 
 .author__name {
   margin: 0;
+  color: #14263d;
 
   @include breakpoint($large) {
     margin-top: 10px;
@@ -130,14 +131,18 @@
 
 .sidebar .author__name {
   @include breakpoint($medium) {
-    font-size: $type-size-3;
+    font-size: 1.15rem;
   }
   font-family: $sans-serif;
-  font-size: $type-size-4;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #14263d;
 }
 
 .author__bio {
   margin: 0;
+  color: #526478;
+  font-size: 0.875rem;
 
   @include breakpoint($large) {
     margin-top: 10px;
@@ -235,6 +240,12 @@
 
   li {
     white-space: nowrap;
+    color: #526478;
+    font-size: 0.875rem;
+
+    i {
+      color: #64748b;
+    }
   }
 
   a {
@@ -243,13 +254,41 @@
     padding-right: 5px;
     padding-top: 2px;
     padding-bottom: 2px;
-    color: inherit;
-    font-size: $type-size-5;
+    color: #526478;
+    font-size: 0.875rem;
     text-decoration: none;
+    transition: color 180ms cubic-bezier(0.22, 1, 0.36, 1);
 
     &:hover {
+      color: #14263d;
       text-decoration: underline;
     }
+  }
+
+  .author__visitor-item {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #dbe3ec;
+    white-space: normal;
+  }
+}
+
+.visitor-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.84375rem;
+  line-height: 1.45;
+  color: #526478;
+  font-variant-numeric: tabular-nums;
+
+  .visitor-counter__row {
+    display: block;
+  }
+
+  .visitor-counter__num {
+    color: #14263d;
+    font-weight: 600;
   }
 }
 

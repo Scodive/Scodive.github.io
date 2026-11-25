@@ -1,23 +1,36 @@
 ---
 layout: default
 title: "What Makes a Benchmark Worth Testing?"
+title_zh: "怎样设计一个真正有评测价值的 Benchmark？"
 date: 2026-08-08
 author_profile: true
 excerpt: "How case construction shapes scores, what a smaller test set preserves, and how to build evidence for the decisions we actually care about. English / 中文."
+excerpt_zh: "题目构造如何暗中决定评分规则，小规模测试集究竟保留了什么，以及如何为真正关心的决策构建可靠证据。"
+topic: "Benchmark design"
+topic_zh: "评测设计"
+reading_time: "16 min read"
+reading_time_zh: "约 16 分钟"
+figure_en: "/assets/benchmark-measurement/scoring-en.svg"
+figure_zh: "/assets/benchmark-measurement/scoring-zh.svg"
+figure_alt_en: "Diagram illustrating how scoring rules and benchmark construction shape evaluation outcomes"
+figure_alt_zh: "评分规则与题目构造如何影响评测结果的示意图"
 ---
 
 <link rel="stylesheet" href="{{ '/assets/benchmark-measurement/article.css' | relative_url }}">
 <div id="benchmark-essay" class="blog-post-content">
-<div class="bm-language" role="group" aria-label="Article language / 文章语言">
-<button type="button" data-bm-language="en" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
-<button type="button" data-bm-language="zh" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+<div class="bm-topbar">
+<a class="bm-back-link" href="{{ '/blogs/' | relative_url }}" data-en="All essays" data-zh="全部文章">All essays</a>
+<div class="bm-language" role="tablist" aria-label="Article language / 文章语言">
+<button type="button" role="tab" data-bm-language="en" aria-selected="true" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
+<button type="button" role="tab" data-bm-language="zh" aria-selected="false" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+</div>
 </div>
 
 <div id="bm-content-en" class="bm-language-content" lang="en" markdown="1">
 
-<p class="bm-kicker">Research essay · Benchmark design</p>
-
 # What Makes a Benchmark Worth Testing?
+
+<p class="bm-meta">August 8, 2026 · Benchmark design · 16 min read</p>
 
 <p class="bm-deck">How case construction shapes scores, what a smaller test set preserves, and how to build evidence for the decisions we actually care about.</p>
 
@@ -293,9 +306,9 @@ The constructive alternative is to make each link inspectable: justify the mix, 
 
 <div id="bm-content-zh" class="bm-language-content" lang="zh-CN" markdown="1" hidden>
 
-<p class="bm-kicker">Research essay · Benchmark design</p>
-
 # 怎样设计一个真正有评测价值的 Benchmark？
+
+<p class="bm-meta">2026 年 8 月 8 日 · 评测设计 · 约 16 分钟</p>
 
 <p class="bm-deck">题目构建如何进入分数，小题集究竟保住了什么，以及怎样为真正关心的判断设计证据。</p>
 

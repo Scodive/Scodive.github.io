@@ -1,0 +1,40 @@
+{% assign pub = include.pub %}
+{% assign heading_tag = include.heading_tag | default: "h2" %}
+<article class="pub-row{% unless pub.image %} pub-row--text-only{% endunless %}">
+  <div class="pub-row__body">
+    <{{ heading_tag }} class="pub-row__title">
+      {% if pub.paper and pub.paper != "#" %}
+        <a href="{{ pub.paper }}" target="_blank" rel="noopener">{{ pub.title }}</a>
+      {% else %}
+        {{ pub.title }}
+      {% endif %}
+    </{{ heading_tag }}>
+    <p class="pub-row__venue">
+      <span class="pub-row__venue-short">{{ pub.venue_short }}</span>
+      {% if pub.venue %}<span class="pub-row__venue-sep" aria-hidden="true">·</span> <span class="pub-row__venue-full">{{ pub.venue }}</span>{% endif %}
+    </p>
+    <p class="pub-row__authors">{{ pub.authors }}</p>
+    {% if pub.abstract %}
+    <p class="pub-row__abstract">{{ pub.abstract }}</p>
+    {% endif %}
+    {% if pub.paper or pub.code or pub.project or pub.video %}
+    <div class="pub-row__links">
+      {% if pub.paper %}<a href="{{ pub.paper }}" class="pub-link pub-link--paper" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i> Paper</a>{% endif %}
+      {% if pub.code %}<a href="{{ pub.code }}" class="pub-link pub-link--code" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>{% endif %}
+      {% if pub.project %}<a href="{{ pub.project }}" class="pub-link pub-link--project" target="_blank" rel="noopener"><i class="fas fa-globe" aria-hidden="true"></i> Project</a>{% endif %}
+      {% if pub.video %}<a href="{{ pub.video }}" class="pub-link pub-link--video" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> Video</a>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+  {% if pub.image %}
+  {% if pub.paper and pub.paper != "#" %}
+  <a class="pub-figure-frame" href="{{ pub.paper }}" target="_blank" rel="noopener" aria-label="{{ pub.title | escape }}">
+    <img loading="lazy" src="{{ pub.image | relative_url }}" alt="{{ pub.title | escape }} overview figure">
+  </a>
+  {% else %}
+  <div class="pub-figure-frame">
+    <img loading="lazy" src="{{ pub.image | relative_url }}" alt="{{ pub.title | escape }} overview figure">
+  </div>
+  {% endif %}
+  {% endif %}
+</article>

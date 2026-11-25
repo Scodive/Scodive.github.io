@@ -20,6 +20,7 @@
   venue: "arXiv Preprint"
   venue_short: "arXiv"
   year: 2026
+  image: /images/papers/moae.png
   paper: "https://arxiv.org/pdf/2609.05992"
   abstract: "MOAE formulates agent refinement as a Pareto-preserving evolutionary search over complete rollouts, jointly optimizing multiple objectives, including task performance, trajectory quality, and safety, without collapsing them into a fixed scalar objective."
   selected: true
@@ -65,7 +66,7 @@
   year: 2026
   image: /images/papers/agenticpressure.png
   paper: "https://arxiv.org/pdf/2609.05995"
-  abstract: "A phenomenological formulzation of Agentic Pressure, starting to study the endogenous risk of reliable agent systems."
+  abstract: "A phenomenological formulation of Agentic Pressure, starting to study the endogenous risk of reliable agent systems."
   selected: false
 
 - title: "FreePose: Real-Time View-Invariant 3D Human Pose Estimation via Motion-View Disentanglement"

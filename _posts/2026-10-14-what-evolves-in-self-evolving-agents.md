@@ -1,23 +1,36 @@
 ---
 layout: default
 title: "What Is Actually Evolving in a Self-Evolving Agent?"
+title_zh: "Agent 自进化，到底在进化什么？"
 date: 2026-10-14
 author_profile: true
 excerpt: "What self-evolving agents actually repair, why completion alone can mislead selection, and when joint objectives, constraints and Pareto archives become useful. English / 中文."
+excerpt_zh: "自进化 Agent 到底在修补什么，为什么单一完成率会误导选择，以及多目标优化、硬约束与 Pareto 档案在什么时候变得必要。"
+topic: "Self-evolving agents"
+topic_zh: "自进化 Agent"
+reading_time: "18 min read"
+reading_time_zh: "约 18 分钟"
+figure_en: "/assets/agent-rsi/evolution-loop-en.svg"
+figure_zh: "/assets/agent-rsi/evolution-loop-zh.svg"
+figure_alt_en: "Diagram of what changes and what is inherited across agent self-evolution loops"
+figure_alt_zh: "Agent 自进化循环中变化与继承关系的示意图"
 ---
 
 <link rel="stylesheet" href="{{ '/assets/agent-rsi/article.css' | relative_url }}">
 <div id="rsi-essay" class="blog-post-content">
-<div class="bm-language" role="group" aria-label="Article language / 文章语言">
-<button type="button" data-bm-language="en" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
-<button type="button" data-bm-language="zh" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+<div class="bm-topbar">
+<a class="bm-back-link" href="{{ '/blogs/' | relative_url }}" data-en="All essays" data-zh="全部文章">All essays</a>
+<div class="bm-language" role="tablist" aria-label="Article language / 文章语言">
+<button type="button" role="tab" data-bm-language="en" aria-selected="true" aria-pressed="true" aria-controls="bm-content-en" lang="en">English</button>
+<button type="button" role="tab" data-bm-language="zh" aria-selected="false" aria-pressed="false" aria-controls="bm-content-zh" lang="zh-CN">中文</button>
+</div>
 </div>
 
 <div id="bm-content-en" class="bm-language-content" lang="en" markdown="1">
 
-<p class="bm-kicker">Research essay · October 14, 2026</p>
-
 # What Is Actually Evolving in a Self-Evolving Agent?
+
+<p class="bm-meta">October 14, 2026 · Self-evolving agents · 18 min read</p>
 
 <p class="bm-deck">What self-improvement methods actually fix, where their gains stop, and how the need for multi-objective optimization emerges.</p>
 
@@ -361,9 +374,9 @@ Two adjacent cases make the target boundary clear: [AlphaEvolve][r25] evolves ta
 
 <div id="bm-content-zh" class="bm-language-content" lang="zh-CN" hidden markdown="1">
 
-<p class="bm-kicker">研究随笔 · 2026 年 10 月 14 日</p>
-
 # Agent 自进化，到底在进化什么？
+
+<p class="bm-meta">2026 年 10 月 14 日 · 自进化 Agent · 约 18 分钟</p>
 
 <p class="bm-deck">自我改进方法修复了什么，它们的收益止步于哪里，以及多目标优化为什么会自然成为下一个问题。</p>
 

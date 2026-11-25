@@ -23,6 +23,32 @@ layout: compress
           <section class="page__content" itemprop="text">
             {{ content }}
           </section>
+          {% if page.collection == 'posts' %}{% if page.previous or page.next %}
+          <nav class="blog-post-footer" aria-label="Essay navigation">
+            <div class="blog-post-footer__item blog-post-footer__item--prev">
+              {% if page.previous %}
+              <span class="blog-post-footer__label" data-en="Previous essay" data-zh="上一篇">Previous essay</span>
+              <a class="blog-post-footer__link"
+                 href="{{ page.previous.url | relative_url }}"
+                 data-href-en="{{ page.previous.url | relative_url }}"
+                 data-href-zh="{{ page.previous.url | relative_url }}#bm-content-zh"
+                 data-en="{{ page.previous.title | escape }}"
+                 data-zh="{{ page.previous.title_zh | default: page.previous.title | escape }}">{{ page.previous.title }}</a>
+              {% endif %}
+            </div>
+            <div class="blog-post-footer__item blog-post-footer__item--next">
+              {% if page.next %}
+              <span class="blog-post-footer__label" data-en="Next essay" data-zh="下一篇">Next essay</span>
+              <a class="blog-post-footer__link"
+                 href="{{ page.next.url | relative_url }}"
+                 data-href-en="{{ page.next.url | relative_url }}"
+                 data-href-zh="{{ page.next.url | relative_url }}#bm-content-zh"
+                 data-en="{{ page.next.title | escape }}"
+                 data-zh="{{ page.next.title_zh | default: page.next.title | escape }}">{{ page.next.title }}</a>
+              {% endif %}
+            </div>
+          </nav>
+          {% endif %}{% endif %}
         </div>
       </article>
     </div>
